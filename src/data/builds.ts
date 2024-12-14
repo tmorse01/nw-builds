@@ -1,23 +1,41 @@
-export interface Build {
+import { MantineColor } from "@mantine/core";
+
+export interface IBuild {
   id: number;
   name: string;
-  role: string;
   weapons: string[];
-  attributes: Record<string, number>;
+  attributes: IAttributes;
   gear: string[];
   perks: string[];
   gems: string[];
   playstyle: string;
   thumbnail: string;
+  tags: ITag[];
 }
 
-export const builds: Build[] = [
+export interface ITag {
+  title: string;
+  color: MantineColor;
+}
+
+export interface IAttributes {
+  strength: number;
+  dexterity: number;
+  intelligence: number;
+  focus: number;
+  constitution: number;
+}
+
+export const builds: IBuild[] = [
   {
     id: 1,
     name: "Bruiser",
-    role: "DPS",
+    tags: [
+      { title: "DPS", color: "red" },
+      { title: "PvP", color: "teal" },
+    ],
     weapons: ["Great Axe", "Warhammer"],
-    attributes: { Strength: 300, Constitution: 300 },
+    attributes: { strength: 300, constitution: 300, dexterity: 5, intelligence: 5, focus: 5 },
     gear: ["Medium Armor", "Elemental Adversion", "Enchanted Ward"],
     perks: ["Insatiable Gravity Well", "Keen"],
     gems: ["Onyx", "Malachite"],

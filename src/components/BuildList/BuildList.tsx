@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button, Card, Grid, Image, List, Title } from "@mantine/core";
+import { Badge, Button, Card, Grid, Image, List, Title } from "@mantine/core";
 import { builds } from "@/data/builds";
 
 export const BuildList: React.FC = () => {
@@ -19,8 +19,15 @@ export const BuildList: React.FC = () => {
               />
             </Link>
             <Title order={3} mb="xs">
-              {build.name} - {build.role}
+              {build.name}
             </Title>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
+              {build.tags.map((tag) => (
+                <Badge key={tag.title} color={tag.color} variant="light" radius="xl">
+                  {tag.title}
+                </Badge>
+              ))}
+            </div>
             <List mb="sm">
               {build.weapons.map((weapon) => (
                 <List.Item key={weapon}>{weapon}</List.Item>
