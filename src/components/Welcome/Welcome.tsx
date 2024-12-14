@@ -1,22 +1,21 @@
-import { Anchor, Text, Title } from '@mantine/core';
-import classes from './Welcome.module.css';
+import { Anchor, Text, Title } from "@mantine/core";
+import classes from "./Welcome.module.css";
 
 export function Welcome() {
   return (
     <>
       <Title className={classes.title} ta="center" mt={100}>
-        Welcome to{' '}
-        <Text inherit variant="gradient" component="span" gradient={{ from: 'pink', to: 'yellow' }}>
-          Mantine
+        Welcome to{" "}
+        <Text inherit variant="gradient" component="span" gradient={{ from: "pink", to: "yellow" }}>
+          NW Builds
         </Text>
       </Title>
       <Text c="dimmed" ta="center" size="lg" maw={580} mx="auto" mt="xl">
-        This starter Vite project includes a minimal setup, if you want to learn more on Mantine +
-        Vite integration follow{' '}
-        <Anchor href="https://mantine.dev/guides/vite/" size="lg">
-          this guide
+        A collection of builds for{" "}
+        <Anchor href="https://www.newworld.com/en-us" size="lg">
+          New World
         </Anchor>
-        . To get started edit pages/Home.page.tsx file.
+        , a massively multiplayer online role-playing game by Amazon Game Studios.
       </Text>
     </>
   );
