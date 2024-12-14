@@ -24,26 +24,28 @@ export const BuildAttributes: React.FC<BuildAttributesProps> = ({ attributes }) 
   };
 
   return (
-    <Card withBorder shadow="sm" radius="md" mt="lg">
+    <>
       <Text fw={600} fz="lg" mb="sm">
         Attributes
       </Text>
-      <Stack gap="xs">
-        {Object.entries(attributes).map(([attr, value]) => (
-          <Group key={attr} align="apart">
-            <Group gap="xs">
-              <ThemeIcon radius="xl" size="md" variant="light">
-                {attributeIcons[attr as keyof typeof attributeIcons]}
-              </ThemeIcon>
-              <Text>{attr.charAt(0).toUpperCase() + attr.slice(1)}</Text>
+      <Card withBorder shadow="sm" radius="md" mt="lg">
+        <Stack gap="xs">
+          {Object.entries(attributes).map(([attr, value]) => (
+            <Group key={attr} align="apart">
+              <Group gap="xs">
+                <ThemeIcon radius="xl" size="md" variant="light">
+                  {attributeIcons[attr as keyof typeof attributeIcons]}
+                </ThemeIcon>
+                <Text>{attr.charAt(0).toUpperCase() + attr.slice(1)}</Text>
+              </Group>
+              <Text fw={700} fz="md" color="dimmed">
+                {value}
+              </Text>
             </Group>
-            <Text fw={700} fz="md" color="dimmed">
-              {value}
-            </Text>
-          </Group>
-        ))}
-      </Stack>
-      <Divider mt="sm" />
-    </Card>
+          ))}
+        </Stack>
+        <Divider mt="sm" />
+      </Card>
+    </>
   );
 };

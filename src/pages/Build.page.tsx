@@ -31,7 +31,7 @@ export const BuildPage: React.FC = () => {
       <Container>
         <BuildOverview build={build} />
         <BuildAttributes attributes={build.attributes} />
-        <SkillTree />
+        <SkillTree skills={build.skills} />
       </Container>
     </>
   );

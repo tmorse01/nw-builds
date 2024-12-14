@@ -1,12 +1,14 @@
 import { Badge, Card, Group, SimpleGrid, Stack, Text } from "@mantine/core";
 
-const skills = [
-  { name: "Shield Bash", type: "Active", description: "Stuns enemies for 2 seconds." },
-  { name: "Defender Stance", type: "Passive", description: "Reduces incoming damage by 15%." },
-  { name: "Leaping Strike", type: "Active", description: "Deals 150% weapon damage." },
-];
+interface SkillTreeProps {
+  skills: {
+    name: string;
+    type: string;
+    description: string;
+  }[];
+}
 
-export const SkillTree = () => (
+export const SkillTree: React.FC<SkillTreeProps> = ({ skills }) => (
   <Stack mt="lg">
     <Text fw={600} fz="lg">
       Skill Tree

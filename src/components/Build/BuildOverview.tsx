@@ -20,8 +20,7 @@ export const BuildOverview: React.FC<BuildOverviewProps> = ({ build }) => (
     </Group>
 
     <Text c="dimmed" mt="sm" fz="sm">
-      A tanky build focusing on high survivability and group utility. Ideal for dungeon crawls and
-      team-based PvE content.
+      {build.playstyle}
     </Text>
   </Card>
 );

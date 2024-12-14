@@ -11,11 +11,18 @@ export interface IBuild {
   playstyle: string;
   thumbnail: string;
   tags: ITag[];
+  skills: ISkill[];
 }
 
 export interface ITag {
   title: string;
   color: MantineColor;
+}
+
+export interface ISkill {
+  name: string;
+  type: "Active" | "Passive";
+  description: string;
 }
 
 export interface IAttributes {
@@ -36,6 +43,23 @@ export const builds: IBuild[] = [
     ],
     weapons: ["Great Axe", "Warhammer"],
     attributes: { strength: 300, constitution: 300, dexterity: 5, intelligence: 5, focus: 5 },
+    skills: [
+      {
+        name: "Gravity Well",
+        type: "Active",
+        description: "Creates a gravity vortex that pulls enemies towards it.",
+      },
+      {
+        name: "Maelstrom",
+        type: "Active",
+        description: "Pulls enemies towards you and deals damage in an area around you.",
+      },
+      {
+        name: "Charge",
+        type: "Active",
+        description: "Charges forward, press the button again to stop charging and attack.",
+      },
+    ],
     gear: ["Medium Armor", "Elemental Adversion", "Enchanted Ward"],
     perks: ["Insatiable Gravity Well", "Keen"],
     gems: ["Onyx", "Malachite"],
