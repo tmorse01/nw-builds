@@ -37,6 +37,10 @@ export const BuildPage: React.FC = () => {
       <Title order={2} mt="lg" mb="sm">
         Weapons
       </Title>
+      <Text mb="sm">
+        This build utilizes the following weapons. Each weapon is chosen to maximize the build's
+        effectiveness in its role.
+      </Text>
       <List>
         {build.weapons.map((weapon) => (
           <List.Item key={weapon}>{weapon}</List.Item>
@@ -46,6 +50,10 @@ export const BuildPage: React.FC = () => {
       <Title order={2} mt="lg" mb="sm">
         Attributes
       </Title>
+      <Text mb="sm">
+        The attribute distribution for this build is optimized to enhance its performance. Here are
+        the recommended attribute points:
+      </Text>
       <List>
         {Object.entries(build.attributes).map(([attribute, value]) => (
           <List.Item key={attribute}>
@@ -57,6 +65,10 @@ export const BuildPage: React.FC = () => {
       <Title order={2} mt="lg" mb="sm">
         Gear
       </Title>
+      <Text mb="sm">
+        The gear selection is crucial for this build. The following gear pieces are recommended to
+        achieve the best results:
+      </Text>
       <List>
         {build.gear.map((item) => (
           <List.Item key={item}>{item}</List.Item>
@@ -66,6 +78,10 @@ export const BuildPage: React.FC = () => {
       <Title order={2} mt="lg" mb="sm">
         Perks
       </Title>
+      <Text mb="sm">
+        Perks provide additional bonuses and abilities. The following perks are essential for this
+        build:
+      </Text>
       <List>
         {build.perks.map((perk) => (
           <List.Item key={perk}>{perk}</List.Item>
@@ -75,6 +91,10 @@ export const BuildPage: React.FC = () => {
       <Title order={2} mt="lg" mb="sm">
         Gems
       </Title>
+      <Text mb="sm">
+        Gems can be socketed into gear to provide additional benefits. The following gems are
+        recommended for this build:
+      </Text>
       <List>
         {build.gems.map((gem) => (
           <List.Item key={gem}>{gem}</List.Item>

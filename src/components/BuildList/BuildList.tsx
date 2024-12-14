@@ -6,7 +6,7 @@ export const BuildList: React.FC = () => {
   return (
     <Grid mt={60}>
       {builds.map((build) => (
-        <Grid.Col key={build.id} span={4}>
+        <Grid.Col key={build.id} span={{ xs: 12, sm: 6, md: 4 }}>
           <Card shadow="sm" padding="lg" radius="md" withBorder>
             <Link to={`/build/${build.id}`}>
               <Image
