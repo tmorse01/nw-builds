@@ -8,12 +8,13 @@ export interface Build {
   perks: string[];
   gems: string[];
   playstyle: string;
+  thumbnail: string;
 }
 
 export const builds: Build[] = [
   {
     id: 1,
-    name: "Bruiser DPS",
+    name: "Bruiser",
     role: "DPS",
     weapons: ["Great Axe", "Warhammer"],
     attributes: { Strength: 300, Constitution: 300 },
@@ -21,6 +22,7 @@ export const builds: Build[] = [
     perks: ["Insatiable Gravity Well", "Keen"],
     gems: ["Onyx", "Malachite"],
     playstyle: "Focus on crowd control and high burst damage in close combat.",
+    thumbnail: "/assets/thumbnails/bruiser-dps.webp",
   },
   // Add more builds as needed
 ];
