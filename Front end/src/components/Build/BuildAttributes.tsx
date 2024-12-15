@@ -25,7 +25,7 @@ export const BuildAttributes: React.FC<BuildAttributesProps> = ({ attributes }) 
 
   return (
     <>
-      <Text fw={600} fz="lg" mb="sm">
+      <Text fw={600} fz="lg" mb="sm" mt="lg">
         Attributes
       </Text>
       <Card withBorder shadow="sm" radius="md" mt="lg">
