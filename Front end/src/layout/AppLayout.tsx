@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { IconWorldSearch } from "@tabler/icons-react";
-import { AppShell, Burger, Group } from "@mantine/core";
+import { AppShell, Burger, Group, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { ColorSchemeToggle } from "@/components/ColorSchemeToggle/ColorSchemeToggle";
 import { Navbar } from "../components/Navbar/NavBar";
@@ -18,6 +18,16 @@ export function AppLayout({ children }: { children: ReactNode }) {
         <Group h="100%" px="md" align="center" justify="space-between">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           <IconWorldSearch size={30} /> {/* Replace with suitable logo */}
+          <Title>
+            <Text
+              inherit
+              variant="gradient"
+              component="span"
+              gradient={{ from: "pink", to: "yellow" }}
+            >
+              NW Builds
+            </Text>
+          </Title>
           <ColorSchemeToggle />
         </Group>
       </AppShell.Header>

@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import { Badge, Button, Card, Grid, Image, List, Title } from "@mantine/core";
-import { builds } from "@/data/builds";
+import { getBuildListByTag } from "@/data/builds";
 
-export const BuildList: React.FC = () => {
+interface BuildListProps {
+  tags?: string[] | null | undefined;
+}
+
+export const BuildList: React.FC<BuildListProps> = ({ tags }) => {
+  const builds = getBuildListByTag(tags ?? undefined);
   return (
     <Grid mt={60}>
       {builds.map((build) => (

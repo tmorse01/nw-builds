@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { IconChevronDown, IconChevronRight } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
 import { Collapse, Group, Text, ThemeIcon, UnstyledButton } from "@mantine/core";
 
 interface Link {
@@ -22,8 +23,8 @@ export function LinksGroup({ label, icon: Icon, links = [] }: LinksGroupProps) {
   const items = links.map((link) => (
     <Text
       key={link.label}
-      component="a"
-      href={link.link}
+      component={Link}
+      to={link.link}
       style={{
         textDecoration: "none",
         color: "inherit",

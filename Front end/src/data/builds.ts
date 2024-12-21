@@ -33,7 +33,7 @@ export interface IAttributes {
   constitution: number;
 }
 
-export const builds: IBuild[] = [
+export const listOfBuilds: IBuild[] = [
   {
     id: 1,
     name: "Bruiser",
@@ -68,3 +68,12 @@ export const builds: IBuild[] = [
   },
   // Add more builds as needed
 ];
+
+export const getBuildListByTag = (tags: string[] = []) => {
+  if (!tags || tags.length === 0) {
+    return listOfBuilds;
+  }
+  return listOfBuilds.filter((build) =>
+    tags.every((tag) => build.tags.some((t) => t.title.toLowerCase() === tag.toLowerCase()))
+  );
+};

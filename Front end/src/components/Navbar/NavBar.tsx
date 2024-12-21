@@ -15,9 +15,9 @@ const pages = [
     label: "Builds",
     icon: IconBlocks,
     links: [
-      { label: "Tank", link: "/builds/tank", icon: IconShield },
-      { label: "Healer", link: "/builds/healer", icon: IconFirstAidKit },
-      { label: "DPS", link: "/builds/dps", icon: IconSword },
+      { label: "Tank", link: "/builds/?tags=tank", icon: IconShield },
+      { label: "Healer", link: "/builds/?tags=healer", icon: IconFirstAidKit },
+      { label: "DPS", link: "/builds/?tags=dps", icon: IconSword },
     ],
   },
   { label: "About", link: "/about", icon: IconInfoCircle },
