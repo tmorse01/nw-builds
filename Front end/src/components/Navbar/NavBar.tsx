@@ -3,6 +3,7 @@ import {
   IconBlocks,
   IconFirstAidKit,
   IconInfoCircle,
+  IconList,
   IconShield,
   IconSword,
 } from "@tabler/icons-react";
@@ -15,6 +16,7 @@ const pages = [
     label: "Builds",
     icon: IconBlocks,
     links: [
+      { label: "All", link: "/builds", icon: IconList },
       { label: "Tank", link: "/builds/?tags=tank", icon: IconShield },
       { label: "Healer", link: "/builds/?tags=healer", icon: IconFirstAidKit },
       { label: "DPS", link: "/builds/?tags=dps", icon: IconSword },

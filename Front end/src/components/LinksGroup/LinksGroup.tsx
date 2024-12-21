@@ -6,6 +6,7 @@ import { Collapse, Group, Text, ThemeIcon, UnstyledButton } from "@mantine/core"
 interface Link {
   label: string;
   link: string;
+  icon: React.ElementType;
 }
 
 interface LinksGroupProps {
@@ -20,11 +21,11 @@ export function LinksGroup({ label, icon: Icon, links = [] }: LinksGroupProps) {
   const hasLinks = links.length > 0;
   const toggle = () => setOpened((o) => !o);
 
-  const items = links.map((link) => (
+  const items = links.map(({ label, link, icon: LinkIcon }) => (
     <Text
-      key={link.label}
+      key={label}
       component={Link}
-      to={link.link}
+      to={link}
       style={{
         textDecoration: "none",
         color: "inherit",
@@ -33,7 +34,10 @@ export function LinksGroup({ label, icon: Icon, links = [] }: LinksGroupProps) {
         margin: "0.5rem 0",
       }}
     >
-      {link.label}
+      <ThemeIcon size={20} variant="light" style={{ marginRight: "0.5rem" }}>
+        <LinkIcon size={16} />
+      </ThemeIcon>
+      {label}
     </Text>
   ));
 
