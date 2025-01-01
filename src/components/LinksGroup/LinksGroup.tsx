@@ -13,10 +13,11 @@ interface LinksGroupProps {
   label: string;
   icon: React.ElementType;
   links?: Link[];
+  link?: string;
 }
 
-export function LinksGroup({ label, icon: Icon, links = [] }: LinksGroupProps) {
-  const [opened, setOpened] = useState(false);
+export function LinksGroup({ label, icon: Icon, links = [], link }: LinksGroupProps) {
+  const [opened, setOpened] = useState(true);
 
   const hasLinks = links.length > 0;
   const toggle = () => setOpened((o) => !o);
@@ -40,6 +41,31 @@ export function LinksGroup({ label, icon: Icon, links = [] }: LinksGroupProps) {
       {label}
     </Text>
   ));
+
+  if (!hasLinks && link) {
+    return (
+      <div style={{ padding: "0.5rem 1rem" }}>
+        <Group>
+          <ThemeIcon size={24} variant="light">
+            <Icon size={18} />
+          </ThemeIcon>
+          <Text
+            key={label}
+            component={Link}
+            to={link}
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              display: "block",
+              margin: "0.5rem 0",
+            }}
+          >
+            {label}
+          </Text>
+        </Group>
+      </div>
+    );
+  }
 
   return (
     <div>

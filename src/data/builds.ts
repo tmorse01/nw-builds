@@ -1,7 +1,7 @@
 import { MantineColor } from "@mantine/core";
 
 export interface IBuild {
-  id: number;
+  id: string;
   name: string;
   weapons: string[];
   attributes: IAttributes;
@@ -36,7 +36,7 @@ export interface IAttributes {
 
 export const listOfBuilds: IBuild[] = [
   {
-    id: 1,
+    id: "war-bruiser",
     name: "War Bruiser",
     tags: [
       { title: "DPS", color: "red" },

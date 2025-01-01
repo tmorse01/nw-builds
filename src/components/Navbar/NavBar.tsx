@@ -1,5 +1,4 @@
 import {
-  IconAt,
   IconBlocks,
   IconFirstAidKit,
   IconInfoCircle,
@@ -23,7 +22,6 @@ const pages = [
     ],
   },
   { label: "About", link: "/about", icon: IconInfoCircle },
-  { label: "Contact", link: "/contact", icon: IconAt },
 ];
 
 export function Navbar() {

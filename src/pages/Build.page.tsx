@@ -9,7 +9,7 @@ import { listOfBuilds } from "../data/builds";
 
 export const BuildPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const build = listOfBuilds.find((b) => b.id === Number(id));
+  const build = listOfBuilds.find((b) => b.id === id);
 
   if (!build) {
     return (
