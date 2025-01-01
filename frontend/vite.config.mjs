@@ -5,9 +5,6 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   root: "./frontend",
   plugins: [react(), tsconfigPaths()],
-  build: {
-    outDir: "../dist",
-  },
   test: {
     globals: true,
     environment: "jsdom",
