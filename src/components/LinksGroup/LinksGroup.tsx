@@ -54,7 +54,6 @@ export function LinksGroup({ label, icon: Icon, links = [] }: LinksGroupProps) {
           borderRadius: "0.25rem",
           transition: "background-color 0.3s",
           cursor: "pointer",
-          backgroundColor: opened ? "#f8f9fa" : "transparent",
         }}
       >
         <Group>

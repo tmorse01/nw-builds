@@ -49,7 +49,7 @@ export const listOfBuilds: IBuild[] = [
     perks: ["Insatiable Gravity Well", "Keen"],
     gems: ["Onyx", "Malachite"],
     playstyle: "Focus on crowd control and high burst damage in close combat.",
-    thumbnail: "/assets/thumbnails/bruiser-dps.webp",
+    thumbnail: "/assets/thumbnails/war-bruiser.png",
     details: `
 This guide focuses on the **Great Axe** and **War Hammer** combination, tailored for wars. 
 This build maximizes crowd control, damage output, and survivability on the frontlines.
@@ -167,6 +167,10 @@ This setup ensures a balance of mobility, damage, and survivability.
 3. **Anhk**: Increases healing received. Really nice for survivability, but hard to get.
 4. **Endless Thirst**: Gives empower and fortify on use of potion. 
 
+---
+
+## Heartrune
+**Detonate**: Charge yourself with explosive energy, dealing damage to enemies around you. Save for crashes. Basic attack to build up heartrune charge.
 
 ---
 
