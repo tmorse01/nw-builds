@@ -16,7 +16,7 @@ export interface IBuild {
 }
 
 export interface ITag {
-  title: string;
+  title: "DPS" | "PvP" | "PvE" | "War" | "Duel" | "Siege" | "Healer" | "Tank" | "Support";
   color: MantineColor;
 }
 
@@ -37,10 +37,11 @@ export interface IAttributes {
 export const listOfBuilds: IBuild[] = [
   {
     id: 1,
-    name: "Bruiser",
+    name: "War Bruiser",
     tags: [
       { title: "DPS", color: "red" },
       { title: "PvP", color: "teal" },
+      { title: "War", color: "blue" },
     ],
     weapons: ["Great Axe", "Warhammer"],
     attributes: { strength: 300, constitution: 300, dexterity: 5, intelligence: 5, focus: 5 },
