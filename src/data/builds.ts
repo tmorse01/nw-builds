@@ -179,6 +179,8 @@ This setup ensures a balance of mobility, damage, and survivability.
 ## Heartrune
 **Detonate**: Charge yourself with explosive energy, dealing damage to enemies around you. Save for crashes. Basic attack to build up heartrune charge.
 
+*Upgrade to Escalating Explosion for more damage, be aware you gain rend.*
+
 ---
 
 ## Playstyle Tips
