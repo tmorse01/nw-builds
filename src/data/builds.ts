@@ -75,7 +75,10 @@ The Great Axe is a bruiser's bread and butter, offering strong AoE slash damage 
 
 #### Gem Options:
 - **Jasper**: Increase damage after taking damage.
-- **Opal**: Increase damage while stamina is not full.
+- **Opal**: Increase damage while stamina is not full. 
+
+#### Runestone:
+- **Punishing**: Increases melee damage.
 
 ### Examples
 ![Great Axe Skill Tree](/assets/builds/war-bruiser/great-axe-skills.png)
@@ -95,6 +98,10 @@ The War Hammer complements the Great Axe with high burst damage and crowd contro
 #### Gem Options:
 - **Onyx**: Increase damage to players above 70% health.
 - **Malachite**: Increase damage to players under crowd control effects.
+
+#### Runestone:
+- **Electrifying**: Lighting damage over time.
+- **Punishing**: Increases melee damage.
 
 ### Examples
 ![War Hammer](/assets/builds/war-bruiser/war-hammer-skills.png)
