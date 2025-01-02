@@ -22,7 +22,6 @@
   "dependencies": {
     "@mantine/carousel": "^7.15.2",
     "@mantine/core": "7.15.2",
-    "@mantine/emotion": "^7.15.2",
     "@mantine/hooks": "7.15.2",
     "@tabler/icons-react": "^3.24.0",
     "embla-carousel-react": "^7.1.0",
