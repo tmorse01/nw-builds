@@ -1,5 +1,7 @@
 import { Card, Group, Image, Text } from "@mantine/core";
 import { IBuild } from "@/data/builds";
+import { BuildAttributes } from "./BuildAttributes";
+import { TableOfContents } from "./TableOfContents";
 import { BuildTags } from "./Tags";
 
 interface BuildOverviewProps {
@@ -22,5 +24,9 @@ export const BuildOverview: React.FC<BuildOverviewProps> = ({ build }) => (
     <Text c="dimmed" mt="sm" fz="sm">
       {build.playstyle}
     </Text>
+    <Group mt="sm">
+      <TableOfContents sections={build.sections} />
+      <BuildAttributes attributes={build.attributes} />
+    </Group>
   </Card>
 );

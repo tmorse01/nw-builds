@@ -35,7 +35,7 @@ export const BuildSections: React.FC<BuildSectionsProps> = ({ sections }) => {
   return (
     <Container mt="xl">
       {sections.map((section, index) => (
-        <div key={index} style={{ marginBottom: "2rem" }}>
+        <div key={index} id={`section-${index}`} style={{ marginBottom: "2rem" }}>
           <Title order={3} mb="md">
             {section.title}
           </Title>

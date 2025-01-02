@@ -134,7 +134,7 @@ export const listOfBuilds: IBuild[] = [
           Experiment with putting points into focus for the CDR at 25, and increased incoming healing at 50.`,
       },
       {
-        title: "Armor and Equipment",
+        title: "Armor",
         content: `### Armor Type: **Medium**
         There are a number of different combinations you can use, but a good starting point is:
         - Helmet: **Light**

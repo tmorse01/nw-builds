@@ -1,5 +1,5 @@
 import { IconBrain, IconEye, IconRun, IconShield, IconSword } from "@tabler/icons-react";
-import { Card, Divider, Group, Stack, Text, ThemeIcon, useMantineTheme } from "@mantine/core";
+import { Card, Group, Stack, Text, ThemeIcon, useMantineTheme } from "@mantine/core";
 
 interface BuildAttributesProps {
   attributes: {
@@ -25,10 +25,7 @@ export const BuildAttributes: React.FC<BuildAttributesProps> = ({ attributes }) 
 
   return (
     <>
-      <Text fw={600} fz="lg" mb="sm" mt="lg">
-        Attributes
-      </Text>
-      <Card withBorder shadow="sm" radius="md" mt="lg">
+      <Card withBorder shadow="sm" radius="md">
         <Stack gap="xs">
           {Object.entries(attributes).map(([attr, value]) => (
             <Group key={attr} align="apart">
@@ -44,7 +41,6 @@ export const BuildAttributes: React.FC<BuildAttributesProps> = ({ attributes }) 
             </Group>
           ))}
         </Stack>
-        <Divider mt="sm" />
       </Card>
     </>
   );

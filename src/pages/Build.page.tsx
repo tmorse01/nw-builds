@@ -1,8 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button, Container, Group, Text, Title } from "@mantine/core";
-import { BuildAttributes } from "@/components/Build/BuildAttributes";
-// import { BuildDetails } from "@/components/Build/BuildDetails";
 import { BuildOverview } from "@/components/Build/BuildOverview";
 import { BuildSections } from "@/components/Build/BuildSections";
 import { SkillTree } from "@/components/Build/SkillTree";
@@ -27,14 +25,10 @@ export const BuildPage: React.FC = () => {
   }
 
   return (
-    <>
-      <Container>
-        <BuildOverview build={build} />
-        <BuildAttributes attributes={build.attributes} />
-        {build.skills && <SkillTree skills={build.skills} />}
-        <BuildSections sections={build.sections} />
-        {/* <BuildDetails details={build.details} /> */}
-      </Container>
-    </>
+    <Container>
+      <BuildOverview build={build} />
+      {build.skills && <SkillTree skills={build.skills} />}
+      <BuildSections sections={build.sections} />
+    </Container>
   );
 };
