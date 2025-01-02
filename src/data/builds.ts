@@ -69,9 +69,9 @@ export const listOfBuilds: IBuild[] = [
           This build maximizes crowd control, damage output, and survivability on the frontlines.`,
       },
       {
-        title: "Weapon Selection",
-        content: `### Primary Weapon: **Great Axe**
-        
+        title: "Primary Weapon",
+        content: `### Great Axe
+
         The Great Axe is a bruiser's bread and butter, offering strong AoE slash damage against groups and abilities to group enemies.
         
         #### Key Abilities:
@@ -95,9 +95,13 @@ export const listOfBuilds: IBuild[] = [
         
         ### Examples
         ![Great Axe Skill Tree](/assets/builds/war-bruiser/great-axe-skills.png)
-        ![Great Axe](/assets/builds/war-bruiser/great-axe.png)
-        
-        ### Secondary Weapon: **War Hammer**
+        ![Expandable Example Great Axe](/assets/builds/war-bruiser/great-axe.png)
+      `,
+      },
+      {
+        title: "Secondary Weapon",
+        content: `
+        ### War Hammer
         The War Hammer complements the Great Axe with high burst damage and crowd control.
         
         #### Key Abilities:
@@ -117,8 +121,8 @@ export const listOfBuilds: IBuild[] = [
         - **Punishing**: Increases melee damage.
         
         ### Examples
-        ![War Hammer](/assets/builds/war-bruiser/war-hammer-skills.png)
-        ![War Hammer](/assets/builds/war-bruiser/war-hammer.png)`,
+        ![War Hammer Skills](/assets/builds/war-bruiser/war-hammer-skills.png)
+        ![Expandable Example War Hammer](/assets/builds/war-bruiser/war-hammer.png)`,
       },
       {
         title: "Attributes",
@@ -142,24 +146,20 @@ export const listOfBuilds: IBuild[] = [
         This setup ensures a balance of mobility, damage, and survivability.
         
         ### Perks to Prioritize:
-        - **Slash Conditioning**: Slash damage absorption after taking slash damage.
-        - **Strike Conditioning**: Strike damage absorption after taking strike damage.
-        - **Elemental Aversion**: Reduces incoming ranged elemental damage.
-        - **Freedom**: Reduces crowd control duration.
-        - **Refreshing**: Reduces cooldowns for abilities.
-        - **Thorny Reflection**: Reflects damage back to attackers and reduces their critical chance.
-        - **Slash Protection**: Reduces incoming slash damage, try to get this on your amulet.
-        - **Strike Protection**: Reduces incoming strike damage, try to get this on your amulet if you can't find a slash protection one.
-        - **Slash Damage**: Increases slash damage. Try to get this on your ring.
-        - **Strike Damage**: Increases strike damage. Try to get this on your ring, if you can't find a slash damage one.
+        1. **Slash Conditioning**(x3): Slash damage absorption after taking slash damage.
+        2. **Strike Conditioning**(x2): Strike damage absorption after taking strike damage.
+        3. **Elemental Aversion**(x3): Reduces incoming ranged elemental damage.
+        4. **Freedom**(x3): Reduces crowd control duration.
+        5. **Refreshing**(x3): Reduces cooldowns for abilities.
+        6. **Thorny Reflection**(x1): Reflects damage back to attackers and reduces their critical chance.
         
         ### Weapon Perks on Armor:
         - **Insatiable Gravity Well**: Reduces cooldown on Gravity Well.
         - *Others are optional*
         
         ### Gems:
-        - **Opal**: Use in armor to reduce incoming elemental damage. Run about 5 of these.
-        - **Onyx**: Use in armor to reduce incoming physical damage. Run about 2 of these.
+        - **Opal**(x5): Use in armor to reduce incoming elemental damage.
+        - **Onyx**(x2): Use in armor to reduce incoming physical damage.
         - **Diamond**: Use in armor to reduce Physical / Elemental damage. This is a hybrid option.
         - **Malachite**: Use in armor to reduce Physical / Elemental damage. This is another hybrid option.
         `,
@@ -184,6 +184,32 @@ export const listOfBuilds: IBuild[] = [
             src: "/assets/builds/war-bruiser/boots.png",
             alt: "Boots",
           },
+        ],
+      },
+      {
+        title: "Jewelry",
+        content: `
+        ## Amulet
+        ### Perks to Prioritize:
+        1. **Slash Protection**: Reduces incoming slash damage.
+        2. **Health**: Increases health.
+        3. **Strike Protection**: Reduces incoming strike damage. _Try to get this on your amulet, if you can't find a slash protection one._
+        4. **Divine**: Increases healing received.
+
+        ## Ring
+        ### Perks to Prioritize:
+        1. **Slash Damage**: Increases slash damage. _Try to get this on your ring._
+        2. **Invigorated Punishment**: Increase ability damage per buff. _This is a really good ring PvP perk!_
+        3. **Hearty**: Increases stamina. _Good for keeping shirking buffs up._
+        4. **Strike Damage**: Increases strike damage. _Try to get this on your ring, if you can't find a slash damage one._
+
+        ## Earring
+        ### Perks to Prioritize:
+        1. **Empowering Toast**: Gain empower after drinking a potion. Look for this on earrings, if you don't have endless thirst.
+        2. **Fortifying Toast**: Gain fortify after drinking a potion. Look for this on earrings, if you don't have endless thirst.
+        3. **Refreshing Toast**: Reduce potion cooldowns. _Good for keeping potion buffs up._
+        `,
+        images: [
           {
             src: "/assets/builds/war-bruiser/amulet.png",
             alt: "Amulet",
@@ -200,16 +226,23 @@ export const listOfBuilds: IBuild[] = [
       },
       {
         title: "Artifacts",
-        content: `1. **Tumbler Feetwraps**: Gives a massive shirking bonus when dodging. Empower, Fortify, and Heal.
-        2. **Void Darkplate**: Armor increased by 20%. A good substitute in place of the tumbler feetwraps if you want more survivability.
-        3. **Anhk**: Increases healing received. Really nice for survivability, but hard to get.
-        4. **Endless Thirst**: Gives empower and fortify on use of potion.`,
+        content: `- **Tumbler Feetwraps**: Gives a massive shirking bonus when dodging. Empower, Fortify, and Heal.
+        - **Void Darkplate**: Armor increased by 20%. A good substitute in place of the tumbler feetwraps if you want more survivability.
+        - **Anhk**: Increases healing received. Really nice for survivability, but hard to get.
+        - **Endless Thirst**: Gives empower and fortify on use of potion.`,
       },
       {
         title: "Heartrune",
-        content: `**Detonate**: Charge yourself with explosive energy, dealing damage to enemies around you. Save for crashes. Basic attack to build up heartrune charge.
-          AoE like Shockwave and Path of Destiny can build up heartrune charge quickly! 
-          *Upgrade to Escalating Explosion for more damage, be aware you gain rend.*`,
+        content: `**Detonate**: Charge yourself with explosive energy, dealing damage to enemies around you. Upgrade to Escalating Explosion for more damage, be aware you gain rend. _Tip: Save for crashes. Basic attack to build up heartrune charge. AoE like Shockwave and Path of Destiny can build up heartrune charge quickly!_`,
+      },
+      {
+        title: "Consumables",
+        content: `- **Health Potion**: Keep multiple on hand to stay alive during extended fights.
+        - **Regeneration Serem**: Maintain consistent health regeneration. Use Regen Potion if you're running low.
+        - **Clensing Potion**: Remove debuffs and crowd control effects.
+        - **Oakflesh Balm**: Reduces incoming physical damage.
+        
+        **Tip**: Always use Clensing Potion and Oakflesh Balm before engaging in a crash or clump fight.`,
       },
       {
         title: "Playstyle Tips",
@@ -224,15 +257,6 @@ export const listOfBuilds: IBuild[] = [
           
           4. **Coordinate with Your Team**:
             Focus on waiting for enemies to cluster, then crash with your team on points. Stagger your abilities to maximize how long players are stuck in CC.`,
-      },
-      {
-        title: "Consumables",
-        content: `- **Health Potion**: Keep multiple on hand to stay alive during extended fights.
-        - **Regeneration Serem**: Maintain consistent health regeneration. Use Regen Potion if you're running low.
-        - **Clensing Potion**: Remove debuffs and crowd control effects.
-        - **Oakflesh Balm**: Reduces incoming physical damage.
-        
-        **Tip**: Always use Clensing Potion and Oakflesh Balm before engaging in a crash or clump fight.`,
       },
       {
         title: "Strengths and Weaknesses",

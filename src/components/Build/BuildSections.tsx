@@ -1,14 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { Carousel } from "@mantine/carousel";
-import { Container, Image, Title } from "@mantine/core";
-import { SectionImage } from "@/data/builds";
+import { Box, Button, Container, Image, Title } from "@mantine/core";
 
 export interface BuildSection {
   title: string;
   content: string;
-  images?: SectionImage[];
+  images?: { src: string; alt: string }[];
 }
 
 export interface BuildSectionsProps {
@@ -18,11 +17,21 @@ export interface BuildSectionsProps {
 function sanitizeMarkdown(content: string): string {
   return content
     .replace(/\r\n|\r/g, "\n") // Normalize newlines to "\n"
-    .replace(/^\s+|\s+$/gm, "") // Trim leading/trailing spaces on each line
-    .replace(/\n{2,}/g, "\n\n"); // Ensure double newlines for markdown paragraphs
+    .replace(/^\s*(\S.*)?$/gm, (_, line) => (line ? line.trim() : "")) // Trim non-empty lines but preserve blank lines
+    .replace(/\n{3,}/g, "\n\n") // Replace multiple blank lines with a single paragraph break
+    .trim(); // Remove leading and trailing whitespace from the entire content
 }
 
 export const BuildSections: React.FC<BuildSectionsProps> = ({ sections }) => {
+  const [expandedImages, setExpandedImages] = useState<Record<string, boolean>>({});
+
+  const toggleImage = (src: string) => {
+    setExpandedImages((prev) => ({
+      ...prev,
+      [src]: !prev[src],
+    }));
+  };
+
   return (
     <Container mt="xl">
       {sections.map((section, index) => (
@@ -35,21 +44,49 @@ export const BuildSections: React.FC<BuildSectionsProps> = ({ sections }) => {
             children={sanitizeMarkdown(section.content)}
             rehypePlugins={[rehypeRaw]}
             components={{
-              img: ({ src, alt }) => (
-                <Image
-                  radius="md"
-                  fit="contain"
-                  w="auto"
-                  src={src}
-                  alt={alt}
-                  style={{
-                    maxWidth: "100%",
-                    margin: "1rem 0",
-                    borderRadius: "8px",
-                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-                  }}
-                />
-              ),
+              img: ({ src, alt }) => {
+                const isExpandable = alt?.startsWith("Expandable");
+                const cleanAlt = alt?.replace(/^Expandable\s*/, "");
+                if (isExpandable) {
+                  return (
+                    <Box>
+                      <Button variant="outline" onClick={() => toggleImage(src || "")} mt="sm">
+                        {expandedImages[src || ""] ? `Hide: ${cleanAlt}` : `Show: ${cleanAlt}`}
+                      </Button>
+                      {expandedImages[src || ""] && (
+                        <Image
+                          src={src}
+                          alt={cleanAlt || "Image"}
+                          w="auto"
+                          radius="md"
+                          fit="contain"
+                          style={{
+                            maxWidth: "100%",
+                            marginTop: "1rem",
+                            borderRadius: "8px",
+                            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+                          }}
+                        />
+                      )}
+                    </Box>
+                  );
+                }
+
+                return (
+                  <Image
+                    src={src}
+                    alt={alt || "Image"}
+                    radius="md"
+                    fit="contain"
+                    style={{
+                      maxWidth: "100%",
+                      marginTop: "1rem",
+                      borderRadius: "8px",
+                      boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+                    }}
+                  />
+                );
+              },
             }}
           />
           {section.images && (
@@ -66,7 +103,13 @@ export const BuildSections: React.FC<BuildSectionsProps> = ({ sections }) => {
               >
                 {section.images.map((image, index) => (
                   <Carousel.Slide key={index}>
-                    <Image radius="md" src={image.src} alt={image.alt} />
+                    <Image
+                      radius="md"
+                      src={image.src}
+                      alt={image.alt}
+                      onClick={() => toggleImage(image.src)}
+                      style={{ cursor: "pointer" }}
+                    />
                   </Carousel.Slide>
                 ))}
               </Carousel>
