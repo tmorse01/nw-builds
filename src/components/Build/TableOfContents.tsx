@@ -17,19 +17,19 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
         <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
           {sections.map((section, index) => (
             <li key={index}>
-              <ScrollLink
-                to={`section-${index}`}
-                smooth
-                offset={offset}
-                duration={500}
-                style={{
+              {/** Explicitly cast ScrollLink to any - To fix stupid typescript error */}
+              {(ScrollLink as any)({
+                to: `section-${index}`,
+                smooth: true,
+                offset,
+                duration: 500,
+                style: {
                   textDecoration: "none",
                   color: "#007BFF",
                   cursor: "pointer",
-                }}
-              >
-                <Anchor>{section.title}</Anchor>
-              </ScrollLink>
+                },
+                children: <Anchor>{section.title}</Anchor>,
+              })}
             </li>
           ))}
         </ul>
