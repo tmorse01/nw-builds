@@ -1,0 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
+[id] {
+  scroll-margin-top: 60px;
+}

@@ -1,37 +1,27 @@
 import React from "react";
-import { Link as ScrollLink } from "react-scroll";
 import { Anchor, Box, Card } from "@mantine/core";
 
 export interface TableOfContentsProps {
   sections: { title: string }[];
-  offset?: number;
 }
 
-export const TableOfContents: React.FC<TableOfContentsProps> = ({
-  sections,
-  offset = -60, // Default offset for a fixed header
-}) => {
+export const TableOfContents: React.FC<TableOfContentsProps> = ({ sections }) => {
   return (
     <Card withBorder shadow="sm" radius="md">
       <Box>
         <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
           {sections.map((section, index) => (
             <li key={index}>
-              {/** Ignore TypeScript error for ScrollLink */}
-              {/* @ts-ignore */}
-              <ScrollLink
-                to={`section-${index}`}
-                smooth
-                offset={offset}
-                duration={500}
+              <a
+                href={`#section-${index}`}
                 style={{
                   textDecoration: "none",
                   color: "#007BFF",
                   cursor: "pointer",
                 }}
               >
-                <Anchor>{section.title}</Anchor>
-              </ScrollLink>
+                <Anchor component="span">{section.title}</Anchor>
+              </a>
             </li>
           ))}
         </ul>
