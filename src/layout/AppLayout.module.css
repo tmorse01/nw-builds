@@ -1,0 +1,7 @@
+.main {
+  padding: var(--mantine-spacing-md);
+  margin-top: var(--app-shell-header-height);
+  margin-left: var(--app-shell-navbar-offset);
+  margin-bottom: var(--app-shell-footer-height);
+  flex: 1;
+}

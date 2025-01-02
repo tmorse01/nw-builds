@@ -5,6 +5,8 @@ import { AppShell, Burger, Group, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { ColorSchemeToggle } from "@/components/ColorSchemeToggle/ColorSchemeToggle";
 import { Navbar } from "../components/Navbar/NavBar";
+import Footer from "./Footer";
+import classes from "./AppLayout.module.css";
 
 export function AppLayout({ children }: { children: ReactNode }) {
   const [opened, { toggle }] = useDisclosure();
@@ -37,7 +39,10 @@ export function AppLayout({ children }: { children: ReactNode }) {
       <AppShell.Navbar>
         <Navbar />
       </AppShell.Navbar>
-      <AppShell.Main>{children}</AppShell.Main>
+      <AppShell.Main className={classes.main}>
+        {children}
+        <Footer />
+      </AppShell.Main>
     </AppShell>
   );
 }

@@ -6,7 +6,7 @@ import {
   IconShield,
   IconSword,
 } from "@tabler/icons-react";
-import { Code, ScrollArea, Text } from "@mantine/core";
+import { ScrollArea } from "@mantine/core";
 import { LinksGroup } from "../LinksGroup/LinksGroup";
 import classes from "./Navbar.module.css";
 
@@ -29,14 +29,7 @@ export function Navbar() {
 
   return (
     <nav className={classes.navbar}>
-      <ScrollArea className={classes.links}>
-        <div className={classes.linksInner}>{links}</div>
-      </ScrollArea>
-
-      <div className={classes.footer}>
-        <Text size="xs">Built by Grimz</Text>
-        <Code fw={700}>v0.0.1</Code>
-      </div>
+      <ScrollArea className={classes.links}>{links}</ScrollArea>
     </nav>
   );
 }
