@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppLayout } from "./layout/AppLayout";
 import AboutPage from "./pages/About.page";
 import { BuildPage } from "./pages/Build.page";
+import BuildEditor from "./pages/BuildEditor.page";
 import { BuildListPage } from "./pages/BuildList.page";
 import { HomePage } from "./pages/Home.page";
 
@@ -27,6 +28,14 @@ const router = createBrowserRouter([
     element: (
       <AppLayout>
         <BuildPage />
+      </AppLayout>
+    ),
+  },
+  {
+    path: "/editor",
+    element: (
+      <AppLayout>
+        <BuildEditor />
       </AppLayout>
     ),
   },

@@ -5,15 +5,13 @@ export interface IBuild {
   name: string;
   weapons: string[];
   attributes: IAttributes;
-  gear: string[];
-  perks: string[];
-  gems: string[];
   playstyle: string;
   thumbnail: string;
   tags: ITag[];
-  skills?: ISkill[];
   sections: GuideSection[];
-  details?: string; // Markdown
+  createdBy: string;
+  isActive: boolean;
+  season: number;
 }
 
 interface GuideSection {
@@ -57,9 +55,6 @@ export const listOfBuilds: IBuild[] = [
     ],
     weapons: ["Great Axe", "Warhammer"],
     attributes: { strength: 350, constitution: 250, dexterity: 5, intelligence: 5, focus: 5 },
-    gear: ["Medium Armor", "Elemental Adversion", "Enchanted Ward"],
-    perks: ["Insatiable Gravity Well", "Keen"],
-    gems: ["Onyx", "Malachite"],
     playstyle: "Focus on crowd control and high burst damage in close combat.",
     thumbnail: "/assets/thumbnails/war-bruiser.png",
     sections: [
@@ -275,6 +270,9 @@ export const listOfBuilds: IBuild[] = [
         content: `The **Bruiser DPS War Build** is perfect for players who want to dominate the battlefield with raw strength and tactical crowd control. Practice positioning and ability timing to maximize your impact in wars.`,
       },
     ],
+    createdBy: "Grimz",
+    isActive: true,
+    season: 6,
   },
 ];
 

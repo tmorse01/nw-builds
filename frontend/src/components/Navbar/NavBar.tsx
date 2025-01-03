@@ -1,5 +1,6 @@
 import {
   IconBlocks,
+  IconEdit,
   IconFirstAidKit,
   IconInfoCircle,
   IconList,
@@ -21,6 +22,7 @@ const pages = [
       { label: "DPS", link: "/builds/?tags=dps", icon: IconSword },
     ],
   },
+  { label: "Build Editor", link: "/editor", icon: IconEdit },
   { label: "About", link: "/about", icon: IconInfoCircle },
 ];
 
