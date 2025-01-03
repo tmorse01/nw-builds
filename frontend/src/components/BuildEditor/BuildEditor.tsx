@@ -12,22 +12,34 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import SectionEditor from "@/components/BuildEditor/SectionEditor";
+import { createBuild } from "@/data/api";
+import { Build } from "@/data/types";
 
-const BuildEditor = () => {
+interface BuildEditorProps {
+  build?: Build;
+  onSave: (build: Build) => void;
+  onCancel: () => void;
+}
+
+const defaultBuild: Build = {
+  id: "",
+  name: "",
+  weapons: [],
+  attributes: { strength: 5, dexterity: 5, intelligence: 5, focus: 5, constitution: 5 },
+  playstyle: "",
+  thumbnail: "",
+  tags: [],
+  sections: [],
+  createdBy: "",
+  isActive: false,
+  season: undefined,
+};
+
+const BuildEditor: React.FC<BuildEditorProps> = ({ build }) => {
   const [sections, setSections] = useState([{ title: "", content: "" }]);
 
   const form = useForm({
-    initialValues: {
-      name: "",
-      weapons: [] as string[],
-      attributes: { strength: 5, dexterity: 5, intelligence: 5, focus: 5, constitution: 5 },
-      playstyle: "",
-      thumbnail: "",
-      tags: [] as string[],
-      sections: [],
-      createdBy: "",
-      season: undefined as number | undefined,
-    },
+    initialValues: build ?? defaultBuild,
   });
 
   const handleSectionChange = (index: number, key: string, value: string) => {
@@ -50,6 +62,7 @@ const BuildEditor = () => {
     const buildData = { ...values, sections };
     console.log("Submitted build:", buildData);
     // TODO: Send data to backend
+    createBuild(buildData);
   };
 
   const handleFillForm = () => {
@@ -65,7 +78,7 @@ const BuildEditor = () => {
       },
       playstyle: "Aggressive frontline DPS with crowd control.",
       thumbnail: "/path/to/thumbnail.png",
-      tags: ["PvP", "DPS"],
+      tags: ["DPS", "PvP"],
       createdBy: "Tester",
       season: 6,
     });

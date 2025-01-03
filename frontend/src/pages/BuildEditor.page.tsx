@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IconExclamationCircle } from "@tabler/icons-react";
 import { Alert, Button, Container, Stack, TextInput, Title } from "@mantine/core";
-import BuildEditor from "@/components/BuildEditor/BuildEditor";
+import BuildManager from "@/components/BuildManager/BuildManager";
 
 const ProtectedBuildEditor = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -36,7 +36,7 @@ const ProtectedBuildEditor = () => {
         >
           Logout
         </Button>
-        <BuildEditor />
+        <BuildManager />
       </>
     );
   }

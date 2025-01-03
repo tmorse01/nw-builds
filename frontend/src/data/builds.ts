@@ -1,58 +1,10 @@
-import { MantineColor } from "@mantine/core";
+import { Build } from "./types";
 
-export interface IBuild {
-  id: string;
-  name: string;
-  weapons: string[];
-  attributes: IAttributes;
-  playstyle: string;
-  thumbnail: string;
-  tags: ITag[];
-  sections: GuideSection[];
-  createdBy: string;
-  isActive: boolean;
-  season: number;
-}
-
-interface GuideSection {
-  title: string;
-  content: string; // Markdown
-  images?: SectionImage[];
-}
-
-export interface SectionImage {
-  src: string;
-  alt: string;
-}
-
-export interface ITag {
-  title: "DPS" | "PvP" | "PvE" | "War" | "Duel" | "Siege" | "Healer" | "Tank" | "Support";
-  color: MantineColor;
-}
-
-export interface ISkill {
-  name: string;
-  type: "Active" | "Passive";
-  description: string;
-}
-
-export interface IAttributes {
-  strength: number;
-  dexterity: number;
-  intelligence: number;
-  focus: number;
-  constitution: number;
-}
-
-export const listOfBuilds: IBuild[] = [
+export const listOfBuilds: Build[] = [
   {
     id: "war-bruiser",
     name: "War Bruiser",
-    tags: [
-      { title: "DPS", color: "red" },
-      { title: "PvP", color: "teal" },
-      { title: "War", color: "blue" },
-    ],
+    tags: ["DPS", "PvP", "War"],
     weapons: ["Great Axe", "Warhammer"],
     attributes: { strength: 350, constitution: 250, dexterity: 5, intelligence: 5, focus: 5 },
     playstyle: "Focus on crowd control and high burst damage in close combat.",
@@ -281,6 +233,6 @@ export const getBuildListByTag = (tags: string[] = []) => {
     return listOfBuilds;
   }
   return listOfBuilds.filter((build) =>
-    tags.every((tag) => build.tags.some((t) => t.title.toLowerCase() === tag.toLowerCase()))
+    tags.every((tag) => build.tags.some((t) => t.toLowerCase() === tag.toLowerCase()))
   );
 };

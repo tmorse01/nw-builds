@@ -1,11 +1,11 @@
 import { Card, Group, Image, Text } from "@mantine/core";
-import { IBuild } from "@/data/builds";
+import { Build } from "@/data/types";
 import { BuildAttributes } from "./BuildAttributes";
 import { TableOfContents } from "./TableOfContents";
 import { BuildTags } from "./Tags";
 
 interface BuildOverviewProps {
-  build: IBuild;
+  build: Build;
 }
 
 export const BuildOverview: React.FC<BuildOverviewProps> = ({ build }) => (

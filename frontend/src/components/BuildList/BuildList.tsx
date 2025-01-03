@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Badge, Button, Card, Grid, Image, List, Title } from "@mantine/core";
 import { getBuildListByTag } from "@/data/builds";
+import { TagColorLookup } from "@/data/types";
 
 interface BuildListProps {
   tags?: string[] | null | undefined;
@@ -28,8 +29,8 @@ export const BuildList: React.FC<BuildListProps> = ({ tags }) => {
             </Title>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
               {build.tags.map((tag) => (
-                <Badge key={tag.title} color={tag.color} variant="light" radius="xl">
-                  {tag.title}
+                <Badge key={tag} color={TagColorLookup[tag]} variant="light" radius="xl">
+                  {tag}
                 </Badge>
               ))}
             </div>
