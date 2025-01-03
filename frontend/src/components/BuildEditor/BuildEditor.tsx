@@ -21,8 +21,7 @@ interface BuildEditorProps {
   onCancel: () => void;
 }
 
-const defaultBuild: Build = {
-  _id: "",
+const defaultBuild: Omit<Build, "_id"> = {
   name: "",
   weapons: [],
   attributes: { strength: 5, dexterity: 5, intelligence: 5, focus: 5, constitution: 5 },
@@ -35,7 +34,7 @@ const defaultBuild: Build = {
   season: undefined,
 };
 
-const BuildEditor: React.FC<BuildEditorProps> = ({ build }) => {
+const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
   const [sections, setSections] = useState([{ title: "", content: "" }]);
 
   const form = useForm({
@@ -61,8 +60,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build }) => {
   const handleSubmit = (values: any) => {
     const buildData = { ...values, sections };
     console.log("Submitted build:", buildData);
-    // TODO: Send data to backend
-    createBuild(buildData);
+    createBuild(buildData).then((data) => onSave(data));
   };
 
   const handleFillForm = () => {
@@ -158,7 +156,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build }) => {
           <Button onClick={handleFillForm} color="blue">
             Fill Form for Testing
           </Button>
-          <Button type="submit">Submit Build</Button>
+          <Button type="submit">Save Build</Button>
         </Stack>
       </form>
     </Container>

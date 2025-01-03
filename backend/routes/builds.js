@@ -14,6 +14,7 @@ router.get("/", async (req, res) => {
 
 // Get a single build by ID
 router.get("/:id", async (req, res) => {
+  console.log("Get Build ", req.params.id);
   try {
     const build = await Build.findById(req.params.id);
     if (!build) return res.status(404).json({ message: "Build not found" });

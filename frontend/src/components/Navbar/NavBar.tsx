@@ -22,7 +22,7 @@ const pages = [
       { label: "DPS", link: "/builds/?tags=dps", icon: IconSword },
     ],
   },
-  { label: "Build Editor", link: "/editor", icon: IconEdit },
+  { label: "Build Manager", link: "/build-manager", icon: IconEdit },
   { label: "About", link: "/about", icon: IconInfoCircle },
 ];
 

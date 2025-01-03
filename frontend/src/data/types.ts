@@ -25,7 +25,9 @@ export interface Image {
 
 export type Tag = "DPS" | "PvP" | "PvE" | "War" | "Duel" | "Siege" | "Healer" | "Tank" | "Support";
 
-export const TagColorLookup = {
+export const getTagColor = (tag: Tag) => TagColorLookup[tag];
+
+const TagColorLookup = {
   DPS: "blue",
   PvP: "red",
   PvE: "green",

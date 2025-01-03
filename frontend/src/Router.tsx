@@ -1,9 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppLayout } from "./layout/AppLayout";
 import AboutPage from "./pages/About.page";
+import AdminProtectedPage from "./pages/AdminProtectedPage";
 import { BuildPage } from "./pages/Build.page";
-import BuildEditor from "./pages/BuildEditor.page";
+import BuildEditorPage from "./pages/BuildEditor.page";
 import { BuildListPage } from "./pages/BuildList.page";
+import BuildManagerPage from "./pages/BuildManager.page";
 import { HomePage } from "./pages/Home.page";
 
 const router = createBrowserRouter([
@@ -32,10 +34,22 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/editor",
+    path: "/build-manager",
     element: (
       <AppLayout>
-        <BuildEditor />
+        <AdminProtectedPage>
+          <BuildManagerPage />
+        </AdminProtectedPage>
+      </AppLayout>
+    ),
+  },
+  {
+    path: "/build-editor/:id?",
+    element: (
+      <AppLayout>
+        <AdminProtectedPage>
+          <BuildEditorPage />
+        </AdminProtectedPage>
       </AppLayout>
     ),
   },
