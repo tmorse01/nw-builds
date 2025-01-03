@@ -24,12 +24,20 @@ const pages = [
   { label: "About", link: "/about", icon: IconInfoCircle },
 ];
 
-export function Navbar() {
-  const links = pages.map((item) => <LinksGroup {...item} key={item.label} />);
+interface NavbarProps {
+  onNavigate: (link: string) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
+  const links = pages.map((item) => (
+    <LinksGroup {...item} key={item.label} onNavigate={onNavigate} />
+  ));
 
   return (
     <nav className={classes.navbar}>
       <ScrollArea className={classes.links}>{links}</ScrollArea>
     </nav>
   );
-}
+};
+
+export default Navbar;

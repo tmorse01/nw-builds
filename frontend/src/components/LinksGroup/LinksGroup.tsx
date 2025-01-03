@@ -14,9 +14,10 @@ interface LinksGroupProps {
   icon: React.ElementType;
   links?: Link[];
   link?: string;
+  onNavigate?: (link: string) => void;
 }
 
-export function LinksGroup({ label, icon: Icon, links = [], link }: LinksGroupProps) {
+export function LinksGroup({ label, icon: Icon, links = [], link, onNavigate }: LinksGroupProps) {
   const [opened, setOpened] = useState(true);
 
   const hasLinks = links.length > 0;
@@ -27,6 +28,7 @@ export function LinksGroup({ label, icon: Icon, links = [], link }: LinksGroupPr
       key={label}
       component={Link}
       to={link}
+      onClick={onNavigate ? () => onNavigate(link) : undefined}
       style={{
         textDecoration: "none",
         color: "inherit",
@@ -53,6 +55,7 @@ export function LinksGroup({ label, icon: Icon, links = [], link }: LinksGroupPr
             key={label}
             component={Link}
             to={link}
+            onClick={onNavigate ? () => onNavigate(link) : undefined}
             style={{
               textDecoration: "none",
               color: "inherit",

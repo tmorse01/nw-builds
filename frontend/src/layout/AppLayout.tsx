@@ -5,7 +5,7 @@ import { AppShell, Burger, Group, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { ColorSchemeToggle } from "@/components/ColorSchemeToggle/ColorSchemeToggle";
 import { BackToTop } from "@/components/Common/BackToTop";
-import { Navbar } from "../components/Navbar/NavBar";
+import Navbar from "../components/Navbar/NavBar";
 import Footer from "./Footer";
 import classes from "./AppLayout.module.css";
 
@@ -38,7 +38,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
         </Group>
       </AppShell.Header>
       <AppShell.Navbar>
-        <Navbar />
+        <Navbar onNavigate={toggle} />
       </AppShell.Navbar>
       <AppShell.Main className={classes.main}>
         {children}
