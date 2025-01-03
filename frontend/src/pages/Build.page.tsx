@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router-dom";
 import { Button, Container, Group, Text, Title } from "@mantine/core";
 import { BuildOverview } from "@/components/Build/BuildOverview";
 import { BuildSections } from "@/components/Build/BuildSections";
-import { SkillTree } from "@/components/Build/SkillTree";
 import { listOfBuilds } from "../data/builds";
 
 export const BuildPage: React.FC = () => {
@@ -27,7 +26,6 @@ export const BuildPage: React.FC = () => {
   return (
     <Container>
       <BuildOverview build={build} />
-      {build.skills && <SkillTree skills={build.skills} />}
       <BuildSections sections={build.sections} />
     </Container>
   );
