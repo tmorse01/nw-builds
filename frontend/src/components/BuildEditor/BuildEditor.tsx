@@ -22,7 +22,7 @@ interface BuildEditorProps {
 }
 
 const defaultBuild: Build = {
-  id: "",
+  _id: "",
   name: "",
   weapons: [],
   attributes: { strength: 5, dexterity: 5, intelligence: 5, focus: 5, constitution: 5 },

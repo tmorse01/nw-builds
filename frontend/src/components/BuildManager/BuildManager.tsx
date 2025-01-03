@@ -22,8 +22,8 @@ const BuildManager: React.FC = () => {
 
   const handleSaveBuild = async (build: Build) => {
     try {
-      if (build.id) {
-        await updateBuild(build.id, build);
+      if (build._id) {
+        await updateBuild(build._id, build);
         // alert("Build updated successfully");
       } else {
         const newBuild = await createBuild(build);
@@ -40,7 +40,7 @@ const BuildManager: React.FC = () => {
   const handleDeleteBuild = async (id: string) => {
     try {
       await deleteBuild(id);
-      setBuilds(builds.filter((build) => build.id !== id));
+      setBuilds(builds.filter((build) => build._id !== id));
       //   alert("Build deleted successfully");
     } catch (err) {
       console.error("Error deleting build:", err);
@@ -54,11 +54,11 @@ const BuildManager: React.FC = () => {
 
       <Stack gap="md">
         {builds.map((build) => (
-          <div key={build.id} style={{ border: "1px solid #ddd", padding: "1rem" }}>
+          <div key={build._id} style={{ border: "1px solid #ddd", padding: "1rem" }}>
             <h3>{build.name}</h3>
             <p>{build.playstyle}</p>
             <Button onClick={() => setSelectedBuild(build)}>Edit</Button>
-            <Button color="red" onClick={() => handleDeleteBuild(build.id!)}>
+            <Button color="red" onClick={() => handleDeleteBuild(build._id!)}>
               Delete
             </Button>
           </div>

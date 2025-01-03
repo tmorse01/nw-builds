@@ -1,5 +1,5 @@
 export interface Build {
-  id: string;
+  _id: string;
   name: string;
   weapons: string[];
   attributes: Attributes;

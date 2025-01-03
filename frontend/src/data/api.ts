@@ -14,6 +14,7 @@ export const fetchBuildById = async (id: string): Promise<Build> => {
 };
 
 export const createBuild = async (build: Build): Promise<Build> => {
+  console.log("Create build:", build);
   const response = await axios.post<Build>(API_URL, build);
   return response.data;
 };
