@@ -5,6 +5,7 @@ import { getTagColor, Tag } from "@/data/types";
 interface BuildCardProps {
   id: string;
   name: string;
+  link: string;
   thumbnail: string;
   tags: string[];
   weapons: string[];
@@ -16,6 +17,7 @@ interface BuildCardProps {
 export const BuildCard: React.FC<BuildCardProps> = ({
   id,
   name,
+  link,
   thumbnail,
   tags,
   weapons,
@@ -25,7 +27,7 @@ export const BuildCard: React.FC<BuildCardProps> = ({
 }) => {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Link to={`/build/${id}`}>
+      <Link to={link}>
         <Image
           src={thumbnail}
           alt={name}

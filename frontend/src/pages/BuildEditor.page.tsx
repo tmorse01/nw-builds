@@ -43,11 +43,7 @@ const BuildEditorPage = () => {
   }
 
   return (
-    <BuildEditor
-      build={build}
-      onSave={() => navigate("/build-manager")}
-      onCancel={() => navigate("/build-manager")}
-    />
+    <BuildEditor build={build} onSave={() => {}} onCancel={() => navigate("/build-manager")} />
   );
 };
 

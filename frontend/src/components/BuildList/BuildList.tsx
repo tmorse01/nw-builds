@@ -15,6 +15,7 @@ export const BuildList: React.FC<BuildListProps> = ({ tags }) => {
           <BuildCard
             id={build._id}
             name={build.name}
+            link={`/build/${build._id}`}
             thumbnail={build.thumbnail}
             tags={build.tags}
             weapons={build.weapons}

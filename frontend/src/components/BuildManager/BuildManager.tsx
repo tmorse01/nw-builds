@@ -57,6 +57,7 @@ const BuildManager: React.FC = () => {
               <BuildCard
                 id={build._id}
                 name={build.name}
+                link={`/build-editor/${build._id}`}
                 thumbnail={build.thumbnail}
                 tags={build.tags}
                 weapons={build.weapons}

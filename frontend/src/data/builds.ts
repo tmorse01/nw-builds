@@ -1,8 +1,8 @@
-import { Build } from "./types";
+import { Build, Tag } from "./types";
 
 export const listOfBuilds: Build[] = [
   {
-    id: "war-bruiser",
+    _id: "war-bruiser",
     name: "War Bruiser",
     tags: ["DPS", "PvP", "War"],
     weapons: ["Great Axe", "Warhammer"],
@@ -236,3 +236,27 @@ export const getBuildListByTag = (tags: string[] = []) => {
     tags.every((tag) => build.tags.some((t) => t.toLowerCase() === tag.toLowerCase()))
   );
 };
+
+export const tags: Tag[] = [
+  "DPS",
+  "PvP",
+  "PvE",
+  "War",
+  "Duel",
+  "Siege",
+  "Healer",
+  "Tank",
+  "Support",
+  "Solo",
+  "Group",
+  "Bruiser",
+  "Ranged",
+  "Melee",
+  "Crowd Control",
+  "Sustain",
+  "Burst",
+  "AoE",
+  "Single Target",
+  "Mobility",
+  "DoT",
+];

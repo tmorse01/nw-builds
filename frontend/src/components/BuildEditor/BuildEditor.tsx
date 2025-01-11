@@ -11,8 +11,9 @@ import {
   Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
 import SectionEditor from "@/components/BuildEditor/SectionEditor";
-import { createBuild } from "@/data/api";
+import { createBuild, updateBuild } from "@/data/api";
 import { Build } from "@/data/types";
 
 interface BuildEditorProps {
@@ -35,8 +36,7 @@ const defaultBuild: Omit<Build, "_id"> = {
 };
 
 const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
-  const [sections, setSections] = useState([{ title: "", content: "" }]);
-
+  const [sections, setSections] = useState([...(build?.sections ?? [])]);
   const form = useForm({
     initialValues: build ?? defaultBuild,
   });
@@ -59,8 +59,25 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
 
   const handleSubmit = (values: any) => {
     const buildData = { ...values, sections };
-    console.log("Submitted build:", buildData);
-    createBuild(buildData).then((data) => onSave(data));
+    if (build?._id) {
+      // Update existing build
+      updateBuild(build._id, buildData).then((data) => {
+        notifications.show({
+          title: "Build Updated",
+          message: "Your build has been updated successfully.",
+        });
+        onSave(data);
+      });
+    } else {
+      // Create new build
+      createBuild(buildData).then((data) => {
+        notifications.show({
+          title: "Build Created",
+          message: "Your build has been create successfully.",
+        });
+        onSave(data);
+      });
+    }
   };
 
   const handleFillForm = () => {
@@ -128,6 +145,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
             {["strength", "dexterity", "intelligence", "focus", "constitution"].map((attr) => (
               <NumberInput
                 key={attr}
+                style={{ width: "100px" }}
                 label={attr.charAt(0).toUpperCase() + attr.slice(1)}
                 {...form.getInputProps(`attributes.${attr}`)}
                 required
@@ -152,8 +170,10 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
             />
           ))}
 
-          <Button onClick={handleAddSection}>Add Section</Button>
-          <Button onClick={handleFillForm} color="blue">
+          <Button onClick={handleAddSection} variant="light">
+            Add Section
+          </Button>
+          <Button onClick={handleFillForm} variant="default">
             Fill Form for Testing
           </Button>
           <Button type="submit">Save Build</Button>

@@ -23,7 +23,28 @@ export interface Image {
   alt: string;
 }
 
-export type Tag = "DPS" | "PvP" | "PvE" | "War" | "Duel" | "Siege" | "Healer" | "Tank" | "Support";
+export type Tag =
+  | "DPS"
+  | "PvP"
+  | "PvE"
+  | "War"
+  | "Duel"
+  | "Siege"
+  | "Healer"
+  | "Tank"
+  | "Support"
+  | "Solo"
+  | "Group"
+  | "Bruiser"
+  | "Ranged"
+  | "Melee"
+  | "Crowd Control"
+  | "Sustain"
+  | "Burst"
+  | "AoE"
+  | "Single Target"
+  | "Mobility"
+  | "DoT";
 
 export const getTagColor = (tag: Tag) => TagColorLookup[tag];
 
@@ -37,6 +58,18 @@ const TagColorLookup = {
   Healer: "purple",
   Tank: "gray",
   Support: "purple",
+  Solo: "orange",
+  Group: "teal",
+  Bruiser: "yellow",
+  Ranged: "cyan",
+  Melee: "blue",
+  "Crowd Control": "pink",
+  Sustain: "green",
+  Burst: "red",
+  AoE: "orange",
+  "Single Target": "blue",
+  Mobility: "cyan",
+  DoT: "brown",
 };
 
 export interface Attributes {
