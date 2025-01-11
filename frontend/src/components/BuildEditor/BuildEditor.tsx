@@ -49,7 +49,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
   };
 
   const handleAddSection = () => {
-    setSections([...sections, { title: "", content: "" }]);
+    setSections([...sections, { _id: "", title: "", content: "" }]);
   };
 
   const handleRemoveSection = (index: number) => {
@@ -100,10 +100,12 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
 
     setSections([
       {
+        _id: "1",
         title: "Introduction",
         content: "<p>This is a test introduction for the build.</p>",
       },
       {
+        _id: "2",
         title: "Weapons",
         content: "<p>Great Axe and Warhammer are the core of this build.</p>",
       },

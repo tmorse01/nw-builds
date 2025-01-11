@@ -8,7 +8,8 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "10mb" })); // Adjust payload limit
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true })); // For form data
 
 // Connect to MongoDB
 mongoose
@@ -21,6 +22,7 @@ mongoose
 
 // Routes
 app.use("/api/builds", require("./routes/builds"));
+app.use("/api/images", require("./routes/images"));
 
 // Start the server
 const PORT = process.env.PORT || 5000;

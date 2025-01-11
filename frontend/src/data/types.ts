@@ -12,15 +12,18 @@ export interface Build {
   season: number | undefined;
 }
 
-interface Section {
+export interface Section {
+  _id: string;
   title: string;
   content: string; // Markdown
-  images?: Image[];
+  images?: ImageType[];
 }
 
-export interface Image {
-  src: string;
-  alt: string;
+export interface ImageType {
+  _id: string;
+  buildId: string;
+  sectionId: string;
+  data: string; // Base64
 }
 
 export type Tag =

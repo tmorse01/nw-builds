@@ -8,9 +8,11 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Button, Stack, TextInput } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
+import { Section } from "@/data/types";
+import ImageUpload from "../ImageUpload/ImageUpload";
 
 interface SectionEditorProps {
-  section: { title: string; content: string };
+  section: Section;
   onChange: (key: string, value: string) => void;
   onRemove: () => void;
 }
@@ -85,7 +87,7 @@ const SectionEditor: React.FC<SectionEditorProps> = ({ section, onChange, onRemo
 
         <RichTextEditor.Content />
       </RichTextEditor>
-
+      <ImageUpload sectionId={section._id} />
       <Button color="red" variant="light" onClick={onRemove}>
         Remove Section
       </Button>
