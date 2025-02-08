@@ -6,7 +6,7 @@ export const listOfBuilds: Build[] = [
     name: "War Bruiser",
     tags: ["DPS", "PvP", "War"],
     weapons: ["Great Axe", "Warhammer"],
-    attributes: { strength: 350, constitution: 250, dexterity: 5, intelligence: 5, focus: 5 },
+    attributes: { strength: 250, constitution: 350, dexterity: 5, intelligence: 5, focus: 5 },
     playstyle: "Focus on crowd control and high burst damage in close combat.",
     thumbnail: "/assets/thumbnails/war-bruiser.png",
     sections: [
@@ -110,28 +110,7 @@ export const listOfBuilds: Build[] = [
         - **Diamond**: Use in armor to reduce Physical / Elemental damage. This is a hybrid option.
         - **Malachite**: Use in armor to reduce Physical / Elemental damage. This is another hybrid option.
         `,
-        images: [
-          {
-            src: "/assets/builds/war-bruiser/helmet.png",
-            alt: "Helmet",
-          },
-          {
-            src: "/assets/builds/war-bruiser/chest.png",
-            alt: "Chest",
-          },
-          {
-            src: "/assets/builds/war-bruiser/gloves.png",
-            alt: "Gloves",
-          },
-          {
-            src: "/assets/builds/war-bruiser/pants.png",
-            alt: "Pants",
-          },
-          {
-            src: "/assets/builds/war-bruiser/boots.png",
-            alt: "Boots",
-          },
-        ],
+        images: [],
       },
       {
         title: "Jewelry",
@@ -156,20 +135,7 @@ export const listOfBuilds: Build[] = [
         2. **Fortifying Toast**: Gain fortify after drinking a potion. Look for this on earrings, if you don't have endless thirst.
         3. **Refreshing Toast**: Reduce potion cooldowns. _Good for keeping potion buffs up._
         `,
-        images: [
-          {
-            src: "/assets/builds/war-bruiser/amulet.png",
-            alt: "Amulet",
-          },
-          {
-            src: "/assets/builds/war-bruiser/ring.png",
-            alt: "Ring",
-          },
-          {
-            src: "/assets/builds/war-bruiser/earring.png",
-            alt: "Earring",
-          },
-        ],
+        images: [],
       },
       {
         title: "Artifacts",
