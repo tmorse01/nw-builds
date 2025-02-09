@@ -1,60 +1,12 @@
-import { MantineColor } from "@mantine/core";
+import { Build, Tag } from "./types";
 
-export interface IBuild {
-  id: string;
-  name: string;
-  weapons: string[];
-  attributes: IAttributes;
-  playstyle: string;
-  thumbnail: string;
-  tags: ITag[];
-  sections: GuideSection[];
-  createdBy: string;
-  isActive: boolean;
-  season: number;
-}
-
-interface GuideSection {
-  title: string;
-  content: string; // Markdown
-  images?: SectionImage[];
-}
-
-export interface SectionImage {
-  src: string;
-  alt: string;
-}
-
-export interface ITag {
-  title: "DPS" | "PvP" | "PvE" | "War" | "Duel" | "Siege" | "Healer" | "Tank" | "Support";
-  color: MantineColor;
-}
-
-export interface ISkill {
-  name: string;
-  type: "Active" | "Passive";
-  description: string;
-}
-
-export interface IAttributes {
-  strength: number;
-  dexterity: number;
-  intelligence: number;
-  focus: number;
-  constitution: number;
-}
-
-export const listOfBuilds: IBuild[] = [
+export const listOfBuilds: Build[] = [
   {
-    id: "war-bruiser",
+    _id: "war-bruiser",
     name: "War Bruiser",
-    tags: [
-      { title: "DPS", color: "red" },
-      { title: "PvP", color: "teal" },
-      { title: "War", color: "blue" },
-    ],
+    tags: ["DPS", "PvP", "War"],
     weapons: ["Great Axe", "Warhammer"],
-    attributes: { strength: 350, constitution: 250, dexterity: 5, intelligence: 5, focus: 5 },
+    attributes: { strength: 250, constitution: 350, dexterity: 5, intelligence: 5, focus: 5 },
     playstyle: "Focus on crowd control and high burst damage in close combat.",
     thumbnail: "/assets/thumbnails/war-bruiser.png",
     sections: [
@@ -158,28 +110,7 @@ export const listOfBuilds: IBuild[] = [
         - **Diamond**: Use in armor to reduce Physical / Elemental damage. This is a hybrid option.
         - **Malachite**: Use in armor to reduce Physical / Elemental damage. This is another hybrid option.
         `,
-        images: [
-          {
-            src: "/assets/builds/war-bruiser/helmet.png",
-            alt: "Helmet",
-          },
-          {
-            src: "/assets/builds/war-bruiser/chest.png",
-            alt: "Chest",
-          },
-          {
-            src: "/assets/builds/war-bruiser/gloves.png",
-            alt: "Gloves",
-          },
-          {
-            src: "/assets/builds/war-bruiser/pants.png",
-            alt: "Pants",
-          },
-          {
-            src: "/assets/builds/war-bruiser/boots.png",
-            alt: "Boots",
-          },
-        ],
+        images: [],
       },
       {
         title: "Jewelry",
@@ -204,20 +135,7 @@ export const listOfBuilds: IBuild[] = [
         2. **Fortifying Toast**: Gain fortify after drinking a potion. Look for this on earrings, if you don't have endless thirst.
         3. **Refreshing Toast**: Reduce potion cooldowns. _Good for keeping potion buffs up._
         `,
-        images: [
-          {
-            src: "/assets/builds/war-bruiser/amulet.png",
-            alt: "Amulet",
-          },
-          {
-            src: "/assets/builds/war-bruiser/ring.png",
-            alt: "Ring",
-          },
-          {
-            src: "/assets/builds/war-bruiser/earring.png",
-            alt: "Earring",
-          },
-        ],
+        images: [],
       },
       {
         title: "Artifacts",
@@ -281,6 +199,30 @@ export const getBuildListByTag = (tags: string[] = []) => {
     return listOfBuilds;
   }
   return listOfBuilds.filter((build) =>
-    tags.every((tag) => build.tags.some((t) => t.title.toLowerCase() === tag.toLowerCase()))
+    tags.every((tag) => build.tags.some((t) => t.toLowerCase() === tag.toLowerCase()))
   );
 };
+
+export const tags: Tag[] = [
+  "DPS",
+  "PvP",
+  "PvE",
+  "War",
+  "Duel",
+  "Siege",
+  "Healer",
+  "Tank",
+  "Support",
+  "Solo",
+  "Group",
+  "Bruiser",
+  "Ranged",
+  "Melee",
+  "Crowd Control",
+  "Sustain",
+  "Burst",
+  "AoE",
+  "Single Target",
+  "Mobility",
+  "DoT",
+];

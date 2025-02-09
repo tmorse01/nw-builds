@@ -11,23 +11,34 @@ import {
   Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
 import SectionEditor from "@/components/BuildEditor/SectionEditor";
+import { createBuild, updateBuild } from "@/data/api";
+import { Build } from "@/data/types";
 
-const BuildEditor = () => {
-  const [sections, setSections] = useState([{ title: "", content: "" }]);
+interface BuildEditorProps {
+  build?: Build;
+  onSave: (build: Build) => void;
+  onCancel: () => void;
+}
 
+const defaultBuild: Omit<Build, "_id"> = {
+  name: "",
+  weapons: [],
+  attributes: { strength: 5, dexterity: 5, intelligence: 5, focus: 5, constitution: 5 },
+  playstyle: "",
+  thumbnail: "",
+  tags: [],
+  sections: [],
+  createdBy: "",
+  isActive: false,
+  season: undefined,
+};
+
+const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
+  const [sections, setSections] = useState([...(build?.sections ?? [])]);
   const form = useForm({
-    initialValues: {
-      name: "",
-      weapons: [] as string[],
-      attributes: { strength: 5, dexterity: 5, intelligence: 5, focus: 5, constitution: 5 },
-      playstyle: "",
-      thumbnail: "",
-      tags: [] as string[],
-      sections: [],
-      createdBy: "",
-      season: undefined as number | undefined,
-    },
+    initialValues: build ?? defaultBuild,
   });
 
   const handleSectionChange = (index: number, key: string, value: string) => {
@@ -38,7 +49,7 @@ const BuildEditor = () => {
   };
 
   const handleAddSection = () => {
-    setSections([...sections, { title: "", content: "" }]);
+    setSections([...sections, { _id: "", title: "", content: "" }]);
   };
 
   const handleRemoveSection = (index: number) => {
@@ -48,8 +59,25 @@ const BuildEditor = () => {
 
   const handleSubmit = (values: any) => {
     const buildData = { ...values, sections };
-    console.log("Submitted build:", buildData);
-    // TODO: Send data to backend
+    if (build?._id) {
+      // Update existing build
+      updateBuild(build._id, buildData).then((data) => {
+        notifications.show({
+          title: "Build Updated",
+          message: "Your build has been updated successfully.",
+        });
+        onSave(data);
+      });
+    } else {
+      // Create new build
+      createBuild(buildData).then((data) => {
+        notifications.show({
+          title: "Build Created",
+          message: "Your build has been create successfully.",
+        });
+        onSave(data);
+      });
+    }
   };
 
   const handleFillForm = () => {
@@ -65,17 +93,19 @@ const BuildEditor = () => {
       },
       playstyle: "Aggressive frontline DPS with crowd control.",
       thumbnail: "/path/to/thumbnail.png",
-      tags: ["PvP", "DPS"],
+      tags: ["DPS", "PvP"],
       createdBy: "Tester",
       season: 6,
     });
 
     setSections([
       {
+        _id: "1",
         title: "Introduction",
         content: "<p>This is a test introduction for the build.</p>",
       },
       {
+        _id: "2",
         title: "Weapons",
         content: "<p>Great Axe and Warhammer are the core of this build.</p>",
       },
@@ -117,6 +147,7 @@ const BuildEditor = () => {
             {["strength", "dexterity", "intelligence", "focus", "constitution"].map((attr) => (
               <NumberInput
                 key={attr}
+                style={{ width: "100px" }}
                 label={attr.charAt(0).toUpperCase() + attr.slice(1)}
                 {...form.getInputProps(`attributes.${attr}`)}
                 required
@@ -141,11 +172,13 @@ const BuildEditor = () => {
             />
           ))}
 
-          <Button onClick={handleAddSection}>Add Section</Button>
-          <Button onClick={handleFillForm} color="blue">
+          <Button onClick={handleAddSection} variant="light">
+            Add Section
+          </Button>
+          <Button onClick={handleFillForm} variant="default">
             Fill Form for Testing
           </Button>
-          <Button type="submit">Submit Build</Button>
+          <Button type="submit">Save Build</Button>
         </Stack>
       </form>
     </Container>

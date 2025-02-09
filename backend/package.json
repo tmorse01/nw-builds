@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "start": "node api/server.js",
+    "dev": "nodemon api/server.js",
+    "start:prod": "node dist/server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.3",
+    "serverless-http": "^3.2.0"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.2.0",
+    "nodemon": "^3.0.2"
+  }
+}

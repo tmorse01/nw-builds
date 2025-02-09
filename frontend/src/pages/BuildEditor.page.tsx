@@ -1,66 +1,50 @@
-import { useState } from "react";
-import { IconExclamationCircle } from "@tabler/icons-react";
-import { Alert, Button, Container, Stack, TextInput, Title } from "@mantine/core";
+import { IconAlertCircle } from "@tabler/icons-react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Alert, Center, Loader, Text } from "@mantine/core";
+import { useFetch } from "@mantine/hooks";
 import BuildEditor from "@/components/BuildEditor/BuildEditor";
+import { Build } from "@/data/types";
 
-const ProtectedBuildEditor = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    const storedPassword = localStorage.getItem("adminPassword");
-    return storedPassword === import.meta.env.VITE_ADMIN_PASSWORD;
+const BuildEditorPage = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const {
+    data: build,
+    error,
+    loading,
+  } = useFetch<Build>(id ? `${import.meta.env.VITE_API_BASE_URL}/api/builds/${id}` : "", {
+    method: "GET",
   });
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
-  const handleLogin = () => {
-    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
-    if (password === adminPassword) {
-      setIsAuthenticated(true);
-      localStorage.setItem("adminPassword", password);
-      setError("");
-    } else {
-      setError("Incorrect password");
-    }
-  };
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem("adminPassword");
-  };
-
-  if (isAuthenticated) {
+  if (loading) {
     return (
-      <>
-        <Button
-          color="red"
-          style={{ position: "absolute", top: 70, right: 10 }}
-          onClick={handleLogout}
-        >
-          Logout
-        </Button>
-        <BuildEditor />
-      </>
+      <Center style={{ height: "100vh" }}>
+        <Loader size="xl" />
+      </Center>
+    );
+  }
+
+  if (error) {
+    return (
+      <Center style={{ height: "100vh" }}>
+        <Alert icon={<IconAlertCircle size={16} />} title="Error" color="red" variant="light">
+          {error.message || "An error occurred while fetching the build."}
+        </Alert>
+      </Center>
+    );
+  }
+
+  if (!build) {
+    return (
+      <Center style={{ height: "100vh" }}>
+        <Text>No build found</Text>
+      </Center>
     );
   }
 
   return (
-    <Container style={{ display: "flex", justifyContent: "center" }}>
-      <Stack align="center" gap="md" style={{ marginTop: "20vh" }}>
-        <Title order={2}>Admin Login</Title>
-        <TextInput
-          label="Password"
-          placeholder="Enter password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {error && (
-          <Alert variant="light" color="red" title="Error" icon={<IconExclamationCircle />}>
-            {error}
-          </Alert>
-        )}
-        <Button onClick={handleLogin}>Submit</Button>
-      </Stack>
-    </Container>
+    <BuildEditor build={build} onSave={() => {}} onCancel={() => navigate("/build-manager")} />
   );
 };
 
-export default ProtectedBuildEditor;
+export default BuildEditorPage;
