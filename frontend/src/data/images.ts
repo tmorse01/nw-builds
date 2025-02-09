@@ -19,6 +19,9 @@ interface ImageTransformOptions {
   format?: "webp" | "jpg" | "png" | "auto";
 }
 
+const BASE_API_URL = import.meta.env.VITE_API_BASE_URL;
+const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:8888";
+
 // Error class for image operations
 export class ImageUploadError extends Error {
   constructor(message: string) {
@@ -45,7 +48,7 @@ export const uploadImage = async (
   formData.append("sectionId", sectionId);
 
   try {
-    const response = await fetch("/api/images", {
+    const response = await fetch(`${BASE_API_URL}/images`, {
       method: "POST",
       body: formData,
     });
@@ -80,7 +83,10 @@ export const getOptimizedImageUrl = (imageUrl: string, options: ImageTransformOp
   if (options.fit) params.append("fit", options.fit);
   if (options.format) params.append("fm", options.format);
 
-  return `${imageUrl}?${params.toString()}`;
+  // If imageUrl starts with '/', it's a relative path and needs the server URL
+  const fullUrl = imageUrl.startsWith("/") ? `${SERVER_URL}${imageUrl}` : imageUrl;
+
+  return `${fullUrl}?${params.toString()}`;
 };
 
 /**
@@ -90,7 +96,7 @@ export const getOptimizedImageUrl = (imageUrl: string, options: ImageTransformOp
  */
 export const deleteImage = async (imageId: string): Promise<void> => {
   try {
-    const response = await fetch(`/api/images?id=${imageId}`, {
+    const response = await fetch(`${BASE_API_URL}/images?id=${imageId}`, {
       method: "DELETE",
     });
 
@@ -122,7 +128,7 @@ export const fetchImages = async (
     if (buildId) params.append("buildId", buildId);
     if (sectionId) params.append("sectionId", sectionId);
 
-    const response = await fetch(`/api/images?${params.toString()}`);
+    const response = await fetch(`${BASE_API_URL}/images?${params.toString()}`);
     const data = await response.json();
 
     if (!response.ok) {

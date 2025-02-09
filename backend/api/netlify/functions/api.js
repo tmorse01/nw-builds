@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const serverless = require("serverless-http");
+const path = require("path");
 require("dotenv").config();
 
 const buildsRouter = require("../../builds");
@@ -19,6 +20,12 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+
+// Serve static files from the uploads directory
+app.use(
+  "/uploads",
+  express.static(path.join(process.cwd(), "public", "uploads"))
+);
 
 // Base path for Netlify Functions
 const router = express.Router();
