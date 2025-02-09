@@ -2,14 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const serverless = require("serverless-http");
 require("dotenv").config();
 
 const app = express();
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json({ limit: "10mb" })); // Adjust payload limit
-app.use(bodyParser.urlencoded({ limit: "10mb", extended: true })); // For form data
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
 // Connect to MongoDB
 mongoose
@@ -21,16 +22,12 @@ mongoose
   .catch((err) => console.error("Failed to connect to MongoDB:", err));
 
 // Routes
-app.get("/", (req, res) => {
+app.get("/.netlify/functions/api", (req, res) => {
   res.send("NW Builds API is running!");
 });
 
-app.use("/api/builds", require("./builds"));
-app.use("/api/images", require("./images"));
+app.use("/.netlify/functions/api/builds", require("../../builds"));
+app.use("/.netlify/functions/api/images", require("../../images"));
 
-// Start the server
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
-module.exports = app;
+// Export handler for serverless
+module.exports.handler = serverless(app);
