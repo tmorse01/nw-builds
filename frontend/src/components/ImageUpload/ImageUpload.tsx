@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IconTrash } from "@tabler/icons-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import {
   ActionIcon,
@@ -13,80 +14,65 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-import { deleteImage, fetchImagesBySection, uploadImage } from "@/data/api";
-import { ImageType } from "@/data/types";
+import {
+  deleteImage,
+  fetchImages,
+  getOptimizedImageUrl,
+  ImageUploadResponse,
+  uploadImage,
+} from "@/data/images";
 
-const ImageUpload = ({ sectionId }: { sectionId: string }) => {
-  const { id } = useParams();
-  const [images, setImages] = useState<ImageType[]>([]);
-  const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+interface ImageUploadProps {
+  sectionId: string;
+}
+
+const ImageUpload: React.FC<ImageUploadProps> = ({ sectionId }) => {
+  const { id } = useParams<{ id: string }>();
+  const queryClient = useQueryClient();
+  const [selectedImage, setSelectedImage] = useState<ImageUploadResponse | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState<string | null>(null);
 
-  // Fetch images for the section
-  const fetchImages = async () => {
-    if (!id) {
-      return;
-    }
-    try {
-      const response = await fetchImagesBySection(id, sectionId);
-      setImages(response);
-    } catch (error) {
-      console.error("Error fetching images:", error);
-    }
-  };
+  // Query for fetching images
+  const { data: images = [] } = useQuery({
+    queryKey: ["images", id, sectionId],
+    queryFn: () => fetchImages(id!, sectionId),
+    enabled: !!id && !!sectionId,
+  });
 
-  const handleUpload = async (files: File[] | null) => {
-    if (!files || !id) {
-      return;
-    }
-
-    setIsUploading(true);
-    try {
-      const uploadPromises = files.map(async (file) => {
-        const reader = new FileReader();
-        return new Promise<void>((resolve, reject) => {
-          reader.onloadend = async () => {
-            const base64String = reader.result?.toString().split(",")[1];
-            if (base64String) {
-              try {
-                await uploadImage(id, sectionId, base64String);
-                resolve();
-              } catch (error) {
-                reject(error);
-              }
-            } else {
-              reject(new Error("Failed to read file"));
-            }
-          };
-          reader.readAsDataURL(file);
-        });
-      });
-
-      await Promise.all(uploadPromises);
+  // Mutation for uploading images
+  const uploadMutation = useMutation({
+    mutationFn: async (files: File[]) => {
+      const uploadPromises = files.map((file) => uploadImage(file, id!, sectionId));
+      return Promise.all(uploadPromises);
+    },
+    onSuccess: () => {
       setUploadSuccess("Images uploaded successfully!");
-      await fetchImages();
-    } catch (error) {
+      queryClient.invalidateQueries({ queryKey: ["images", id, sectionId] });
+    },
+    onError: (error) => {
       console.error("Error uploading images:", error);
       setUploadSuccess("Failed to upload images.");
-    } finally {
-      setIsUploading(false);
-    }
-  };
+    },
+  });
 
-  // Delete image
-  const handleDelete = async (imageId: string) => {
-    try {
-      await deleteImage(imageId);
-      setImages((prev) => prev.filter((img) => img._id !== imageId));
-    } catch (error) {
+  // Mutation for deleting images
+  const deleteMutation = useMutation({
+    mutationFn: deleteImage,
+    onSuccess: (_, imageId) => {
+      queryClient.setQueryData(
+        ["images", id, sectionId],
+        (old: ImageUploadResponse[] | undefined) => old?.filter((img) => img._id !== imageId) ?? []
+      );
+    },
+    onError: (error) => {
       console.error("Error deleting image:", error);
-    }
-  };
+    },
+  });
 
-  useEffect(() => {
-    fetchImages();
-  }, [id, sectionId]);
+  const handleUpload = (files: File[] | null) => {
+    if (!files || !id) return;
+    uploadMutation.mutate(files);
+  };
 
   return (
     <Stack gap="md">
@@ -97,7 +83,10 @@ const ImageUpload = ({ sectionId }: { sectionId: string }) => {
         multiple
         onChange={(files) => handleUpload(files as File[])}
       />
-      <Button onClick={fetchImages} loading={isUploading}>
+      <Button
+        onClick={() => queryClient.invalidateQueries({ queryKey: ["images", id, sectionId] })}
+        loading={uploadMutation.isPending}
+      >
         Refresh Images
       </Button>
 
@@ -111,15 +100,27 @@ const ImageUpload = ({ sectionId }: { sectionId: string }) => {
         {images?.map((image) => (
           <Card key={image._id} shadow="sm" padding="sm" radius="md" withBorder>
             <Image
-              src={`data:image/png;base64,${image.data}`}
-              alt="Uploaded"
+              src={getOptimizedImageUrl(image.imageUrl, {
+                width: 100,
+                height: 100,
+                fit: "cover",
+                format: "webp",
+              })}
+              alt={image.originalName}
               height={100}
               onClick={() => setSelectedImage(image)}
               style={{ cursor: "pointer" }}
             />
             <Group mt="sm">
-              <Text size="sm">Image</Text>
-              <ActionIcon color="red" onClick={() => handleDelete(image._id)} title="Delete">
+              <Text size="sm" lineClamp={1} title={image.originalName}>
+                {image.originalName}
+              </Text>
+              <ActionIcon
+                color="red"
+                onClick={() => deleteMutation.mutate(image._id)}
+                loading={deleteMutation.isPending}
+                title="Delete"
+              >
                 <IconTrash />
               </ActionIcon>
             </Group>
@@ -134,7 +135,16 @@ const ImageUpload = ({ sectionId }: { sectionId: string }) => {
         size="lg"
       >
         {selectedImage && (
-          <Image src={`data:image/png;base64,${selectedImage.data}`} alt="Preview" fit="contain" />
+          <Image
+            src={getOptimizedImageUrl(selectedImage.imageUrl, {
+              width: 1200,
+              height: 800,
+              fit: "contain",
+              format: "webp",
+            })}
+            alt={selectedImage.originalName}
+            fit="contain"
+          />
         )}
       </Modal>
     </Stack>

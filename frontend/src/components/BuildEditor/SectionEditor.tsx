@@ -87,7 +87,7 @@ const SectionEditor: React.FC<SectionEditorProps> = ({ section, onChange, onRemo
 
         <RichTextEditor.Content />
       </RichTextEditor>
-      <ImageUpload sectionId={section._id} />
+      {/* <ImageUpload sectionId={section._id} /> */}
       <Button color="red" variant="light" onClick={onRemove}>
         Remove Section
       </Button>

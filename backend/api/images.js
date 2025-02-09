@@ -1,72 +1,145 @@
 const express = require("express");
-const router = express.Router();
 const mongoose = require("mongoose");
+const multer = require("multer");
+const path = require("path");
+const { fileURLToPath } = require("url");
 
-// Define the Image Schema and Model
-const ImageSchema = new mongoose.Schema({
-  buildId: { type: String, required: true }, // Associate with a specific build
-  sectionId: { type: String, required: true }, // Associate with a specific section
-  data: { type: String, required: true }, // Base64 encoded image
+// Configure multer for file storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/uploads/");
+  },
+  filename: (req, file, cb) => {
+    // Create unique filename
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  },
 });
 
-const Image = mongoose.model("Image", ImageSchema);
+// Add file filter for security
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(
+      new Error("Invalid file type. Only JPEG, PNG, GIF and WebP are allowed."),
+      false
+    );
+  }
+};
 
-// Route to upload an image
-router.post("/upload", async (req, res) => {
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limit
+  },
+});
+
+// Update your MongoDB schema
+const ImageSchema = new mongoose.Schema(
+  {
+    buildId: { type: String, required: true },
+    sectionId: { type: String, required: true },
+    imagePath: { type: String, required: true },
+    originalName: { type: String, required: true },
+  },
+  { timestamps: true }
+);
+
+const Image = mongoose.models.Image || mongoose.model("Image", ImageSchema);
+
+// Define handler functions first
+const handleUpload = async (req, res) => {
   try {
-    const { buildId, sectionId, image } = req.body;
-    if (!buildId || !sectionId || !image) {
-      return res
-        .status(400)
-        .json({ error: "buildId, sectionId, and image are required" });
-    }
+    upload.single("image")(req, req, async (err) => {
+      if (err) {
+        return res.status(400).json({ error: err.message });
+      }
 
-    const newImage = new Image({ buildId, sectionId, data: image });
-    await newImage.save();
+      const { buildId, sectionId } = req.body;
+      const file = req.file;
 
-    res
-      .status(201)
-      .json({ message: "Image uploaded successfully", image: newImage });
+      if (!buildId || !sectionId || !file) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      const newImage = new Image({
+        buildId,
+        sectionId,
+        imagePath: `/uploads/${file.filename}`,
+        originalName: file.originalname,
+      });
+
+      await newImage.save();
+
+      res.status(201).json({
+        message: "Image uploaded successfully",
+        image: {
+          ...newImage._doc,
+          imageUrl: `/uploads/${file.filename}`,
+        },
+      });
+    });
   } catch (error) {
-    console.error("Error uploading image:", error);
+    console.error("Upload error:", error);
     res.status(500).json({ error: "Failed to upload image" });
   }
-});
+};
 
-// Route to fetch all images for a build
-router.get("/build/:buildId", async (req, res) => {
+const handleGet = async (req, res) => {
   try {
-    const { buildId } = req.params;
-    const images = await Image.find({ buildId });
-    res.json(images);
+    const { buildId, sectionId } = req.query;
+    const query = {};
+
+    if (buildId) query.buildId = buildId;
+    if (sectionId) query.sectionId = sectionId;
+
+    const images = await Image.find(query).sort({ createdAt: -1 });
+
+    const imagesWithUrls = images.map((img) => ({
+      ...img._doc,
+      imageUrl: img.imagePath,
+    }));
+
+    res.status(200).json(imagesWithUrls);
   } catch (error) {
-    console.error("Error fetching images:", error);
+    console.error("Get error:", error);
     res.status(500).json({ error: "Failed to fetch images" });
   }
-});
+};
 
-// Route to fetch images for a specific section
-router.get("/build/:buildId/section/:sectionId", async (req, res) => {
+const handleDelete = async (req, res) => {
   try {
-    const { buildId, sectionId } = req.params;
-    const images = await Image.find({ buildId, sectionId });
-    res.json(images);
-  } catch (error) {
-    console.error("Error fetching section images:", error);
-    res.status(500).json({ error: "Failed to fetch images" });
-  }
-});
+    const { id } = req.query;
+    const image = await Image.findById(id);
 
-// Route to delete an image by ID
-router.delete("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
+    if (!image) {
+      return res.status(404).json({ error: "Image not found" });
+    }
+
+    const fs = require("fs");
+    const filePath = path.join(process.cwd(), "public", image.imagePath);
+
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+
     await Image.findByIdAndDelete(id);
     res.status(200).json({ message: "Image deleted successfully" });
   } catch (error) {
-    console.error("Error deleting image:", error);
+    console.error("Delete error:", error);
     res.status(500).json({ error: "Failed to delete image" });
   }
-});
+};
 
+// Create router and define routes after handlers are defined
+const router = express.Router();
+
+router.post("/", handleUpload);
+router.get("/", handleGet);
+router.delete("/", handleDelete);
+
+// Export using CommonJS
 module.exports = router;

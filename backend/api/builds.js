@@ -1,6 +1,7 @@
 const express = require("express");
-const router = express.Router();
 const Build = require("../models/Build");
+
+const router = express.Router();
 
 // Get all builds
 router.get("/", async (req, res) => {
@@ -14,12 +15,13 @@ router.get("/", async (req, res) => {
 
 // Get a single build by ID
 router.get("/:id", async (req, res) => {
-  console.log("Get Build ", req.params.id);
+  console.log("Get Build ID:", req.params.id);
   try {
     const build = await Build.findById(req.params.id);
     if (!build) return res.status(404).json({ message: "Build not found" });
     res.json(build);
   } catch (err) {
+    console.error("Error fetching build:", err);
     res.status(500).json({ message: err.message });
   }
 });

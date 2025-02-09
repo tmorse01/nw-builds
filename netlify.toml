@@ -1,5 +1,7 @@
 [build]
   functions = "backend/api/netlify/functions"
+  command = "npm run build"
+  publish = ".next"
   
 [functions]
   external_node_modules = ["express"]
@@ -8,4 +10,7 @@
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
-  status = 200 
+  status = 200
+
+[images]
+  remote_images = ["https://nw-builds.netlify.app/.netlify/images/*"] 
