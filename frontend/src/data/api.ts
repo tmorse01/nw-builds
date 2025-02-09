@@ -9,8 +9,8 @@ type Image = {
 };
 
 const BASE_API_URL = import.meta.env.VITE_API_BASE_URL;
-const BUILD_API_URL = `${BASE_API_URL}/api/builds`;
-const IMAGE_API_URL = `${BASE_API_URL}/api/images`;
+const BUILD_API_URL = `${BASE_API_URL}/builds`;
+const IMAGE_API_URL = `${BASE_API_URL}/images`;
 
 export const fetchBuilds = async (): Promise<Build[]> => {
   const response = await axios.get<Build[]>(BUILD_API_URL);

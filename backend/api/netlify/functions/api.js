@@ -8,7 +8,17 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "development"
+        ? ["http://localhost:5173", "http://localhost:8888"] // Allow both Vite dev server and Netlify dev
+        : "https://your-production-domain.netlify.app",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+    optionsSuccessStatus: 204,
+  })
+);
 app.use(bodyParser.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
