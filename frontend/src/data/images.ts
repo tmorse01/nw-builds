@@ -1,26 +1,26 @@
 /* eslint-disable curly */
 // Types for image operations
 export interface ImageUploadResponse {
-  _id: string;
+  _id: string; // MongoDB ID
   buildId: string;
   sectionId: string;
-  imagePath: string;
+  cloudinaryUrl: string; // Use this for displaying images
+  publicId: string; // Cloudinary image identifier (needed for deletion)
   originalName: string;
-  imageUrl: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 interface ImageTransformOptions {
   width?: number;
   height?: number;
-  quality?: number;
-  fit?: "cover" | "contain" | "fill" | "inside" | "outside";
+  quality?: number; // Cloudinary supports 1-100
+  fit?: "scale" | "fit" | "fill" | "limit" | "crop" | "pad"; // Adjusted for Cloudinary
   format?: "webp" | "jpg" | "png" | "auto";
+  dpr?: number; // Device Pixel Ratio (for high-res screens)
+  sharpen?: boolean; // Apply sharpening filter
+  blur?: number; // Apply blur effect (0-200)
 }
 
 const BASE_API_URL = import.meta.env.VITE_API_BASE_URL;
-const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:8888";
 
 // Error class for image operations
 export class ImageUploadError extends Error {
@@ -69,24 +69,34 @@ export const uploadImage = async (
 };
 
 /**
- * Generates an optimized image URL using Netlify Image CDN
- * @param imageUrl - The original image URL
+ * Generates an optimized Cloudinary image URL with transformations.
+ * @param imageUrl - The original Cloudinary URL
  * @param options - Transform options for the image
- * @returns Optimized image URL with transform parameters
+ * @returns Optimized image URL with Cloudinary transformations
  */
 export const getOptimizedImageUrl = (imageUrl: string, options: ImageTransformOptions): string => {
-  const params = new URLSearchParams();
+  if (!imageUrl) return "";
 
-  if (options.width) params.append("w", options.width.toString());
-  if (options.height) params.append("h", options.height.toString());
-  if (options.quality) params.append("q", options.quality.toString());
-  if (options.fit) params.append("fit", options.fit);
-  if (options.format) params.append("fm", options.format);
+  // Extract Cloudinary public ID from the URL
+  const urlParts = imageUrl.split("/upload/");
+  if (urlParts.length < 2) return imageUrl; // Return original if not a Cloudinary URL
 
-  // If imageUrl starts with '/', it's a relative path and needs the server URL
-  const fullUrl = imageUrl.startsWith("/") ? `${SERVER_URL}${imageUrl}` : imageUrl;
+  const baseUrl = urlParts[0]; // Cloudinary base URL
+  const publicId = urlParts[1]; // Image identifier
 
-  return `${fullUrl}?${params.toString()}`;
+  const transforms: string[] = [];
+
+  if (options.width) transforms.push(`w_${options.width}`);
+  if (options.height) transforms.push(`h_${options.height}`);
+  if (options.quality) transforms.push(`q_${options.quality || 100}`); // Default to max quality
+  if (options.fit) transforms.push(`c_limit`); // Limit resize instead of hard crop
+  if (options.format) transforms.push(`f_${options.format}`);
+
+  // Force sharpening to enhance clarity
+  transforms.push("e_sharpen");
+
+  // Construct the transformed URL
+  return `${baseUrl}/upload/${transforms.join(",")}/${publicId}`;
 };
 
 /**

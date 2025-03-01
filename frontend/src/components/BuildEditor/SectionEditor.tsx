@@ -32,7 +32,15 @@ const SectionEditor: React.FC<SectionEditorProps> = ({ section, onChange, onRemo
   });
 
   return (
-    <Stack gap="sm">
+    <Stack
+      gap="sm"
+      bg="var(--mantine-color-default)"
+      p="md"
+      style={{
+        borderRadius: "5px",
+        overflow: "hidden",
+      }}
+    >
       <TextInput
         label="Section Title"
         value={section.title}
