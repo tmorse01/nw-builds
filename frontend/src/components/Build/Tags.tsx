@@ -1,5 +1,5 @@
 import { Badge } from "@mantine/core";
-import { getTagColor, Tag } from "@/data/types";
+import { Tag } from "@/data/types";
 
 interface BuildTagsProps {
   tags: Tag[];
@@ -16,8 +16,8 @@ export const BuildTags: React.FC<BuildTagsProps> = ({ tags }) => {
       }}
     >
       {tags.map((tag) => (
-        <Badge key={tag} color={getTagColor(tag)} variant="light" radius="xl">
-          {tag}
+        <Badge key={tag.name} color={tag.color} variant="light" radius="xl">
+          {tag.name}
         </Badge>
       ))}
     </div>

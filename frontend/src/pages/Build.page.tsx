@@ -1,17 +1,33 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Button, Container, Group, Text, Title } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
+import { Link, useParams } from "react-router-dom";
+import { Button, Container, Group, Loader, Text, Title } from "@mantine/core";
 import { BuildOverview } from "@/components/Build/BuildOverview";
-
-// import { BuildSections } from "@/components/Build/BuildSections";
-
-// import { listOfBuilds } from "../data/builds";
+import { BuildSections } from "@/components/Build/BuildSections";
+import { fetchBuildById } from "@/data/builds";
+import { Build } from "@/data/types";
 
 export const BuildPage: React.FC = () => {
-  // const { id } = useParams<{ id: string }>();
-  // const build = listOfBuilds.find((b) => b._id === id);
-  const build = null;
-  if (!build) {
+  const { id } = useParams<{ id: string }>();
+
+  const {
+    data: build,
+    isLoading,
+    isError,
+  } = useQuery<Build>({
+    queryKey: ["build", id],
+    queryFn: () => fetchBuildById(id!),
+    enabled: !!id,
+  });
+
+  if (isLoading) {
+    return (
+      <Container>
+        <Loader size="sm" mt="xl" />
+      </Container>
+    );
+  }
+
+  if (isError || !build) {
     return (
       <Container>
         <Title mt="xl">Build Not Found</Title>
@@ -28,7 +44,7 @@ export const BuildPage: React.FC = () => {
   return (
     <Container>
       <BuildOverview build={build} />
-      {/* <BuildSections sections={build.sections} /> */}
+      <BuildSections sections={build.sections} />
     </Container>
   );
 };

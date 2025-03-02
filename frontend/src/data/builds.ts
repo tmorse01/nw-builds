@@ -1,13 +1,8 @@
+import { fetchImages } from "@/data/images";
+import { Build } from "./types";
+
 const BASE_API_URL = import.meta.env.VITE_API_BASE_URL;
 const BUILD_API_URL = `${BASE_API_URL}/builds`;
-
-export interface Build {
-  _id: string;
-  name: string;
-  thumbnail: string;
-  tags: string[];
-  weapons: string[];
-}
 
 /**
  * Fetches all builds
@@ -81,5 +76,19 @@ export const deleteBuild = async (id: string): Promise<{ message: string }> => {
     return response.json();
   } catch (error) {
     throw new Error("Failed to delete build");
+  }
+};
+
+/**
+ * Fetches the thumbnail image for a specific build.
+ */
+export const fetchBuildThumbnail = async (buildId: string): Promise<string> => {
+  try {
+    const images = await fetchImages(buildId, "thumbnail");
+    return images.length > 0
+      ? images[0].cloudinaryUrl
+      : "https://placehold.co/600x400?text=Placeholder";
+  } catch (error) {
+    return "https://placehold.co/600x400?text=Placeholder"; // Fallback placeholder
   }
 };

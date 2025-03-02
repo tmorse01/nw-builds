@@ -6,6 +6,7 @@ import {
   IconList,
   IconShield,
   IconSword,
+  IconTag,
 } from "@tabler/icons-react";
 import { ScrollArea } from "@mantine/core";
 import { LinksGroup } from "../LinksGroup/LinksGroup";
@@ -23,7 +24,7 @@ const pages = [
     ],
   },
   { label: "Build Manager", link: "/build-manager", icon: IconEdit },
-  { label: "Tag Manager", link: "/tag-manager", icon: IconEdit },
+  { label: "Tag Manager", link: "/tag-manager", icon: IconTag },
   { label: "About", link: "/about", icon: IconInfoCircle },
 ];
 

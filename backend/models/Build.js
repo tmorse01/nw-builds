@@ -17,7 +17,6 @@ const BuildSchema = new mongoose.Schema(
       constitution: { type: Number, required: true },
     },
     playstyle: { type: String, required: true },
-    thumbnail: { type: String },
     tags: { type: [String] },
     sections: [SectionSchema],
     createdBy: { type: String, required: true },

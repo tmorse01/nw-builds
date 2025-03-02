@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Grid, Loader, Text } from "@mantine/core";
-import { Build, fetchBuilds } from "@/data/builds";
+import { fetchBuilds } from "@/data/builds";
+import { Build } from "@/data/types";
 import { BuildCard } from "../Build/BuildCard";
 
 interface BuildListProps {
@@ -24,7 +25,9 @@ export const BuildList: React.FC<BuildListProps> = ({ tags }) => {
     if (builds) {
       setFilteredBuilds(
         tags && tags.length > 0
-          ? builds.filter((build) => tags.every((tag) => build.tags.includes(tag)))
+          ? builds.filter((build) =>
+              tags.every((tag) => build.tags.some((buildTag) => buildTag.name === tag))
+            )
           : builds
       );
     }
@@ -46,7 +49,6 @@ export const BuildList: React.FC<BuildListProps> = ({ tags }) => {
             id={build._id}
             name={build.name}
             link={`/build/${build._id}`}
-            thumbnail={build.thumbnail}
             tags={build.tags}
             weapons={build.weapons}
           />

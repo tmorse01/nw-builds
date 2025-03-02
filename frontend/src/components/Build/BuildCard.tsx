@@ -1,13 +1,14 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { Badge, Button, Card, Image, List, Title } from "@mantine/core";
-import { getTagColor, Tag } from "@/data/types";
+import { Badge, Button, Card, Image, List, Loader, Title } from "@mantine/core";
+import { fetchBuildThumbnail } from "@/data/builds";
+import { Tag } from "@/data/types";
 
 interface BuildCardProps {
   id: string;
   name: string;
   link: string;
-  thumbnail: string;
-  tags: string[];
+  tags: Tag[];
   weapons: string[];
   onEdit?: () => void;
   onDelete?: () => void;
@@ -18,33 +19,42 @@ export const BuildCard: React.FC<BuildCardProps> = ({
   id,
   name,
   link,
-  thumbnail,
   tags,
   weapons,
   onEdit,
   onDelete,
   showActions = false,
 }) => {
+  // Fetch the thumbnail using React Query
+  const { data: thumbnail, isLoading } = useQuery({
+    queryKey: ["buildThumbnail", id],
+    queryFn: () => fetchBuildThumbnail(id),
+  });
+
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Link to={link}>
-        <Image
-          src={thumbnail}
-          alt={name}
-          fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-          height={200}
-          mb="sm"
-          radius="md"
-          fit="cover"
-        />
+        {isLoading ? (
+          <Loader size="sm" mt="lg" />
+        ) : (
+          <Image
+            src={thumbnail}
+            alt={name}
+            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+            height={200}
+            mb="sm"
+            radius="md"
+            fit="cover"
+          />
+        )}
       </Link>
       <Title order={3} mb="xs">
         {name}
       </Title>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
         {tags.map((tag) => (
-          <Badge key={tag} color={getTagColor(tag as Tag)} variant="light" radius="xl">
-            {tag}
+          <Badge key={tag.name} color={tag.color} variant="light" radius="xl">
+            {tag.name}
           </Badge>
         ))}
       </div>
