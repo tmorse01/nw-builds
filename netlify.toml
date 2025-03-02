@@ -1,11 +1,11 @@
 [build]
-  base = "frontend"  # Change base to frontend since that's where your frontend lives
+  base = "frontend"
   command = "npm run build"
-  publish = "dist"  # This is the output directory for Vite
+  publish = "dist"
 
 [functions]
-  directory = "../backend/api/netlify/functions"  # Correct path to functions
-  external_node_modules = ["express"]
+  directory = "backend/api/netlify/functions"  
+  external_node_modules = ["express", "mongoose", "multer", "cloudinary", "streamifier", "cors", "body-parser", "serverless-http", "dotenv"]
   node_bundler = "esbuild"
 
 [[redirects]]
