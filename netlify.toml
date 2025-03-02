@@ -1,9 +1,10 @@
 [build]
-  functions = "backend/api/netlify/functions"
+  base = "frontend"  # Change base to frontend since that's where your frontend lives
   command = "npm run build"
-  publish = "frontend/dist"
-  
+  publish = "dist"  # This is the output directory for Vite
+
 [functions]
+  directory = "../backend/api/netlify/functions"  # Correct path to functions
   external_node_modules = ["express"]
   node_bundler = "esbuild"
 
@@ -11,6 +12,3 @@
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
-
-[images]
-  remote_images = ["https://nw-builds.netlify.app/.netlify/images/*"] 
