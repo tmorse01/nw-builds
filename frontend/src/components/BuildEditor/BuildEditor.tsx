@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -14,7 +15,7 @@ import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import SectionEditor from "@/components/BuildEditor/SectionEditor";
 import { createBuild, deleteBuild, updateBuild } from "@/data/builds";
-import { Build } from "@/data/types";
+import { Build, Section } from "@/data/types";
 import { DeleteButton } from "../Common/DeleteButton";
 import ThumbnailUpload from "../ImageUpload/ThumbnailUpload";
 
@@ -24,24 +25,11 @@ interface BuildEditorProps {
   onCancel: () => void;
 }
 
-const defaultBuild: Omit<Build, "_id"> = {
-  name: "",
-  weapons: [],
-  attributes: { strength: 5, dexterity: 5, intelligence: 5, focus: 5, constitution: 5 },
-  playstyle: "",
-  thumbnail: "",
-  tags: [],
-  sections: [],
-  createdBy: "",
-  isActive: false,
-  season: undefined,
-};
-
 const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
   const [sections, setSections] = useState([...(build?.sections ?? [])]);
-  const form = useForm({
-    initialValues: build ?? defaultBuild,
-  });
+  const form = useForm({ initialValues: build });
+  const { id } = useParams();
+  const isNewBuild = id === "new";
 
   const handleSectionChange = (index: number, key: string, value: string) => {
     const keyName = key as "title" | "content";
@@ -51,7 +39,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
   };
 
   const handleAddSection = () => {
-    setSections([...sections, { _id: "", title: "", content: "" }]);
+    setSections([...sections, { _id: "", title: "", content: "" } as Section]);
   };
 
   const handleRemoveSection = (index: number) => {
@@ -61,21 +49,21 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
 
   const handleSubmit = (values: any) => {
     const buildData = { ...values, sections };
-    if (build?._id) {
-      // Update existing build
-      updateBuild(build._id, buildData).then((data) => {
-        notifications.show({
-          title: "Build Updated",
-          message: "Your build has been updated successfully.",
-        });
-        onSave(data);
-      });
-    } else {
+    if (isNewBuild) {
       // Create new build
       createBuild(buildData).then((data) => {
         notifications.show({
           title: "Build Created",
           message: "Your build has been create successfully.",
+        });
+        onSave(data);
+      });
+    } else {
+      // Update existing build
+      updateBuild(build._id, buildData).then((data) => {
+        notifications.show({
+          title: "Build Updated",
+          message: "Your build has been updated successfully.",
         });
         onSave(data);
       });

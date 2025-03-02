@@ -68,8 +68,8 @@ export default function ThumbnailUpload({ buildId, onChange }: ThumbnailUploadPr
   return (
     <Stack align="center" gap="md">
       {thumbnail ? (
-        <div style={{ position: "relative", width: 120, height: 120 }}>
-          <Image src={thumbnail} alt="Thumbnail preview" width={120} height={120} radius="md" />
+        <div style={{ position: "relative", width: 200, height: 120 }}>
+          <Image src={thumbnail} alt="Thumbnail preview" width={200} height={120} radius="md" />
           <Button
             size="xs"
             color="red"

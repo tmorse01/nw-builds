@@ -41,7 +41,7 @@ export const BuildCard: React.FC<BuildCardProps> = ({
             src={thumbnail}
             alt={name}
             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-            height={200}
+            height={120}
             mb="sm"
             radius="md"
             fit="cover"

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Container, Grid, Input, Modal, Stack, Text, Title } from "@mantine/core";
+import { Button, Container, Grid, Group, Input, Modal, Stack, Text, Title } from "@mantine/core";
 import { BuildCard } from "@/components/Build/BuildCard";
 import { deleteBuild, fetchBuilds } from "@/data/builds";
 import { Build } from "@/data/types";
@@ -25,9 +25,7 @@ const BuildManager: React.FC = () => {
   }, []);
 
   const handleDelete = async () => {
-    if (!deleteTarget) {
-      return;
-    }
+    if (!deleteTarget) return;
     try {
       await deleteBuild(deleteTarget._id!);
       setBuilds(builds.filter((build) => build._id !== deleteTarget._id));
@@ -45,7 +43,12 @@ const BuildManager: React.FC = () => {
   return (
     <Container>
       <Stack gap="md">
-        <Title order={2}>Manage Builds</Title>
+        <Group justify="space-between">
+          <Title order={2}>Manage Builds</Title>
+          <Button onClick={() => navigate("/build-editor/new")} color="blue">
+            + Add Build
+          </Button>
+        </Group>
         <Input
           placeholder="Search builds by name"
           value={searchTerm}
@@ -58,7 +61,6 @@ const BuildManager: React.FC = () => {
                 id={build._id}
                 name={build.name}
                 link={`/build-editor/${build._id}`}
-                thumbnail={build.thumbnail}
                 tags={build.tags}
                 weapons={build.weapons}
                 onEdit={() => navigate(`/build-editor/${build._id}`)}
