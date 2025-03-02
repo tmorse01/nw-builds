@@ -1,4 +1,5 @@
 export interface Section {
+  _id: string;
   title: string;
   content: string; // HTML content as a string
 }

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node api/netlify/functions/api.js",
-    "dev": "netlify dev",
+    "dev": "netlify dev --no-open",
     "build": "netlify build"
   },
   "dependencies": {
