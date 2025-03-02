@@ -1,18 +1,7 @@
 import { useState } from "react";
-import { Badge, Group, Input } from "@mantine/core";
-
-const tagsData = [
-  "Tank",
-  "Healer",
-  "DPS",
-  "PvP",
-  "PvE",
-  "Solo",
-  "Group",
-  "Mage",
-  "Melee",
-  "Ranged",
-];
+import { useQuery } from "@tanstack/react-query";
+import { Badge, Group, Input, Loader, Text } from "@mantine/core";
+import { fetchTags } from "@/data/tags";
 
 interface TagsFilterProps {
   onFilterChange?: (tags: string[]) => void;
@@ -20,6 +9,15 @@ interface TagsFilterProps {
 
 export function TagsFilter({ onFilterChange }: TagsFilterProps) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const {
+    data: tags,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["tags"],
+    queryFn: fetchTags,
+  });
 
   const handleTagClick = (tag: string) => {
     setSelectedTags((prev) => {
@@ -43,24 +41,34 @@ export function TagsFilter({ onFilterChange }: TagsFilterProps) {
   return (
     <div>
       <Input.Wrapper label="Filter by Tags" description="Select tags to filter builds">
-        <Group gap="xs" mt="xs">
-          {tagsData.map((tag) => (
-            <Badge
-              key={tag}
-              color={selectedTags.includes(tag) ? "blue" : "gray"}
-              variant={selectedTags.includes(tag) ? "filled" : "outline"}
-              onClick={() => handleTagClick(tag)}
-              style={{ cursor: "pointer" }}
-            >
-              {tag}
-            </Badge>
-          ))}
-          {selectedTags.length > 0 && (
-            <Badge color="red" variant="filled" onClick={handleClear} style={{ cursor: "pointer" }}>
-              Clear All
-            </Badge>
-          )}
-        </Group>
+        {isLoading && <Loader size="sm" mt="xs" />}
+        {isError && <Text color="red">Failed to load tags</Text>}
+
+        {tags && (
+          <Group gap="xs" mt="xs">
+            {tags.map(({ name, color }) => (
+              <Badge
+                key={name}
+                color={selectedTags.includes(name) ? color : "gray"}
+                variant={selectedTags.includes(name) ? "filled" : "outline"}
+                onClick={() => handleTagClick(name)}
+                style={{ cursor: "pointer" }}
+              >
+                {name}
+              </Badge>
+            ))}
+            {selectedTags.length > 0 && (
+              <Badge
+                color="red"
+                variant="filled"
+                onClick={handleClear}
+                style={{ cursor: "pointer" }}
+              >
+                Clear All
+              </Badge>
+            )}
+          </Group>
+        )}
       </Input.Wrapper>
     </div>
   );
