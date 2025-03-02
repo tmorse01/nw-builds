@@ -1,4 +1,3 @@
-/* eslint-disable curly */
 // Types for image operations
 export interface ImageUploadResponse {
   _id: string; // MongoDB ID

@@ -1,5 +1,5 @@
 export interface Build {
-  _id?: string;
+  _id: string;
   name: string;
   weapons: string[];
   attributes: Attributes;
@@ -13,7 +13,7 @@ export interface Build {
 }
 
 export interface Section {
-  _id?: string;
+  _id: string;
   title: string;
   content: string; // Markdown
   images?: ImageType[];

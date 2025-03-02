@@ -14,11 +14,11 @@ import {
 
 import "@mantine/dropzone/styles.css";
 
-interface ImageUploadProps {
+interface SectionImageUpload {
   sectionId: string;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ sectionId }) => {
+const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
 
@@ -80,7 +80,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ sectionId }) => {
     <Stack gap="sm">
       {/* Drag & Drop Upload */}
       <Dropzone accept={IMAGE_MIME_TYPE} onDrop={handleDrop} multiple>
-        <Text ta="center">Upload section images here or click to select files</Text>
+        <Text ta="center">Upload images here or click to select files</Text>
       </Dropzone>
 
       {images.length > 0 && (
@@ -121,4 +121,4 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ sectionId }) => {
   );
 };
 
-export default ImageUpload;
+export default SectionImageUpload;

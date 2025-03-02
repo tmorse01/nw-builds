@@ -6,10 +6,10 @@ import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Button, Stack, TextInput } from "@mantine/core";
+import { CloseButton, Group, Stack, TextInput } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
 import { Section } from "@/data/types";
-import ImageUpload from "../ImageUpload/ImageUpload";
+import SectionImageUpload from "../ImageUpload/SectionImageUpload";
 
 interface SectionEditorProps {
   section: Section;
@@ -41,12 +41,16 @@ const SectionEditor: React.FC<SectionEditorProps> = ({ section, onChange, onRemo
         overflow: "hidden",
       }}
     >
-      <TextInput
-        label="Section Title"
-        value={section.title}
-        onChange={(e) => onChange("title", e.target.value)}
-        required
-      />
+      <Group justify="space-between">
+        <TextInput
+          label="Section Title"
+          value={section.title}
+          onChange={(e) => onChange("title", e.target.value)}
+          required
+          placeholder="Enter section title"
+        />
+        <CloseButton onClick={onRemove} title="Remove Section" />
+      </Group>
       <RichTextEditor editor={editor}>
         <RichTextEditor.Toolbar sticky stickyOffset={60}>
           <RichTextEditor.ControlsGroup>
@@ -95,10 +99,7 @@ const SectionEditor: React.FC<SectionEditorProps> = ({ section, onChange, onRemo
 
         <RichTextEditor.Content />
       </RichTextEditor>
-      {section._id && <ImageUpload sectionId={section._id} />}
-      <Button color="red" variant="light" onClick={onRemove}>
-        Remove Section
-      </Button>
+      <SectionImageUpload sectionId={section._id} />
     </Stack>
   );
 };

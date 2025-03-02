@@ -15,6 +15,7 @@ import { notifications } from "@mantine/notifications";
 import SectionEditor from "@/components/BuildEditor/SectionEditor";
 import { createBuild, updateBuild } from "@/data/api";
 import { Build } from "@/data/types";
+import ThumbnailUpload from "../ImageUpload/ThumbnailUpload";
 
 interface BuildEditorProps {
   build?: Build;
@@ -136,6 +137,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
               required
               {...form.getInputProps("season")}
             />
+            <ThumbnailUpload />
           </Group>
           <MultiSelect
             label="Weapons"
