@@ -7,6 +7,7 @@ import BuildEditorPage from "./pages/BuildEditor.page";
 import { BuildListPage } from "./pages/BuildList.page";
 import BuildManagerPage from "./pages/BuildManager.page";
 import { HomePage } from "./pages/Home.page";
+import TagManagerPage from "./pages/TagManagerPage";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,16 @@ const router = createBrowserRouter([
       <AppLayout>
         <AdminProtectedPage>
           <BuildEditorPage />
+        </AdminProtectedPage>
+      </AppLayout>
+    ),
+  },
+  {
+    path: "/tag-manager",
+    element: (
+      <AppLayout>
+        <AdminProtectedPage>
+          <TagManagerPage />
         </AdminProtectedPage>
       </AppLayout>
     ),

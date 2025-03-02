@@ -69,7 +69,14 @@ const handleUpload = async (req, res) => {
       // Upload to Cloudinary
       const result = await uploadToCloudinary(req.file.buffer);
 
-      // Save image details in MongoDB
+      if (sectionId === "thumbnail") {
+        const images = await Image.find({ buildId, sectionId });
+        // Delete previous thumbnail image
+        if (images.length > 0) {
+          await Image.findByIdAndDelete(images[0]._id);
+        }
+      }
+
       const newImage = new Image({
         buildId,
         sectionId,
@@ -79,6 +86,7 @@ const handleUpload = async (req, res) => {
       });
 
       await newImage.save();
+
       res.status(201).json({
         message: "Image uploaded successfully",
         image: newImage,

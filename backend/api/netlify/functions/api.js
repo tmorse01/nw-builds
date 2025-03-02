@@ -8,6 +8,7 @@ require("dotenv").config();
 
 const buildsRouter = require("../../builds");
 const imagesRouter = require("../../images");
+const tagsRouter = require("../../tags");
 
 // Connect to MongoDB
 mongoose
@@ -37,6 +38,7 @@ router.get("/", (req, res) => {
 // Mount routers on the base path
 router.use("/builds", buildsRouter);
 router.use("/images", imagesRouter);
+router.use("/tags", tagsRouter);
 
 // Mount everything under /.netlify/functions/api
 app.use("/.netlify/functions/api", router);

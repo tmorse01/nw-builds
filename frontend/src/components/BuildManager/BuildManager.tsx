@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Grid, Input, Modal, Stack, Text, Title } from "@mantine/core";
 import { BuildCard } from "@/components/Build/BuildCard";
-import { deleteBuild, fetchBuilds } from "@/data/api";
+import { deleteBuild, fetchBuilds } from "@/data/builds";
 import { Build } from "@/data/types";
 
 const BuildManager: React.FC = () => {

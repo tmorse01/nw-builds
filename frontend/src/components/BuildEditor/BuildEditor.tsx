@@ -13,12 +13,13 @@ import {
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import SectionEditor from "@/components/BuildEditor/SectionEditor";
-import { createBuild, updateBuild } from "@/data/api";
+import { createBuild, deleteBuild, updateBuild } from "@/data/builds";
 import { Build } from "@/data/types";
+import { DeleteButton } from "../Common/DeleteButton";
 import ThumbnailUpload from "../ImageUpload/ThumbnailUpload";
 
 interface BuildEditorProps {
-  build?: Build;
+  build: Build;
   onSave: (build: Build) => void;
   onCancel: () => void;
 }
@@ -81,36 +82,23 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
     }
   };
 
-  const handleFillForm = () => {
-    form.setValues({
-      name: "Test Build",
-      weapons: ["Great Axe", "Warhammer"],
-      attributes: {
-        strength: 300,
-        dexterity: 50,
-        intelligence: 10,
-        focus: 20,
-        constitution: 200,
-      },
-      playstyle: "Aggressive frontline DPS with crowd control.",
-      thumbnail: "/path/to/thumbnail.png",
-      tags: ["DPS", "PvP"],
-      createdBy: "Tester",
-      season: 6,
-    });
-
-    setSections([
-      {
-        _id: "1",
-        title: "Introduction",
-        content: "<p>This is a test introduction for the build.</p>",
-      },
-      {
-        _id: "2",
-        title: "Weapons",
-        content: "<p>Great Axe and Warhammer are the core of this build.</p>",
-      },
-    ]);
+  const handleDeleteBuild = () => {
+    if (build?._id) {
+      deleteBuild(build._id)
+        .then(() => {
+          notifications.show({
+            title: "Build Deleted",
+            message: "Your build has been deleted successfully.",
+          });
+        })
+        .catch((error) => {
+          notifications.show({
+            title: "Build Delete Failed",
+            message: error.message,
+            color: "red",
+          });
+        });
+    }
   };
 
   return (
@@ -137,7 +125,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
               required
               {...form.getInputProps("season")}
             />
-            <ThumbnailUpload />
+            <ThumbnailUpload buildId={build._id} />
           </Group>
           <MultiSelect
             label="Weapons"
@@ -173,14 +161,13 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
               onRemove={() => handleRemoveSection(index)}
             />
           ))}
-
-          <Button onClick={handleAddSection} variant="light">
-            Add Section
-          </Button>
-          <Button onClick={handleFillForm} variant="default">
-            Fill Form for Testing
-          </Button>
-          <Button type="submit">Save Build</Button>
+          <Group justify="center">
+            <DeleteButton onDelete={handleDeleteBuild} />
+            <Button onClick={handleAddSection} variant="light">
+              Add Section
+            </Button>
+            <Button type="submit">Save Build</Button>
+          </Group>
         </Stack>
       </form>
     </Container>

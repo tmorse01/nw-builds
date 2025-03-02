@@ -23,6 +23,7 @@ const pages = [
     ],
   },
   { label: "Build Manager", link: "/build-manager", icon: IconEdit },
+  { label: "Tag Manager", link: "/tag-manager", icon: IconEdit },
   { label: "About", link: "/about", icon: IconInfoCircle },
 ];
 

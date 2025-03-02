@@ -1,14 +1,16 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button, Container, Group, Text, Title } from "@mantine/core";
 import { BuildOverview } from "@/components/Build/BuildOverview";
-import { BuildSections } from "@/components/Build/BuildSections";
-import { listOfBuilds } from "../data/builds";
+
+// import { BuildSections } from "@/components/Build/BuildSections";
+
+// import { listOfBuilds } from "../data/builds";
 
 export const BuildPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const build = listOfBuilds.find((b) => b._id === id);
-
+  // const { id } = useParams<{ id: string }>();
+  // const build = listOfBuilds.find((b) => b._id === id);
+  const build = null;
   if (!build) {
     return (
       <Container>
@@ -26,7 +28,7 @@ export const BuildPage: React.FC = () => {
   return (
     <Container>
       <BuildOverview build={build} />
-      <BuildSections sections={build.sections} />
+      {/* <BuildSections sections={build.sections} /> */}
     </Container>
   );
 };
