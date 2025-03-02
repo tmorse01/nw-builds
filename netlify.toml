@@ -1,7 +1,7 @@
 [build]
   functions = "backend/api/netlify/functions"
   command = "npm run build"
-  publish = ".next"
+  publish = "frontend/dist"
   
 [functions]
   external_node_modules = ["express"]
