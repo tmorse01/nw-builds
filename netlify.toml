@@ -12,3 +12,15 @@
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
+
+[context.production]
+  ENVIRONMENT = "production"
+
+[context.deploy-preview]
+  ENVIRONMENT = "deploy-preview"
+
+[context.branch-deploy]
+  ENVIRONMENT = "branch-deploy"
+
+[context.dev]
+  ENVIRONMENT = "development"
