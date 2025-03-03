@@ -994,41 +994,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/notifications@npm:7.15.2":
-  version: 7.15.2
-  resolution: "@mantine/notifications@npm:7.15.2"
+"@mantine/notifications@npm:^7.17.1":
+  version: 7.17.1
+  resolution: "@mantine/notifications@npm:7.17.1"
   dependencies:
-    "@mantine/store": "npm:7.15.2"
+    "@mantine/store": "npm:7.17.1"
     react-transition-group: "npm:4.4.5"
   peerDependencies:
-    "@mantine/core": 7.15.2
-    "@mantine/hooks": 7.15.2
+    "@mantine/core": 7.17.1
+    "@mantine/hooks": 7.17.1
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
-  checksum: 10c0/efffba141955f276a0628004b33d4530fa5f45cc440485b80aa4c5711fc3bfa2ec6073b61b30e5c05b4e0fa26c72e27b84b1f8e324f4f079c7454a7e265cbde5
+  checksum: 10c0/efbb978dccf2f956ce14fd9915ab82e3c41bc8b8e36ed293cf1687d9797b98f585cc23b533e86990d754ab8a3a733668727115d7fe313f3d7b90ac24e86f0816
   languageName: node
   linkType: hard
 
-"@mantine/store@npm:7.15.2":
-  version: 7.15.2
-  resolution: "@mantine/store@npm:7.15.2"
+"@mantine/store@npm:7.17.1":
+  version: 7.17.1
+  resolution: "@mantine/store@npm:7.17.1"
   peerDependencies:
     react: ^18.x || ^19.x
-  checksum: 10c0/e9e271232f5cf1f49f312f7d938d5758fbcf60c9b51998601bd8126c0124b552a09e37b0583787315c6230b26afa2a8761187aece2a19015e4a1922e7201f06d
+  checksum: 10c0/c7500a042a27f894f8aabe4cd8d9a0bbf277e198c01b897c5d9d0acbfc6e69afead312e16cca2dd12dc4844853143d5172119340f75467dcd4bf1b851910731a
   languageName: node
   linkType: hard
 
-"@mantine/tiptap@npm:^7.15.2":
-  version: 7.15.2
-  resolution: "@mantine/tiptap@npm:7.15.2"
+"@mantine/tiptap@npm:^7.17.1":
+  version: 7.17.1
+  resolution: "@mantine/tiptap@npm:7.17.1"
   peerDependencies:
-    "@mantine/core": 7.15.2
-    "@mantine/hooks": 7.15.2
+    "@mantine/core": 7.17.1
+    "@mantine/hooks": 7.17.1
     "@tiptap/extension-link": ">=2.1.12"
     "@tiptap/react": ">=2.1.12"
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
-  checksum: 10c0/394dda8796e5875f1c48163371d2281667b59f3404f453de7af980b0f2b7a5a0e5009cda72459f63bd91da7ef923ac0179e26d57284b2589ddc01ee7c86034f4
+  checksum: 10c0/f54ce50b3c153797394ac385133125bcd6a4d1b9d0ac738fbbb2269b2a988e571dd1c9b09fd2f38a02b0700cf8783a527c7198398a1ca5eb7485ae4f1b715ee2
   languageName: node
   linkType: hard
 
@@ -5327,8 +5327,8 @@ __metadata:
     "@mantine/dropzone": "npm:^7.17.1"
     "@mantine/form": "npm:^7.15.2"
     "@mantine/hooks": "npm:^7.17.1"
-    "@mantine/notifications": "npm:7.15.2"
-    "@mantine/tiptap": "npm:^7.15.2"
+    "@mantine/notifications": "npm:^7.17.1"
+    "@mantine/tiptap": "npm:^7.17.1"
     "@storybook/react": "npm:^8.4.5"
     "@storybook/react-vite": "npm:^8.4.5"
     "@tabler/icons-react": "npm:^3.28.1"
@@ -5375,7 +5375,7 @@ __metadata:
     storybook-dark-mode: "npm:^4.0.2"
     stylelint: "npm:^16.10.0"
     stylelint-config-standard-scss: "npm:^13.1.0"
-    typescript: "npm:^5.8.2"
+    typescript: "npm:5.7.3"
     typescript-eslint: "npm:^8.16.0"
     uuid: "npm:^11.0.3"
     vite: "npm:^5.4.11"
@@ -8211,23 +8211,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.8.2":
-  version: 5.8.2
-  resolution: "typescript@npm:5.8.2"
+"typescript@npm:5.7.3":
+  version: 5.7.3
+  resolution: "typescript@npm:5.7.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/5c4f6fbf1c6389b6928fe7b8fcd5dc73bb2d58cd4e3883f1d774ed5bd83b151cbac6b7ecf11723de56d4676daeba8713894b1e9af56174f2f9780ae7848ec3c6
+  checksum: 10c0/b7580d716cf1824736cc6e628ab4cd8b51877408ba2be0869d2866da35ef8366dd6ae9eb9d0851470a39be17cbd61df1126f9e211d8799d764ea7431d5435afa
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.8.2#optional!builtin<compat/typescript>":
-  version: 5.8.2
-  resolution: "typescript@patch:typescript@npm%3A5.8.2#optional!builtin<compat/typescript>::version=5.8.2&hash=5786d5"
+"typescript@patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>":
+  version: 5.7.3
+  resolution: "typescript@patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>::version=5.7.3&hash=5786d5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/5448a08e595cc558ab321e49d4cac64fb43d1fa106584f6ff9a8d8e592111b373a995a1d5c7f3046211c8a37201eb6d0f1566f15cdb7a62a5e3be01d087848e2
+  checksum: 10c0/6fd7e0ed3bf23a81246878c613423730c40e8bdbfec4c6e4d7bf1b847cbb39076e56ad5f50aa9d7ebd89877999abaee216002d3f2818885e41c907caaa192cc4
   languageName: node
   linkType: hard
 
