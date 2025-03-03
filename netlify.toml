@@ -4,7 +4,7 @@
   publish = "dist"
 
 [functions]
-  directory = "backend/api/netlify/functions"  
+  directory = "../backend/api/netlify/functions"  
   external_node_modules = ["express", "mongoose", "multer", "cloudinary", "streamifier", "cors", "body-parser", "serverless-http", "dotenv"]
   node_bundler = "esbuild"
 
@@ -13,14 +13,3 @@
   to = "/.netlify/functions/api/:splat"
   status = 200
 
-[context.production]
-  ENVIRONMENT = "production"
-
-[context.deploy-preview]
-  ENVIRONMENT = "deploy-preview"
-
-[context.branch-deploy]
-  ENVIRONMENT = "branch-deploy"
-
-[context.dev]
-  ENVIRONMENT = "development"
