@@ -1,10 +1,9 @@
 [build]
-  base = "frontend"
   command = "npm run build"
-  publish = "dist"
+  publish = "frontend/dist"
 
 [functions]
-  directory = "../backend/api/netlify/functions"  
+  directory = "backend/api/netlify/functions"
   external_node_modules = ["express", "mongoose", "multer", "cloudinary", "streamifier", "cors", "body-parser", "serverless-http", "dotenv"]
   node_bundler = "esbuild"
 
@@ -12,4 +11,3 @@
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
-
