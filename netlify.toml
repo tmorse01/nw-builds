@@ -1,9 +1,10 @@
 [build]
+  base = "frontend"
   command = "npm run build"
-  publish = "frontend/dist"
+  publish = "dist"
 
 [functions]
-  directory = "backend/api/netlify/functions"
+  directory = "../backend/api/netlify/functions"
   external_node_modules = ["express", "mongoose", "multer", "cloudinary", "streamifier", "cors", "body-parser", "serverless-http", "dotenv"]
   node_bundler = "esbuild"
 
