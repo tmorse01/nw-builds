@@ -96,7 +96,9 @@ router.get("/:id", async (req, res) => {
       id: build._id.toString(), // TODO - Remove
       ...build.toObject(),
       sections: build.sections.map((section) => ({
-        id: section._id.toString(),
+        id: section._id
+          ? section._id.toString()
+          : require("mongoose").Types.ObjectId().toString(),
         ...section.toObject(),
       })),
     };
