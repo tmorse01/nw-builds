@@ -99,7 +99,7 @@ const SectionEditor: React.FC<SectionEditorProps> = ({ section, onChange, onRemo
 
         <RichTextEditor.Content />
       </RichTextEditor>
-      <SectionImageUpload sectionId={section._id} />
+      <SectionImageUpload sectionId={section.id} />
     </Stack>
   );
 };

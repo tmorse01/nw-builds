@@ -6,8 +6,15 @@ const router = express.Router();
 // Get all tags
 router.get("/", async (req, res) => {
   try {
-    const tags = await Tag.find().select("name color -_id");
-    res.json(tags);
+    // Don't exclude _id in the select to allow adding id property
+    const tags = await Tag.find();
+    // Transform tags to include id property
+    const transformedTags = tags.map((doc) => ({
+      id: doc._id.toString(),
+      name: doc.name,
+      color: doc.color,
+    }));
+    res.json(transformedTags);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch tags." });
   }
@@ -35,7 +42,16 @@ router.post("/", async (req, res) => {
     const newTag = new Tag({ name, color });
     await newTag.save();
 
-    res.status(201).json({ message: "Tag added successfully.", tag: newTag });
+    // Add id property to response
+    const response = {
+      message: "Tag added successfully.",
+      tag: {
+        id: newTag._id.toString(),
+        name: newTag.name,
+        color: newTag.color,
+      },
+    };
+    res.status(201).json(response);
   } catch (error) {
     res.status(500).json({ error: "Failed to add tag." });
   }
@@ -67,7 +83,12 @@ router.put("/:tag", async (req, res) => {
     existingTag.color = color;
     await existingTag.save();
 
-    res.json({ message: "Tag updated successfully.", tag: existingTag.name });
+    // Add id to response if returning the full tag
+    res.json({
+      message: "Tag updated successfully.",
+      tag: existingTag.name,
+      id: existingTag._id.toString(),
+    });
   } catch (error) {
     res.status(500).json({ error: "Failed to update tag." });
   }

@@ -54,12 +54,12 @@ const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
 
   // Delete mutation
   const deleteMutation = useMutation({
-    mutationFn: async (image: ImageUploadResponse) => deleteImage(image._id),
+    mutationFn: async (image: ImageUploadResponse) => deleteImage(image.id),
     onSuccess: (_, deletedImage) => {
       queryClient.setQueryData(
         ["images", id, sectionId],
         (old: ImageUploadResponse[] | undefined) =>
-          old?.filter((img) => img._id !== deletedImage._id) ?? []
+          old?.filter((img) => img.id !== deletedImage.id) ?? []
       );
     },
     onError: () => {
@@ -86,7 +86,7 @@ const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
       {images.length > 0 && (
         <SimpleGrid cols={{ base: 2, sm: 4 }} mt="xl">
           {images.map((image) => (
-            <Box key={image._id} pos="relative">
+            <Box key={image.id} pos="relative">
               <Image
                 src={getOptimizedImageUrl(image.cloudinaryUrl, {
                   width: 200,

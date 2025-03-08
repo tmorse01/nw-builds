@@ -1,6 +1,6 @@
 // Types for image operations
 export interface ImageUploadResponse {
-  _id: string; // MongoDB ID
+  id: string; // MongoDB ID
   buildId: string;
   sectionId: string;
   cloudinaryUrl: string; // Use this for displaying images

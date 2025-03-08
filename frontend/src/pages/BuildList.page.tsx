@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BuildList } from "@/components/BuildList/BuildList";
-import { TagsFilter } from "@/components/TagsFilter/TagsFilter";
+import { TagsFilter } from "@/components/Tags/TagsFilter";
 
 export const BuildListPage: React.FC = () => {
   const location = useLocation();

@@ -18,6 +18,7 @@ import { createBuild, deleteBuild, updateBuild } from "@/data/builds";
 import { Build, Section } from "@/data/types";
 import { DeleteButton } from "../Common/DeleteButton";
 import ThumbnailUpload from "../ImageUpload/ThumbnailUpload";
+import { TagEditor } from "../Tags/TagsEditor";
 
 interface BuildEditorProps {
   build: Build;
@@ -39,7 +40,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
   };
 
   const handleAddSection = () => {
-    setSections([...sections, { _id: "", title: "", content: "" } as Section]);
+    setSections([...sections, { id: "", title: "", content: "" } as Section]);
   };
 
   const handleRemoveSection = (index: number) => {
@@ -60,7 +61,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
       });
     } else {
       // Update existing build
-      updateBuild(build._id, buildData).then((data) => {
+      updateBuild(build.id, buildData).then((data) => {
         notifications.show({
           title: "Build Updated",
           message: "Your build has been updated successfully.",
@@ -71,8 +72,8 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
   };
 
   const handleDeleteBuild = () => {
-    if (build?._id) {
-      deleteBuild(build._id)
+    if (build?.id) {
+      deleteBuild(build.id)
         .then(() => {
           notifications.show({
             title: "Build Deleted",
@@ -93,7 +94,10 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
     <Container>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack gap="md">
-          <Title order={3}>Build Details</Title>
+          <Title order={2}>Build Editor</Title>
+          <Group>
+            <ThumbnailUpload buildId={build.id} />
+          </Group>
           <Group>
             <TextInput
               label="Build Name"
@@ -113,14 +117,15 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
               required
               {...form.getInputProps("season")}
             />
-            <ThumbnailUpload buildId={build._id} />
+            <MultiSelect
+              label="Weapons"
+              required
+              {...form.getInputProps("weapons")}
+              data={["Great Axe", "Warhammer", "Bow", "Rapier", "Spear"]}
+            />
           </Group>
-          <MultiSelect
-            label="Weapons"
-            required
-            {...form.getInputProps("weapons")}
-            data={["Great Axe", "Warhammer", "Bow", "Rapier", "Spear"]}
-          />
+          <TagEditor {...form.getInputProps("tags")} />
+
           <Group>
             {["strength", "dexterity", "intelligence", "focus", "constitution"].map((attr) => (
               <NumberInput

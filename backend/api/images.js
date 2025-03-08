@@ -87,9 +87,15 @@ const handleUpload = async (req, res) => {
 
       await newImage.save();
 
+      // Add id property to response
+      const transformedImage = {
+        id: newImage._id.toString(),
+        ...newImage.toObject(),
+      };
+
       res.status(201).json({
         message: "Image uploaded successfully",
-        image: newImage,
+        image: transformedImage,
       });
     });
   } catch (error) {
@@ -107,7 +113,14 @@ const handleGet = async (req, res) => {
     if (sectionId) query.sectionId = sectionId;
 
     const images = await Image.find(query).sort({ createdAt: -1 });
-    res.status(200).json(images);
+
+    // Transform images to include string ID
+    const transformedImages = images.map((image) => ({
+      id: image._id.toString(),
+      ...image._doc,
+    }));
+
+    res.status(200).json(transformedImages);
   } catch (error) {
     console.error("Get error:", error);
     res.status(500).json({ error: "Failed to fetch images" });

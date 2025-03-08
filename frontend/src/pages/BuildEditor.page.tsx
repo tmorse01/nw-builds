@@ -27,25 +27,25 @@ const BuildEditorPage = () => {
     },
     enabled: !!id && !isNewBuild, // Prevent API call if it's a new build
   });
-
+  console.log("build:, ", build);
   if (isNewBuild) {
     // Pre-generate a MongoDB ObjectId for the new build
     const newBuild: Build = {
-      _id: new ObjectId().toHexString(),
+      id: new ObjectId().toHexString(),
       name: "",
       weapons: [],
       attributes: {
-        strength: 0,
-        dexterity: 0,
-        intelligence: 0,
-        focus: 0,
-        constitution: 0,
+        strength: 5,
+        dexterity: 5,
+        intelligence: 5,
+        focus: 5,
+        constitution: 5,
       },
       playstyle: "",
       tags: [],
       sections: [],
       createdBy: "",
-      season: new Date().getFullYear(), // Default to current year
+      season: 7, // Default to current season
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

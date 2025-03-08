@@ -8,7 +8,12 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const builds = await Build.find();
-    res.json(builds);
+    // Transform each build to include id property
+    const transformedBuilds = builds.map((doc) => ({
+      id: doc._id.toString(),
+      ...doc._doc,
+    }));
+    res.json(transformedBuilds);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -87,15 +92,18 @@ router.get("/:id", async (req, res) => {
     }, {});
 
     // Create a response object with resolved tags
-    const buildData = build.toObject();
+    const buildData = {
+      id: build._id.toString(),
+      ...build.toObject(),
+    };
 
     // Resolve tags if they exist
     if (buildData.tags && Array.isArray(buildData.tags)) {
-      buildData.resolvedTags = buildData.tags.map(
+      buildData.tags = buildData.tags.map(
         (tagName) => tagsMap[tagName] || { name: tagName, color: "#cccccc" } // Default color if tag not found
       );
     } else {
-      buildData.resolvedTags = [];
+      buildData.tags = [];
     }
 
     res.json(buildData);
@@ -110,7 +118,12 @@ router.post("/", async (req, res) => {
   const build = new Build(req.body);
   try {
     const newBuild = await build.save();
-    res.status(201).json(newBuild);
+    // Add id property to response
+    const response = {
+      id: newBuild._id.toString(),
+      ...newBuild.toObject(),
+    };
+    res.status(201).json(response);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -129,7 +142,13 @@ router.put("/:id", async (req, res) => {
     );
     if (!updatedBuild)
       return res.status(404).json({ message: "Build not found" });
-    res.json(updatedBuild);
+
+    // Add id property to response
+    const response = {
+      id: updatedBuild._id.toString(),
+      ...updatedBuild.toObject(),
+    };
+    res.json(response);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
