@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { IconX } from "@tabler/icons-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { ActionIcon, Box, Image, SimpleGrid, Stack, Text } from "@mantine/core";
+import { ActionIcon, Box, Image, Modal, SimpleGrid, Stack, Text } from "@mantine/core";
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { showNotification } from "@mantine/notifications";
 import {
@@ -21,6 +22,7 @@ interface SectionImageUpload {
 const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
+  const [previewImage, setPreviewImage] = useState<ImageUploadResponse | null>(null);
 
   // Fetch images from Cloudinary
   const { data: images = [] } = useQuery({
@@ -92,7 +94,10 @@ const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
                   quality: 90,
                 })}
                 alt={image.originalName}
+                height={200}
                 radius="md"
+                style={{ cursor: "pointer" }}
+                onClick={() => setPreviewImage(image)}
               />
               {/* Delete Icon in Top-Right Corner */}
               <ActionIcon
@@ -113,6 +118,23 @@ const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
           ))}
         </SimpleGrid>
       )}
+
+      {/* Full-size image preview modal */}
+      <Modal
+        opened={!!previewImage}
+        onClose={() => setPreviewImage(null)}
+        title={previewImage?.originalName || "Image Preview"}
+        size="xl"
+      >
+        {previewImage && (
+          <Image
+            src={previewImage.cloudinaryUrl}
+            alt={previewImage.originalName}
+            fit="contain"
+            style={{ maxHeight: "80vh" }}
+          />
+        )}
+      </Modal>
     </Stack>
   );
 };

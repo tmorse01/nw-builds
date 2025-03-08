@@ -16,6 +16,7 @@ export const BuildSectionImageViewer: React.FC<BuildSectionImageViewerProps> = (
   onImageClick,
 }) => {
   // Using TanStack Query for data fetching
+  // TODO: Later optimize to fetch all the images for a build at once
   const {
     data: images = [],
     isLoading,
@@ -58,6 +59,7 @@ export const BuildSectionImageViewer: React.FC<BuildSectionImageViewerProps> = (
             <Image
               radius="md"
               src={image.cloudinaryUrl}
+              alt={image.originalName}
               onClick={() => onImageClick(image.cloudinaryUrl)}
               style={{ cursor: "pointer" }}
             />
