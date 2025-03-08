@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
-import { Carousel } from "@mantine/carousel";
 import { Box, Button, Container, Image, Title } from "@mantine/core";
+import { BuildSectionImageViewer } from "./BuildSectionImageViewer";
 
 export interface BuildSection {
   title: string;
   content: string;
-  images?: { src: string; alt: string }[];
+  id?: string; // Adding id property for section identification
 }
 
 export interface BuildSectionsProps {
   sections: BuildSection[];
+  buildId: string; // Adding buildId to identify which build these sections belong to
 }
 
 function sanitizeMarkdown(content: string): string {
@@ -22,7 +23,7 @@ function sanitizeMarkdown(content: string): string {
     .trim(); // Remove leading and trailing whitespace from the entire content
 }
 
-export const BuildSections: React.FC<BuildSectionsProps> = ({ sections }) => {
+export const BuildSections: React.FC<BuildSectionsProps> = ({ sections, buildId }) => {
   const [expandedImages, setExpandedImages] = useState<Record<string, boolean>>({});
 
   const toggleImage = (src: string) => {
@@ -89,32 +90,11 @@ export const BuildSections: React.FC<BuildSectionsProps> = ({ sections }) => {
               },
             }}
           />
-          {section.images && (
-            <>
-              <Title order={4} mt="lg" mb="md">
-                Examples
-              </Title>
-              <Carousel
-                withIndicators
-                loop
-                align="start"
-                slideSize={{ base: "100%", sm: "50%", md: "33.333333%" }}
-                slideGap={{ base: 0, sm: "md" }}
-              >
-                {section.images.map((image, index) => (
-                  <Carousel.Slide key={index}>
-                    <Image
-                      radius="md"
-                      src={image.src}
-                      alt={image.alt}
-                      onClick={() => toggleImage(image.src)}
-                      style={{ cursor: "pointer" }}
-                    />
-                  </Carousel.Slide>
-                ))}
-              </Carousel>
-            </>
-          )}
+          <BuildSectionImageViewer
+            sectionId={section.id}
+            buildId={buildId}
+            onImageClick={toggleImage}
+          />
         </div>
       ))}
     </Container>
