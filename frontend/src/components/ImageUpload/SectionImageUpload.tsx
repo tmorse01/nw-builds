@@ -89,13 +89,9 @@ const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
             <Box key={image.id} pos="relative">
               <Image
                 src={getOptimizedImageUrl(image.cloudinaryUrl, {
-                  width: 200,
-                  height: 200,
                   quality: 90,
-                  fit: "limit",
                 })}
                 alt={image.originalName}
-                height={100}
                 radius="md"
               />
               {/* Delete Icon in Top-Right Corner */}

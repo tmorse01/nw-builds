@@ -95,6 +95,10 @@ router.get("/:id", async (req, res) => {
     const buildData = {
       id: build._id.toString(),
       ...build.toObject(),
+      sections: build.sections.map((section) => ({
+        id: section._id.toString(),
+        ...section.toObject(),
+      })),
     };
 
     // Resolve tags if they exist

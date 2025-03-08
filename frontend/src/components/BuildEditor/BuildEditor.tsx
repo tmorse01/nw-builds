@@ -15,7 +15,7 @@ import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import SectionEditor from "@/components/BuildEditor/SectionEditor";
 import { createBuild, deleteBuild, updateBuild } from "@/data/builds";
-import { Build, Section } from "@/data/types";
+import { Build, Section, Tag } from "@/data/types";
 import { DeleteButton } from "../Common/DeleteButton";
 import ThumbnailUpload from "../ImageUpload/ThumbnailUpload";
 import { TagEditor } from "../Tags/TagsEditor";
@@ -49,7 +49,11 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
   };
 
   const handleSubmit = (values: any) => {
-    const buildData = { ...values, sections };
+    const buildData = {
+      ...values,
+      sections,
+      tags: values.tags.map((tag: Tag) => tag.name),
+    };
     if (isNewBuild) {
       // Create new build
       createBuild(buildData).then((data) => {
