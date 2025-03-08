@@ -18,6 +18,59 @@ export const fetchBuilds = async (): Promise<Build[]> => {
 };
 
 /**
+ * Response structure for the build list endpoint
+ */
+export interface BuildListResponse {
+  builds: Build[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    pages: number;
+  };
+}
+
+/**
+ * Fetches list of builds with pagination and filtering options
+ * @param options - Options for filtering and pagination
+ */
+export const fetchBuildList = async (
+  options: {
+    page?: number;
+    limit?: number;
+    tags?: string[];
+    search?: string;
+    status?: string;
+    sort?: string;
+  } = {}
+): Promise<BuildListResponse> => {
+  try {
+    const params = new URLSearchParams();
+
+    // Add pagination params
+    if (options.page) params.append("page", options.page.toString());
+    if (options.limit) params.append("limit", options.limit.toString());
+
+    // Add filtering params
+    if (options.tags && options.tags.length > 0) {
+      options.tags.forEach((tag) => params.append("tags", tag));
+    }
+    if (options.search) params.append("search", options.search);
+    if (options.status) params.append("status", options.status);
+    if (options.sort) params.append("sort", options.sort);
+
+    const queryString = params.toString() ? `?${params.toString()}` : "";
+
+    const response = await fetch(`${BUILD_API_URL}/list${queryString}`);
+    if (!response.ok) throw new Error("Failed to fetch build list");
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching build list:", error);
+    throw new Error("Failed to fetch build list");
+  }
+};
+
+/**
  * Fetches a build by its ID
  */
 export const fetchBuildById = async (id: string): Promise<Build> => {

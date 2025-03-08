@@ -1,5 +1,6 @@
 const express = require("express");
 const Build = require("../models/Build");
+const Tag = require("../models/Tag");
 
 const router = express.Router();
 
@@ -13,13 +14,91 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get builds optimized for card display
+router.get("/list", async (req, res) => {
+  try {
+    // Parse pagination parameters
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    // Query with selected fields useful for cards
+    const builds = await Build.find()
+      .sort({ updatedAt: -1, createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    // Fetch all tags from the database
+    const tags = await Tag.find();
+    const tagsMap = tags.reduce((map, tag) => {
+      map[tag.name] = { name: tag.name, color: tag.color };
+      return map;
+    }, {});
+
+    // Transform builds to include string ID and resolve tags
+    const transformedBuilds = builds.map((doc) => {
+      // Get the basic document data
+      const buildData = {
+        id: doc._id.toString(),
+        ...doc._doc,
+      };
+
+      // Resolve tags if they exist
+      if (buildData.tags && Array.isArray(buildData.tags)) {
+        buildData.tags = buildData.tags.map(
+          (tagName) => tagsMap[tagName] || { name: tagName, color: "#cccccc" } // Default color if tag not found
+        );
+      } else {
+        buildData.tags = [];
+      }
+
+      return buildData;
+    });
+
+    // Get total count for pagination
+    const total = await Build.countDocuments();
+
+    res.json({
+      builds: transformedBuilds,
+      pagination: {
+        total,
+        page,
+        limit,
+        pages: Math.ceil(total / limit),
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Get a single build by ID
 router.get("/:id", async (req, res) => {
   console.log("Get Build ID:", req.params.id);
   try {
     const build = await Build.findById(req.params.id);
     if (!build) return res.status(404).json({ message: "Build not found" });
-    res.json(build);
+
+    // Fetch all tags from the database
+    const tags = await Tag.find();
+    const tagsMap = tags.reduce((map, tag) => {
+      map[tag.name] = { name: tag.name, color: tag.color };
+      return map;
+    }, {});
+
+    // Create a response object with resolved tags
+    const buildData = build.toObject();
+
+    // Resolve tags if they exist
+    if (buildData.tags && Array.isArray(buildData.tags)) {
+      buildData.resolvedTags = buildData.tags.map(
+        (tagName) => tagsMap[tagName] || { name: tagName, color: "#cccccc" } // Default color if tag not found
+      );
+    } else {
+      buildData.resolvedTags = [];
+    }
+
+    res.json(buildData);
   } catch (err) {
     console.error("Error fetching build:", err);
     res.status(500).json({ message: err.message });

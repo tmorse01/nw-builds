@@ -1,43 +1,59 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { Button, Container, Grid, Group, Input, Modal, Stack, Text, Title } from "@mantine/core";
+import {
+  Button,
+  Container,
+  Grid,
+  Group,
+  Input,
+  Loader,
+  Modal,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
+import { queryClient } from "@/App";
 import { BuildCard } from "@/components/Build/BuildCard";
-import { deleteBuild, fetchBuilds } from "@/data/builds";
+import { deleteBuild, fetchBuildList } from "@/data/builds";
 import { Build } from "@/data/types";
 
 const BuildManager: React.FC = () => {
-  const [builds, setBuilds] = useState<Build[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [deleteTarget, setDeleteTarget] = useState<Build | null>(null);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loadBuilds = async () => {
-      try {
-        const data = await fetchBuilds();
-        setBuilds(data);
-      } catch (err) {
-        console.error("Error fetching builds:", err);
-      }
-    };
-    loadBuilds();
-  }, []);
+  const { data: builds, isLoading } = useQuery({
+    queryKey: ["buildList"],
+    queryFn: () => loadBuilds(),
+  });
+
+  const loadBuilds = async () => {
+    try {
+      const response = await fetchBuildList();
+      return response.builds;
+    } catch (err) {
+      console.error("Error fetching builds:", err);
+    }
+  };
 
   const handleDelete = async () => {
     if (!deleteTarget) return;
     try {
-      await deleteBuild(deleteTarget._id!);
-      setBuilds(builds.filter((build) => build._id !== deleteTarget._id));
+      await deleteBuild(deleteTarget.id!);
+      queryClient.setQueryData(["buildList"], (data: any) => {
+        return data.filter((build: Build) => build.id !== deleteTarget.id);
+      });
       setDeleteModalOpen(false);
       setDeleteTarget(null);
     } catch (err) {
       console.error("Error deleting build:", err);
     }
   };
-
-  const filteredBuilds = builds.filter((build) =>
-    build.name.toLowerCase().includes(searchTerm.toLowerCase())
+  console.log("builds: ", builds);
+  const filteredBuilds = builds?.filter((build) =>
+    build.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -55,15 +71,16 @@ const BuildManager: React.FC = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <Grid>
-          {filteredBuilds.map((build) => (
-            <Grid.Col key={build._id} span={{ xs: 12, sm: 6, md: 4 }}>
+          {isLoading && <Loader color="blue" />}
+          {filteredBuilds?.map((build) => (
+            <Grid.Col key={build.id} span={{ xs: 12, sm: 6, md: 4 }}>
               <BuildCard
-                id={build._id}
+                id={build.id}
                 name={build.name}
-                link={`/build-editor/${build._id}`}
+                link={`/build-editor/${build.id}`}
                 tags={build.tags}
                 weapons={build.weapons}
-                onEdit={() => navigate(`/build-editor/${build._id}`)}
+                onEdit={() => navigate(`/build-editor/${build.id}`)}
                 onDelete={() => {
                   setDeleteTarget(build);
                   setDeleteModalOpen(true);
