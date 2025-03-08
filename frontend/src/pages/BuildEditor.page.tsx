@@ -27,7 +27,7 @@ const BuildEditorPage = () => {
     },
     enabled: !!id && !isNewBuild, // Prevent API call if it's a new build
   });
-  console.log("build:, ", build);
+
   if (isNewBuild) {
     // Pre-generate a MongoDB ObjectId for the new build
     const newBuild: Build = {

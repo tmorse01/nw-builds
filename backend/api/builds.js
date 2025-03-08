@@ -93,7 +93,7 @@ router.get("/:id", async (req, res) => {
 
     // Create a response object with resolved tags
     const buildData = {
-      id: build._id.toString(),
+      id: build._id.toString(), // TODO - Remove
       ...build.toObject(),
       sections: build.sections.map((section) => ({
         id: section._id.toString(),

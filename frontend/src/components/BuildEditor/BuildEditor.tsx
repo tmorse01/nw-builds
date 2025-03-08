@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ObjectId from "bson-objectid";
 import { useParams } from "react-router-dom";
 import {
   Button,
@@ -40,7 +41,8 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
   };
 
   const handleAddSection = () => {
-    setSections([...sections, { id: "", title: "", content: "" } as Section]);
+    const newId = new ObjectId().toHexString();
+    setSections([...sections, { id: newId, title: "", content: "" } as Section]);
   };
 
   const handleRemoveSection = (index: number) => {

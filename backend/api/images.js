@@ -31,6 +31,7 @@ const upload = multer({
 // MongoDB Schema
 const ImageSchema = new mongoose.Schema(
   {
+    id: { type: String, required: true },
     buildId: { type: String, required: true },
     sectionId: { type: String, required: true },
     cloudinaryUrl: { type: String, required: true }, // Store Cloudinary URL
