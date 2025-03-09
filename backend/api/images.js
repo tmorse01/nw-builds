@@ -63,7 +63,7 @@ const handleUpload = async (req, res) => {
     upload.single("image")(req, req, async (err) => {
       if (err) return res.status(400).json({ error: err.message });
 
-      const { buildId, sectionId } = req.body;
+      const { id, buildId, sectionId } = req.body;
       if (!buildId || !sectionId || !req.file)
         return res.status(400).json({ error: "Missing required fields" });
 
@@ -79,6 +79,7 @@ const handleUpload = async (req, res) => {
       }
 
       const newImage = new Image({
+        id,
         buildId,
         sectionId,
         cloudinaryUrl: result.secure_url,

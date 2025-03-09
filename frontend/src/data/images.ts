@@ -1,3 +1,5 @@
+import ObjectID from "bson-objectid";
+
 // Types for image operations
 export interface ImageUploadResponse {
   id: string; // MongoDB ID
@@ -45,6 +47,7 @@ export const uploadImage = async (
   formData.append("image", file);
   formData.append("buildId", buildId);
   formData.append("sectionId", sectionId);
+  formData.append("id", new ObjectID().toHexString());
 
   try {
     const response = await fetch(`${BASE_API_URL}/images`, {

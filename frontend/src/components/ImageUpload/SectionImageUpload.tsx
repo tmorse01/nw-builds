@@ -20,21 +20,21 @@ interface SectionImageUpload {
 }
 
 const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
-  const { id } = useParams<{ id: string }>();
+  const { id: buildId } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
   const [previewImage, setPreviewImage] = useState<ImageUploadResponse | null>(null);
 
   // Fetch images from Cloudinary
   const { data: images = [] } = useQuery({
-    queryKey: ["images", id, sectionId],
-    queryFn: () => fetchImages(id!, sectionId),
-    enabled: !!id && !!sectionId,
+    queryKey: ["images", buildId, sectionId],
+    queryFn: () => fetchImages(buildId!, sectionId),
+    enabled: !!buildId && !!sectionId,
   });
 
   // Upload mutation
   const uploadMutation = useMutation({
     mutationFn: async (files: File[]) => {
-      const uploadPromises = files.map((file) => uploadImage(file, id!, sectionId));
+      const uploadPromises = files.map((file) => uploadImage(file, buildId!, sectionId));
       return Promise.all(uploadPromises);
     },
     onSuccess: () => {
@@ -43,7 +43,7 @@ const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
         message: "Your images have been uploaded.",
         color: "green",
       });
-      queryClient.invalidateQueries({ queryKey: ["images", id, sectionId] });
+      queryClient.invalidateQueries({ queryKey: ["images", buildId, sectionId] });
     },
     onError: () => {
       showNotification({
@@ -59,7 +59,7 @@ const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
     mutationFn: async (image: ImageUploadResponse) => deleteImage(image.id),
     onSuccess: (_, deletedImage) => {
       queryClient.setQueryData(
-        ["images", id, sectionId],
+        ["images", buildId, sectionId],
         (old: ImageUploadResponse[] | undefined) =>
           old?.filter((img) => img.id !== deletedImage.id) ?? []
       );
