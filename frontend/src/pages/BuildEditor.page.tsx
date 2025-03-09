@@ -44,6 +44,7 @@ const BuildEditorPage = () => {
       playstyle: "",
       tags: [],
       sections: [],
+      perks: [],
       createdBy: "",
       season: 7, // Default to current season
       createdAt: new Date().toISOString(),

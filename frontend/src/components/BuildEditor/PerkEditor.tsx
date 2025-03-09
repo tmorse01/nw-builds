@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IconPlus, IconTrash } from "@tabler/icons-react";
-import { ActionIcon, Badge, Flex, Group, NumberInput, Text, TextInput } from "@mantine/core";
+import { ActionIcon, Flex, Group, NumberInput, Text, TextInput } from "@mantine/core";
 
 export interface Perk {
   name: string;
@@ -74,31 +74,28 @@ export const PerkEditor: React.FC<PerkEditorProps> = ({
       )}
       <Flex gap="xs" wrap="wrap" mb={readOnly ? 0 : 10} style={{ flex: 1 }}>
         {perks.map((perk, index) => (
-          <Badge
+          <Group
             key={index}
-            size="md"
-            color="white"
-            variant="outline"
-            rightSection={
-              !readOnly ? (
-                <ActionIcon
-                  size="xs"
-                  color="red"
-                  variant="transparent"
-                  onClick={() => handleRemovePerk(index)}
-                >
-                  <IconTrash size={12} />
-                </ActionIcon>
-              ) : null
-            }
-            styles={{
-              root: {
-                paddingRight: readOnly ? undefined : 5,
-              },
-            }}
+            gap={5}
+            style={{ border: "1px solid #444", borderRadius: "4px", padding: "3px 8px" }}
           >
-            {perk.name} (x{perk.count})
-          </Badge>
+            <Text c="yellow" fw={700} size="sm" style={{ display: "inline" }}>
+              {perk.count}x
+            </Text>
+            <Text size="sm" style={{ display: "inline" }}>
+              {perk.name}
+            </Text>
+            {!readOnly && (
+              <ActionIcon
+                size="xs"
+                color="red"
+                variant="transparent"
+                onClick={() => handleRemovePerk(index)}
+              >
+                <IconTrash size={12} />
+              </ActionIcon>
+            )}
+          </Group>
         ))}
         {perks.length === 0 && readOnly && (
           <Text color="dimmed" size="sm">
