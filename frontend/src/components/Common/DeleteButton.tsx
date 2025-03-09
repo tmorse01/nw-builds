@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Modal, Text } from "@mantine/core";
+import { Button, Group, Modal, Text } from "@mantine/core";
 
 interface DeleteButtonProps {
   onDelete: () => void;
@@ -27,14 +27,14 @@ export function DeleteButton({
 
       <Modal opened={opened} onClose={() => setOpened(false)} title="Confirm Deletion" centered>
         <Text>{confirmationMessage}</Text>
-        <div className="flex justify-end gap-2 mt-4">
+        <Group pt="lg">
           <Button variant="default" onClick={() => setOpened(false)}>
             Cancel
           </Button>
           <Button color="red" onClick={handleDelete}>
             Confirm
           </Button>
-        </div>
+        </Group>
       </Modal>
     </>
   );

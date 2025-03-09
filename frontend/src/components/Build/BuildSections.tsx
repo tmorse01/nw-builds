@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
-import { Box, Button, Container, Image, Title } from "@mantine/core";
+import { Box, Button, Container, Image, Stack, Title } from "@mantine/core";
 import { Section } from "@/data/types";
 import { BuildSectionImageViewer } from "./BuildSectionImageViewer";
 
@@ -26,11 +26,22 @@ export const BuildSections: React.FC<BuildSectionsProps> = ({ sections }) => {
       [src]: !prev[src],
     }));
   };
-  console.log("build sections", sections);
+
   return (
-    <Container mt="xl">
+    <Container>
       {sections.map((section, index) => (
-        <div key={index} id={`section-${index}`} style={{ marginBottom: "2rem" }}>
+        <Stack
+          key={`section-${index}`}
+          gap="sm"
+          bg="var(--mantine-color-default)"
+          p="md"
+          mt="lg"
+          mb="lg"
+          style={{
+            borderRadius: "5px",
+            overflow: "hidden",
+          }}
+        >
           <Title order={3} mb="md">
             {section.title}
           </Title>
@@ -85,7 +96,7 @@ export const BuildSections: React.FC<BuildSectionsProps> = ({ sections }) => {
             }}
           />
           <BuildSectionImageViewer images={section.images} onImageClick={toggleImage} />
-        </div>
+        </Stack>
       ))}
     </Container>
   );

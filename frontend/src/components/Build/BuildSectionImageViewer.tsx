@@ -15,28 +15,38 @@ export const BuildSectionImageViewer: React.FC<BuildSectionImageViewerProps> = (
   if (images.length === 0) {
     return null;
   }
-  console.log("hello world");
+
+  if (images.length === 1) {
+    return (
+      <Image
+        radius="md"
+        src={images[0].cloudinaryUrl}
+        alt={images[0].originalName}
+        onClick={() => onImageClick(images[0].cloudinaryUrl)}
+        style={{ cursor: "pointer" }}
+      />
+    );
+  }
+
   return (
-    <>
-      <Carousel
-        withIndicators
-        loop
-        align="start"
-        slideSize={{ base: "100%", sm: "50%", md: "33.333333%" }}
-        slideGap={{ base: 0, sm: "md" }}
-      >
-        {images.map((image, index) => (
-          <Carousel.Slide key={index}>
-            <Image
-              radius="md"
-              src={image.cloudinaryUrl}
-              alt={image.originalName}
-              onClick={() => onImageClick(image.cloudinaryUrl)}
-              style={{ cursor: "pointer" }}
-            />
-          </Carousel.Slide>
-        ))}
-      </Carousel>
-    </>
+    <Carousel
+      withIndicators
+      loop
+      align="start"
+      slideSize={{ base: "100%", sm: "50%", md: "33.333333%" }}
+      slideGap={{ base: 0, sm: "md" }}
+    >
+      {images.map((image, index) => (
+        <Carousel.Slide key={index}>
+          <Image
+            radius="md"
+            src={image.cloudinaryUrl}
+            alt={image.originalName}
+            onClick={() => onImageClick(image.cloudinaryUrl)}
+            style={{ cursor: "pointer" }}
+          />
+        </Carousel.Slide>
+      ))}
+    </Carousel>
   );
 };

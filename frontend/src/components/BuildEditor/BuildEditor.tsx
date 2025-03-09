@@ -103,14 +103,16 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
           <Title order={2}>Build Editor</Title>
           <Group>
             <ThumbnailUpload buildId={build._id} />
-          </Group>
-          <Group>
             <TextInput
               label="Build Name"
               placeholder="Unique build name"
               required
               {...form.getInputProps("name")}
             />
+            <DeleteButton onDelete={handleDeleteBuild} />
+            <Button type="submit">Save Build</Button>
+          </Group>
+          <Group>
             <TextInput
               label="Created By"
               placeholder="Build creator"
@@ -160,13 +162,16 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
               onRemove={() => handleRemoveSection(index)}
             />
           ))}
-          <Group justify="center">
-            <DeleteButton onDelete={handleDeleteBuild} />
-            <Button onClick={handleAddSection} variant="light">
-              Add Section
-            </Button>
-            <Button type="submit">Save Build</Button>
-          </Group>
+          <Button
+            fullWidth
+            variant="default"
+            style={{
+              borderStyle: "dashed",
+            }}
+            onClick={handleAddSection}
+          >
+            Add Section
+          </Button>
         </Stack>
       </form>
     </Container>
