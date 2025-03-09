@@ -31,7 +31,7 @@ const BuildEditorPage = () => {
   if (isNewBuild) {
     // Pre-generate a MongoDB ObjectId for the new build
     const newBuild: Build = {
-      id: new ObjectId().toHexString(),
+      _id: new ObjectId().toHexString(),
       name: "",
       weapons: [],
       attributes: {

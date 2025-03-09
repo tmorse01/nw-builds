@@ -7,7 +7,6 @@ import { BuildSectionImageViewer } from "./BuildSectionImageViewer";
 
 export interface BuildSectionsProps {
   sections: Section[];
-  buildId: string;
 }
 
 function sanitizeMarkdown(content: string): string {
@@ -18,7 +17,7 @@ function sanitizeMarkdown(content: string): string {
     .trim(); // Remove leading and trailing whitespace from the entire content
 }
 
-export const BuildSections: React.FC<BuildSectionsProps> = ({ sections, buildId }) => {
+export const BuildSections: React.FC<BuildSectionsProps> = ({ sections }) => {
   const [expandedImages, setExpandedImages] = useState<Record<string, boolean>>({});
 
   const toggleImage = (src: string) => {
@@ -27,7 +26,7 @@ export const BuildSections: React.FC<BuildSectionsProps> = ({ sections, buildId 
       [src]: !prev[src],
     }));
   };
-
+  console.log("build sections", sections);
   return (
     <Container mt="xl">
       {sections.map((section, index) => (
@@ -85,11 +84,7 @@ export const BuildSections: React.FC<BuildSectionsProps> = ({ sections, buildId 
               },
             }}
           />
-          <BuildSectionImageViewer
-            sectionId={section._id}
-            buildId={buildId}
-            onImageClick={toggleImage}
-          />
+          <BuildSectionImageViewer images={section.images} onImageClick={toggleImage} />
         </div>
       ))}
     </Container>

@@ -2,6 +2,7 @@ export interface Section {
   _id: string;
   title: string;
   content: string; // HTML content as a string
+  images: SectionImage[];
 }
 
 export interface Attributes {
@@ -30,4 +31,15 @@ export interface Tag {
   _id: string;
   name: string;
   color: string;
+}
+
+export interface SectionImage {
+  _id: string;
+  buildId: string;
+  sectionId: string;
+  cloudinaryUrl: string;
+  publicId: string;
+  originalName: string;
+  createdAt: string;
+  updatedAt: string;
 }

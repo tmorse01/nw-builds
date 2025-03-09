@@ -1,8 +1,8 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
+const Image = require("../models/Image");
 
 // Configure Cloudinary (Replace with your credentials)
 cloudinary.config({
@@ -27,20 +27,6 @@ const upload = multer({
       );
   },
 });
-
-// MongoDB Schema
-const ImageSchema = new mongoose.Schema(
-  {
-    buildId: { type: String, required: true },
-    sectionId: { type: String, required: true },
-    cloudinaryUrl: { type: String, required: true }, // Store Cloudinary URL
-    publicId: { type: String, required: true }, // Store Cloudinary public ID
-    originalName: { type: String, required: true },
-  },
-  { timestamps: true }
-);
-
-const Image = mongoose.models.Image || mongoose.model("Image", ImageSchema);
 
 // **Upload Image to Cloudinary**
 const uploadToCloudinary = async (buffer) => {

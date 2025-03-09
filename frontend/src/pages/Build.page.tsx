@@ -26,7 +26,7 @@ export const BuildPage: React.FC = () => {
       </Container>
     );
   }
-
+  console.log("build page");
   if (isError || !build) {
     return (
       <Container>
@@ -44,7 +44,7 @@ export const BuildPage: React.FC = () => {
   return (
     <Container>
       <BuildOverview build={build} />
-      <BuildSections sections={build.sections} buildId={build._id} />
+      <BuildSections sections={build.sections} />
     </Container>
   );
 };

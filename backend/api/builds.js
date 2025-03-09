@@ -1,6 +1,7 @@
 const express = require("express");
 const Build = require("../models/Build");
 const Tag = require("../models/Tag");
+const Image = require("../models/Image");
 
 const router = express.Router();
 
@@ -91,10 +92,23 @@ router.get("/:id", async (req, res) => {
       return map;
     }, {});
 
+    // Fetch images by build ID
+    const images = await Image.find({ buildId: req.params.id });
+    // Map over sections and assign images
+    const sections = build.sections.map((section) => {
+      const sectionImages = images.filter(
+        (image) => image.sectionId === section._id.toString()
+      );
+      return {
+        ...section.toObject(),
+        images: sectionImages,
+      };
+    });
     // Create a response object with resolved tags
     const buildData = {
       _id: build._id.toString(),
       ...build.toObject(),
+      sections,
     };
 
     // Resolve tags if they exist
