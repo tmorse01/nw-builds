@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Grid, Loader, Text } from "@mantine/core";
-import { fetchBuilds } from "@/data/builds";
+import { fetchBuildList } from "@/data/builds";
 import { Build } from "@/data/types";
 import { BuildCard } from "../Build/BuildCard";
 
@@ -18,7 +18,10 @@ export const BuildList: React.FC<BuildListProps> = ({ tags }) => {
     isError,
   } = useQuery({
     queryKey: ["builds"],
-    queryFn: fetchBuilds,
+    queryFn: async () => {
+      const response = await fetchBuildList();
+      return response.builds;
+    },
   });
 
   useEffect(() => {

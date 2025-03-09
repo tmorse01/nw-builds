@@ -48,7 +48,8 @@ router.get("/list", async (req, res) => {
         _id: doc._id.toString(),
         ...doc._doc,
       };
-
+      console.log("Build Data:", buildData);
+      console.log("tagsMap:", tagsMap);
       // Resolve tags if they exist
       if (buildData.tags && Array.isArray(buildData.tags)) {
         buildData.tags = buildData.tags.map(
