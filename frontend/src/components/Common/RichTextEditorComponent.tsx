@@ -9,7 +9,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { Link, RichTextEditor } from "@mantine/tiptap";
 
 interface RichTextEditorComponentProps {
-  content: string;
+  content?: string;
   onChange?: (content: string) => void;
   readOnly?: boolean;
 }

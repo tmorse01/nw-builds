@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { Card, Group, Image, Loader, Text } from "@mantine/core";
+import { Card, Group, Image, Loader, Stack, Text, Title } from "@mantine/core";
 import { fetchBuildThumbnail } from "@/data/builds";
 import { Build } from "@/data/types";
+import { PerkEditor } from "../BuildEditor/PerkEditor";
 import { BuildAttributes } from "./BuildAttributes";
 import { TableOfContents } from "./TableOfContents";
 import { BuildTags } from "./Tags";
@@ -33,9 +34,9 @@ export const BuildOverview: React.FC<BuildOverviewProps> = ({ build }) => {
       </Card.Section>
 
       <Group mt="md">
-        <Text fw={500} fz="lg">
+        <Title order={2} style={{ margin: 0 }}>
           {build.name}
-        </Text>
+        </Title>
         <BuildTags tags={build.tags} />
       </Group>
 
@@ -45,6 +46,11 @@ export const BuildOverview: React.FC<BuildOverviewProps> = ({ build }) => {
       <Group mt="sm">
         <TableOfContents sections={build.sections} />
         <BuildAttributes attributes={build.attributes} />
+        <Card withBorder shadow="sm" radius="md" w={300}>
+          <Stack gap="xs">
+            <PerkEditor value={build.perks} readOnly />
+          </Stack>
+        </Card>
       </Group>
     </Card>
   );

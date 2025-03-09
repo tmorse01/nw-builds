@@ -20,6 +20,7 @@ import { Build, Section, Tag } from "@/data/types";
 import { DeleteButton } from "../Common/DeleteButton";
 import ThumbnailUpload from "../ImageUpload/ThumbnailUpload";
 import { TagEditor } from "../Tags/TagsEditor";
+import { PerkEditor } from "./PerkEditor";
 
 interface BuildEditorProps {
   build: Build;
@@ -42,7 +43,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
 
   const handleAddSection = () => {
     const newId = new ObjectId().toHexString();
-    setSections([...sections, { _id: newId, title: "", content: "" } as Section]);
+    setSections([...sections, { _id: newId, title: "", content: undefined } as Section]);
   };
 
   const handleRemoveSection = (index: number) => {
@@ -67,13 +68,21 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
       });
     } else {
       // Update existing build
-      updateBuild(build._id, buildData).then((data) => {
-        notifications.show({
-          title: "Build Updated",
-          message: "Your build has been updated successfully.",
+      updateBuild(build._id, buildData)
+        .then((data) => {
+          notifications.show({
+            title: "Build Updated",
+            message: "Your build has been updated successfully.",
+          });
+          onSave(data);
+        })
+        .catch((error) => {
+          notifications.show({
+            title: "Build Update Failed",
+            message: error.message,
+            color: "red",
+          });
         });
-        onSave(data);
-      });
     }
   };
 
@@ -101,18 +110,20 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack gap="md">
           <Title order={2}>Build Editor</Title>
-          <Group>
-            <ThumbnailUpload buildId={build._id} />
+          <Group align="end">
             <TextInput
               label="Build Name"
               placeholder="Unique build name"
               required
+              size="xl"
+              width={500}
               {...form.getInputProps("name")}
             />
             <DeleteButton onDelete={handleDeleteBuild} />
             <Button type="submit">Save Build</Button>
           </Group>
           <Group>
+            <ThumbnailUpload buildId={build._id} />
             <TextInput
               label="Created By"
               placeholder="Build creator"
@@ -133,7 +144,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
             />
           </Group>
           <TagEditor {...form.getInputProps("tags")} />
-
+          <PerkEditor {...form.getInputProps("perks")} />
           <Group>
             {["strength", "dexterity", "intelligence", "focus", "constitution"].map((attr) => (
               <NumberInput

@@ -5,6 +5,11 @@ const SectionSchema = new mongoose.Schema({
   content: { type: String }, // Store content as HTML
 });
 
+const PerkSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  count: { type: Number, required: true },
+});
+
 const BuildSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -21,6 +26,7 @@ const BuildSchema = new mongoose.Schema(
     sections: [SectionSchema],
     createdBy: { type: String, required: true },
     season: { type: Number, required: true },
+    perks: { type: [PerkSchema] },
   },
   { timestamps: true }
 );

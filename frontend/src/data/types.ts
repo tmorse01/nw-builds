@@ -1,7 +1,7 @@
 export interface Section {
   _id: string;
   title: string;
-  content: string; // HTML content as a string
+  content: string | undefined;
   images: SectionImage[];
 }
 
@@ -25,6 +25,7 @@ export interface Build {
   season: number;
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
+  perks: Perk[];
 }
 
 export interface Tag {
@@ -42,4 +43,9 @@ export interface SectionImage {
   originalName: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface Perk {
+  name: string;
+  count: number;
 }

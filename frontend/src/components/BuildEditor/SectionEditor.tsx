@@ -1,14 +1,7 @@
 import React from "react";
-import Highlight from "@tiptap/extension-highlight";
-import Subscript from "@tiptap/extension-subscript";
-import Superscript from "@tiptap/extension-superscript";
-import TextAlign from "@tiptap/extension-text-align";
-import Underline from "@tiptap/extension-underline";
-import { useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 import { CloseButton, Group, Stack, TextInput } from "@mantine/core";
-import { RichTextEditor } from "@mantine/tiptap";
 import { Section } from "@/data/types";
+import RichTextEditorComponent from "../Common/RichTextEditorComponent";
 import SectionImageUpload from "../ImageUpload/SectionImageUpload";
 
 interface SectionEditorProps {
@@ -18,19 +11,6 @@ interface SectionEditorProps {
 }
 
 const SectionEditor: React.FC<SectionEditorProps> = ({ section, onChange, onRemove }) => {
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      Highlight,
-      Superscript,
-      Subscript,
-      TextAlign.configure({ types: ["heading", "paragraph"] }),
-    ],
-    content: section.content,
-    onUpdate: ({ editor }) => onChange("content", editor.getHTML()),
-  });
-
   return (
     <Stack
       gap="sm"
@@ -51,54 +31,11 @@ const SectionEditor: React.FC<SectionEditorProps> = ({ section, onChange, onRemo
         />
         <CloseButton onClick={onRemove} title="Remove Section" />
       </Group>
-      <RichTextEditor editor={editor}>
-        <RichTextEditor.Toolbar sticky stickyOffset={60}>
-          <RichTextEditor.ControlsGroup>
-            <RichTextEditor.Bold />
-            <RichTextEditor.Italic />
-            <RichTextEditor.Underline />
-            <RichTextEditor.Strikethrough />
-            <RichTextEditor.ClearFormatting />
-            <RichTextEditor.Highlight />
-            <RichTextEditor.Code />
-          </RichTextEditor.ControlsGroup>
-
-          <RichTextEditor.ControlsGroup>
-            <RichTextEditor.H1 />
-            <RichTextEditor.H2 />
-            <RichTextEditor.H3 />
-            <RichTextEditor.H4 />
-          </RichTextEditor.ControlsGroup>
-
-          <RichTextEditor.ControlsGroup>
-            <RichTextEditor.Blockquote />
-            <RichTextEditor.Hr />
-            <RichTextEditor.BulletList />
-            <RichTextEditor.OrderedList />
-            <RichTextEditor.Subscript />
-            <RichTextEditor.Superscript />
-          </RichTextEditor.ControlsGroup>
-
-          <RichTextEditor.ControlsGroup>
-            <RichTextEditor.Link />
-            <RichTextEditor.Unlink />
-          </RichTextEditor.ControlsGroup>
-
-          <RichTextEditor.ControlsGroup>
-            <RichTextEditor.AlignLeft />
-            <RichTextEditor.AlignCenter />
-            <RichTextEditor.AlignJustify />
-            <RichTextEditor.AlignRight />
-          </RichTextEditor.ControlsGroup>
-
-          <RichTextEditor.ControlsGroup>
-            <RichTextEditor.Undo />
-            <RichTextEditor.Redo />
-          </RichTextEditor.ControlsGroup>
-        </RichTextEditor.Toolbar>
-
-        <RichTextEditor.Content />
-      </RichTextEditor>
+      <RichTextEditorComponent
+        key={section._id}
+        content={section.content}
+        onChange={(value) => onChange("content", value)}
+      />
       <SectionImageUpload sectionId={section._id} />
     </Stack>
   );
