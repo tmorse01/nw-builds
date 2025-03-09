@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     const builds = await Build.find();
     // Transform each build to include id property
     const transformedBuilds = builds.map((doc) => ({
-      id: doc._id.toString(),
+      _id: doc._id.toString(),
       ...doc._doc,
     }));
     res.json(transformedBuilds);
@@ -44,7 +44,7 @@ router.get("/list", async (req, res) => {
     const transformedBuilds = builds.map((doc) => {
       // Get the basic document data
       const buildData = {
-        id: doc._id.toString(),
+        _id: doc._id.toString(),
         ...doc._doc,
       };
 
@@ -79,7 +79,7 @@ router.get("/list", async (req, res) => {
 
 // Get a single build by ID
 router.get("/:id", async (req, res) => {
-  console.log("Get Build ID:", req.params.id);
+  console.log("Get Build ID:", req.params);
   try {
     const build = await Build.findById(req.params.id);
     if (!build) return res.status(404).json({ message: "Build not found" });
@@ -93,7 +93,7 @@ router.get("/:id", async (req, res) => {
 
     // Create a response object with resolved tags
     const buildData = {
-      id: build._id.toString(), // TODO - Remove
+      _id: build._id.toString(),
       ...build.toObject(),
     };
 
@@ -120,7 +120,7 @@ router.post("/", async (req, res) => {
     const newBuild = await build.save();
     // Add id property to response
     const response = {
-      id: newBuild._id.toString(),
+      _id: newBuild._id.toString(),
       ...newBuild.toObject(),
     };
     res.status(201).json(response);
@@ -145,7 +145,7 @@ router.put("/:id", async (req, res) => {
 
     // Add id property to response
     const response = {
-      id: updatedBuild._id.toString(),
+      _id: updatedBuild._id.toString(),
       ...updatedBuild.toObject(),
     };
     res.json(response);

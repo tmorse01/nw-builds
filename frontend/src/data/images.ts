@@ -2,7 +2,7 @@ import ObjectID from "bson-objectid";
 
 // Types for image operations
 export interface ImageUploadResponse {
-  id: string; // MongoDB ID
+  _id: string; // MongoDB ID
   buildId: string;
   sectionId: string;
   cloudinaryUrl: string; // Use this for displaying images

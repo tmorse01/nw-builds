@@ -31,7 +31,6 @@ const upload = multer({
 // MongoDB Schema
 const ImageSchema = new mongoose.Schema(
   {
-    id: { type: String, required: true },
     buildId: { type: String, required: true },
     sectionId: { type: String, required: true },
     cloudinaryUrl: { type: String, required: true }, // Store Cloudinary URL
@@ -63,7 +62,7 @@ const handleUpload = async (req, res) => {
     upload.single("image")(req, req, async (err) => {
       if (err) return res.status(400).json({ error: err.message });
 
-      const { id, buildId, sectionId } = req.body;
+      const { buildId, sectionId } = req.body;
       if (!buildId || !sectionId || !req.file)
         return res.status(400).json({ error: "Missing required fields" });
 
@@ -79,7 +78,6 @@ const handleUpload = async (req, res) => {
       }
 
       const newImage = new Image({
-        id,
         buildId,
         sectionId,
         cloudinaryUrl: result.secure_url,
@@ -89,15 +87,9 @@ const handleUpload = async (req, res) => {
 
       await newImage.save();
 
-      // Add id property to response
-      const transformedImage = {
-        id: newImage._id.toString(),
-        ...newImage.toObject(),
-      };
-
       res.status(201).json({
         message: "Image uploaded successfully",
-        image: transformedImage,
+        image: newImage,
       });
     });
   } catch (error) {

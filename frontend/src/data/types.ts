@@ -1,5 +1,5 @@
 export interface Section {
-  id: string;
+  _id: string;
   title: string;
   content: string; // HTML content as a string
 }
@@ -13,7 +13,7 @@ export interface Attributes {
 }
 
 export interface Build {
-  id: string;
+  _id: string;
   name: string;
   weapons: string[];
   attributes: Attributes;
@@ -27,7 +27,7 @@ export interface Build {
 }
 
 export interface Tag {
-  id: string;
+  _id: string;
   name: string;
   color: string;
 }

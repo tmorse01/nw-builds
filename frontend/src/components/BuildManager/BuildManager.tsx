@@ -41,9 +41,9 @@ const BuildManager: React.FC = () => {
   const handleDelete = async () => {
     if (!deleteTarget) return;
     try {
-      await deleteBuild(deleteTarget.id!);
+      await deleteBuild(deleteTarget._id!);
       queryClient.setQueryData(["buildList"], (data: any) => {
-        return data.filter((build: Build) => build.id !== deleteTarget.id);
+        return data.filter((build: Build) => build._id !== deleteTarget._id);
       });
       setDeleteModalOpen(false);
       setDeleteTarget(null);
@@ -73,14 +73,14 @@ const BuildManager: React.FC = () => {
         <Grid>
           {isLoading && <Loader color="blue" />}
           {filteredBuilds?.map((build) => (
-            <Grid.Col key={build.id} span={{ xs: 12, sm: 6, md: 4 }}>
+            <Grid.Col key={build._id} span={{ xs: 12, sm: 6, md: 4 }}>
               <BuildCard
-                id={build.id}
+                id={build._id}
                 name={build.name}
-                link={`/build-editor/${build.id}`}
+                link={`/build-editor/${build._id}`}
                 tags={build.tags}
                 weapons={build.weapons}
-                onEdit={() => navigate(`/build-editor/${build.id}`)}
+                onEdit={() => navigate(`/build-editor/${build._id}`)}
                 onDelete={() => {
                   setDeleteTarget(build);
                   setDeleteModalOpen(true);

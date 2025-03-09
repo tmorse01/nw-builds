@@ -13,8 +13,8 @@ interface BuildOverviewProps {
 export const BuildOverview: React.FC<BuildOverviewProps> = ({ build }) => {
   // Fetch the thumbnail using React Query
   const { data: thumbnail, isLoading } = useQuery({
-    queryKey: ["buildThumbnail", build.id],
-    queryFn: () => fetchBuildThumbnail(build.id),
+    queryKey: ["buildThumbnail", build._id],
+    queryFn: () => fetchBuildThumbnail(build._id),
   });
 
   return (

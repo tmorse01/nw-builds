@@ -44,11 +44,11 @@ export const BuildList: React.FC<BuildListProps> = ({ tags }) => {
   return (
     <Grid mt={60}>
       {filteredBuilds.map((build) => (
-        <Grid.Col key={build.id} span={{ xs: 12, sm: 6, md: 4 }}>
+        <Grid.Col key={build._id} span={{ xs: 12, sm: 6, md: 4 }}>
           <BuildCard
-            id={build.id}
+            id={build._id}
             name={build.name}
-            link={`/build/${build.id}`}
+            link={`/build/${build._id}`}
             tags={build.tags}
             weapons={build.weapons}
           />

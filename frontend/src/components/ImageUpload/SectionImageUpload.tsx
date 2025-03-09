@@ -16,25 +16,25 @@ import {
 import "@mantine/dropzone/styles.css";
 
 interface SectionImageUpload {
-  sectionId: string;
+  sectionTitle: string;
 }
 
-const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
+const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionTitle }) => {
   const { id: buildId } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
   const [previewImage, setPreviewImage] = useState<ImageUploadResponse | null>(null);
 
   // Fetch images from Cloudinary
   const { data: images = [] } = useQuery({
-    queryKey: ["images", buildId, sectionId],
-    queryFn: () => fetchImages(buildId!, sectionId),
-    enabled: !!buildId && !!sectionId,
+    queryKey: ["images", buildId, sectionTitle],
+    queryFn: () => fetchImages(buildId!, sectionTitle),
+    enabled: !!buildId && !!sectionTitle,
   });
 
   // Upload mutation
   const uploadMutation = useMutation({
     mutationFn: async (files: File[]) => {
-      const uploadPromises = files.map((file) => uploadImage(file, buildId!, sectionId));
+      const uploadPromises = files.map((file) => uploadImage(file, buildId!, sectionTitle));
       return Promise.all(uploadPromises);
     },
     onSuccess: () => {
@@ -43,7 +43,7 @@ const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
         message: "Your images have been uploaded.",
         color: "green",
       });
-      queryClient.invalidateQueries({ queryKey: ["images", buildId, sectionId] });
+      queryClient.invalidateQueries({ queryKey: ["images", buildId, sectionTitle] });
     },
     onError: () => {
       showNotification({
@@ -56,12 +56,12 @@ const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
 
   // Delete mutation
   const deleteMutation = useMutation({
-    mutationFn: async (image: ImageUploadResponse) => deleteImage(image.id),
+    mutationFn: async (image: ImageUploadResponse) => deleteImage(image._id),
     onSuccess: (_, deletedImage) => {
       queryClient.setQueryData(
-        ["images", buildId, sectionId],
+        ["images", buildId, sectionTitle],
         (old: ImageUploadResponse[] | undefined) =>
-          old?.filter((img) => img.id !== deletedImage.id) ?? []
+          old?.filter((img) => img._id !== deletedImage._id) ?? []
       );
     },
     onError: () => {
@@ -88,7 +88,7 @@ const SectionImageUpload: React.FC<SectionImageUpload> = ({ sectionId }) => {
       {images.length > 0 && (
         <SimpleGrid cols={{ base: 2, sm: 4 }} mt="xl">
           {images.map((image) => (
-            <Box key={image.id} pos="relative">
+            <Box key={image._id} pos="relative">
               <Image
                 src={getOptimizedImageUrl(image.cloudinaryUrl, {
                   quality: 90,

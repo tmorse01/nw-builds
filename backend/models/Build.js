@@ -1,14 +1,12 @@
 const mongoose = require("mongoose");
 
 const SectionSchema = new mongoose.Schema({
-  id: { type: String, required: true },
   title: { type: String, required: true },
   content: { type: String }, // Store content as HTML
 });
 
 const BuildSchema = new mongoose.Schema(
   {
-    id: { type: String, required: true },
     name: { type: String, required: true },
     weapons: { type: [String], required: true },
     attributes: {

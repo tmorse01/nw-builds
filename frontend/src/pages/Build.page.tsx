@@ -44,7 +44,7 @@ export const BuildPage: React.FC = () => {
   return (
     <Container>
       <BuildOverview build={build} />
-      <BuildSections sections={build.sections} buildId={build.id} />
+      <BuildSections sections={build.sections} buildId={build._id} />
     </Container>
   );
 };

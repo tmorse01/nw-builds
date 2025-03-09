@@ -42,7 +42,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
 
   const handleAddSection = () => {
     const newId = new ObjectId().toHexString();
-    setSections([...sections, { id: newId, title: "", content: "" } as Section]);
+    setSections([...sections, { _id: newId, title: "", content: "" } as Section]);
   };
 
   const handleRemoveSection = (index: number) => {
@@ -67,7 +67,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
       });
     } else {
       // Update existing build
-      updateBuild(build.id, buildData).then((data) => {
+      updateBuild(build._id, buildData).then((data) => {
         notifications.show({
           title: "Build Updated",
           message: "Your build has been updated successfully.",
@@ -78,8 +78,8 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
   };
 
   const handleDeleteBuild = () => {
-    if (build?.id) {
-      deleteBuild(build.id)
+    if (build?._id) {
+      deleteBuild(build._id)
         .then(() => {
           notifications.show({
             title: "Build Deleted",
@@ -102,7 +102,7 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
         <Stack gap="md">
           <Title order={2}>Build Editor</Title>
           <Group>
-            <ThumbnailUpload buildId={build.id} />
+            <ThumbnailUpload buildId={build._id} />
           </Group>
           <Group>
             <TextInput

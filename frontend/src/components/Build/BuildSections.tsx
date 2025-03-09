@@ -2,17 +2,12 @@ import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { Box, Button, Container, Image, Title } from "@mantine/core";
+import { Section } from "@/data/types";
 import { BuildSectionImageViewer } from "./BuildSectionImageViewer";
 
-export interface BuildSection {
-  title: string;
-  content: string;
-  id?: string; // Adding id property for section identification
-}
-
 export interface BuildSectionsProps {
-  sections: BuildSection[];
-  buildId: string; // Adding buildId to identify which build these sections belong to
+  sections: Section[];
+  buildId: string;
 }
 
 function sanitizeMarkdown(content: string): string {
@@ -91,7 +86,7 @@ export const BuildSections: React.FC<BuildSectionsProps> = ({ sections, buildId 
             }}
           />
           <BuildSectionImageViewer
-            sectionId={section.id}
+            sectionId={section._id}
             buildId={buildId}
             onImageClick={toggleImage}
           />
