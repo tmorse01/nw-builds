@@ -14,6 +14,7 @@ export const BuildSections: React.FC<BuildSectionsProps> = ({ sections }) => {
       {sections.map((section, index) => (
         <Stack
           key={`section-${index}`}
+          id={`section-${index}`}
           bg="var(--mantine-color-default)"
           p="md"
           mt="lg"
