@@ -5,13 +5,9 @@ import { SectionImage } from "@/data/types";
 
 interface BuildSectionImageViewerProps {
   images: SectionImage[];
-  onImageClick: (src: string) => void;
 }
 
-export const BuildSectionImageViewer: React.FC<BuildSectionImageViewerProps> = ({
-  images,
-  onImageClick,
-}) => {
+export const BuildSectionImageViewer: React.FC<BuildSectionImageViewerProps> = ({ images }) => {
   if (images.length === 0) {
     return null;
   }
@@ -22,7 +18,6 @@ export const BuildSectionImageViewer: React.FC<BuildSectionImageViewerProps> = (
         radius="md"
         src={images[0].cloudinaryUrl}
         alt={images[0].originalName}
-        onClick={() => onImageClick(images[0].cloudinaryUrl)}
         style={{ cursor: "pointer" }}
       />
     );
@@ -38,13 +33,7 @@ export const BuildSectionImageViewer: React.FC<BuildSectionImageViewerProps> = (
     >
       {images.map((image, index) => (
         <Carousel.Slide key={index}>
-          <Image
-            radius="md"
-            src={image.cloudinaryUrl}
-            alt={image.originalName}
-            onClick={() => onImageClick(image.cloudinaryUrl)}
-            style={{ cursor: "pointer" }}
-          />
+          <Image radius="md" src={image.cloudinaryUrl} alt={image.originalName} />
         </Carousel.Slide>
       ))}
     </Carousel>
