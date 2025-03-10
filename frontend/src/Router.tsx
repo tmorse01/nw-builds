@@ -24,7 +24,6 @@ const router = createBrowserRouter([
     path: "/builds",
     element: (
       <AppLayout>
-        <PageTitle title="Builds" />
         <BuildListPage />
       </AppLayout>
     ),
