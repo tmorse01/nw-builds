@@ -28,6 +28,21 @@ export interface Build {
   perks: Perk[];
 }
 
+export interface BuildModel {
+  _id: string;
+  name: string;
+  weapons: string[];
+  attributes: Attributes;
+  playstyle: string;
+  tags: string[];
+  sections: Section[];
+  createdBy: string;
+  season: number;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  perks: Perk[];
+}
+
 export interface Tag {
   _id: string;
   name: string;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Stack, Title } from "@mantine/core";
+import { Card, Stack, Title } from "@mantine/core";
 import RichTextEditorComponent from "@/components/Common/RichTextEditorComponent";
 import { Section } from "@/data/types";
 import { BuildSectionImageViewer } from "./BuildSectionImageViewer";
@@ -10,27 +10,24 @@ export interface BuildSectionsProps {
 
 export const BuildSections: React.FC<BuildSectionsProps> = ({ sections }) => {
   return (
-    <Container>
+    <Stack gap="md" mt="lg">
       {sections.map((section, index) => (
-        <Stack
+        <Card
           key={`section-${section._id}`}
           id={`section-${index}`}
-          bg="var(--mantine-color-default)"
-          p="md"
-          mt="lg"
-          mb="lg"
-          style={{
-            borderRadius: "5px",
-            overflow: "hidden",
-          }}
+          withBorder
+          shadow="sm"
+          radius="md"
         >
-          <Title order={3} mb="md">
-            {section.title}
-          </Title>
-          <RichTextEditorComponent content={section.content} readOnly />
-          <BuildSectionImageViewer images={section.images} />
-        </Stack>
+          <Stack gap="md">
+            <Title order={3} mb="md">
+              {section.title}
+            </Title>
+            <RichTextEditorComponent content={section.content} readOnly />
+            <BuildSectionImageViewer images={section.images} />
+          </Stack>
+        </Card>
       ))}
-    </Container>
+    </Stack>
   );
 };

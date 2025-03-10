@@ -1,5 +1,5 @@
 import { fetchImages } from "@/data/images";
-import { Build } from "./types";
+import { Build, BuildModel } from "./types";
 
 const BASE_API_URL = import.meta.env.VITE_API_BASE_URL;
 const BUILD_API_URL = `${BASE_API_URL}/builds`;
@@ -86,7 +86,7 @@ export const fetchBuildById = async (id: string): Promise<Build> => {
 /**
  * Creates a new build
  */
-export const createBuild = async (build: Build): Promise<Build> => {
+export const createBuild = async (build: BuildModel): Promise<Build> => {
   try {
     const response = await fetch(BUILD_API_URL, {
       method: "POST",
@@ -103,7 +103,7 @@ export const createBuild = async (build: Build): Promise<Build> => {
 /**
  * Updates an existing build
  */
-export const updateBuild = async (id: string, updatedBuild: Build): Promise<Build> => {
+export const updateBuild = async (id: string, updatedBuild: BuildModel): Promise<Build> => {
   try {
     const response = await fetch(`${BUILD_API_URL}/${id}`, {
       method: "PUT",

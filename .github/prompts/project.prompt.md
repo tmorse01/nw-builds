@@ -102,3 +102,93 @@ The `.netlify` directory contains Netlify-specific configurations and plugins.
   - `.yarn/install-state.gz`: Yarn v2 install state.
   - `.pnp.*`: Yarn v2 PnP files.
   - `.DS_Store`: macOS Finder metadata.
+
+# New World Builds Project Guidelines
+
+## Mantine Component Styling Guidelines
+
+When styling Mantine components, use the built-in style props instead of inline `style` objects or deprecated `sx` prop whenever possible. These props connect with the theme system and provide a more consistent approach to styling.
+
+### Preferred Style Props
+
+| Prop                             | CSS Property                                         | Description                                    |
+| -------------------------------- | ---------------------------------------------------- | ---------------------------------------------- |
+| `m`                              | margin                                               | Sets margin on all sides                       |
+| `mt`, `mb`, `ml`, `mr`           | marginTop, marginBottom, marginLeft, marginRight     | Sets margin on specific sides                  |
+| `mx`                             | marginInline                                         | Sets horizontal margin                         |
+| `my`                             | marginBlock                                          | Sets vertical margin                           |
+| `p`                              | padding                                              | Sets padding on all sides                      |
+| `pt`, `pb`, `pl`, `pr`           | paddingTop, paddingBottom, paddingLeft, paddingRight | Sets padding on specific sides                 |
+| `px`                             | paddingInline                                        | Sets horizontal padding                        |
+| `py`                             | paddingBlock                                         | Sets vertical padding                          |
+| `bg`                             | background                                           | Sets background color                          |
+| `c`                              | color                                                | Sets text color                                |
+| `w`, `h`                         | width, height                                        | Sets element dimensions                        |
+| `miw`, `mih`                     | minWidth, minHeight                                  | Sets minimum dimensions                        |
+| `maw`, `mah`                     | maxWidth, maxHeight                                  | Sets maximum dimensions                        |
+| `pos`                            | position                                             | Sets position property (fixed, absolute, etc.) |
+| `top`, `left`, `bottom`, `right` | top, left, bottom, right                             | Sets position coordinates                      |
+
+### Example Usage
+
+```tsx
+// ❌ Avoid this approach
+<Box
+  style={{
+    marginTop: 20,
+    padding: '1rem',
+    backgroundColor: 'white',
+    position: 'fixed',
+    top: '20px'
+  }}
+>
+  Content
+</Box>
+
+// ✅ Use style props instead
+<Box
+  mt={20}
+  p="md"
+  bg="white"
+  pos="fixed"
+  top={20}
+>
+  Content
+</Box>
+```
+
+### When to Use `style` Prop
+
+Only use the `style` prop for CSS properties that don't have corresponding style props, such as:
+
+- `zIndex`
+- `boxShadow`
+- `borderRadius`
+- CSS transforms
+- Complex selectors
+
+```tsx
+// Example of combining style props with style object
+<Box
+  pos="fixed"
+  top={20}
+  right={20}
+  bg="white"
+  p="md"
+  style={{
+    zIndex: 100,
+    borderRadius: "4px",
+    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
+  }}
+>
+  Content
+</Box>
+```
+
+### Benefits
+
+- Connects with theme system (spacing scales, color scheme)
+- More consistent styling across components
+- Better readability and maintainability
+- Responsive values support
+- TypeScript autocompletion support
