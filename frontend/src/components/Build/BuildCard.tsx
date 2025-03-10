@@ -1,6 +1,29 @@
+import {
+  IconAxe,
+  IconBow,
+  IconFlame,
+  IconGalaxy,
+  IconHammer,
+  IconHeart,
+  IconSnowflake,
+  IconSword,
+  IconTrowel,
+} from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { Badge, Button, Card, Image, List, Loader, Title } from "@mantine/core";
+import {
+  Badge,
+  Box,
+  Button,
+  Card,
+  Group,
+  Image,
+  Loader,
+  Text,
+  ThemeIcon,
+  Title,
+  Tooltip,
+} from "@mantine/core";
 import { fetchBuildThumbnail } from "@/data/builds";
 import { Tag } from "@/data/types";
 
@@ -31,6 +54,38 @@ export const BuildCard: React.FC<BuildCardProps> = ({
     queryFn: () => fetchBuildThumbnail(id),
   });
 
+  // Enhanced weapon icon mapping with more weapon types
+  const getWeaponIcon = (weapon: string) => {
+    switch (weapon.toLowerCase()) {
+      case "sword and shield":
+        return <IconSword size={20} stroke={1.5} />;
+      case "great axe":
+        return <IconAxe size={20} stroke={1.5} />;
+      case "bow":
+        return <IconBow size={20} stroke={1.5} />;
+      case "rapier":
+        return <IconSword size={20} stroke={1.5} />;
+      case "warhammer":
+        return <IconHammer size={20} stroke={1.5} />;
+      case "spear":
+        return <IconTrowel size={20} stroke={1.5} transform="rotate(135deg)" />;
+      case "hatchet":
+        return <IconAxe size={20} stroke={1.5} />;
+      case "fire staff":
+        return <IconFlame size={20} stroke={1.5} />;
+      case "life staff":
+        return <IconHeart size={20} stroke={1.5} />;
+      case "ice gauntlet":
+        return <IconSnowflake size={20} stroke={1.5} />;
+      case "void gauntlet":
+        return <IconGalaxy size={20} stroke={1.5} />;
+      case "greatsword":
+        return <IconSword size={20} stroke={1.5} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Link to={link}>
@@ -41,7 +96,7 @@ export const BuildCard: React.FC<BuildCardProps> = ({
             src={thumbnail}
             alt={name}
             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-            height={120}
+            height={200}
             mb="sm"
             radius="md"
             fit="cover"
@@ -58,11 +113,32 @@ export const BuildCard: React.FC<BuildCardProps> = ({
           </Badge>
         ))}
       </div>
-      <List mb="sm">
-        {weapons.map((weapon) => (
-          <List.Item key={weapon}>{weapon}</List.Item>
+
+      {/* Minimalist weapon display with stat bars */}
+      <Group mb="md" gap="xs">
+        {weapons.map((weapon, index) => (
+          <Box key={weapon} w="100%">
+            <Tooltip label={`${weapon} (${index === 0 ? "Primary" : "Secondary"})`}>
+              <Group gap="xs" wrap="nowrap" align="center" mb={6}>
+                <ThemeIcon
+                  size={42}
+                  radius="md"
+                  variant="light"
+                  color={index === 0 ? "blue" : "grape"}
+                >
+                  {getWeaponIcon(weapon) || weapon.charAt(0).toUpperCase()}
+                </ThemeIcon>
+                <Box w="100%">
+                  <Text size="sm" fw={600} mb={2} style={{ textTransform: "capitalize" }}>
+                    {weapon}
+                  </Text>
+                </Box>
+              </Group>
+            </Tooltip>
+          </Box>
         ))}
-      </List>
+      </Group>
+
       <Button variant="light" color="blue" fullWidth component={Link} to={`/build/${id}`} mb="xs">
         View Build
       </Button>

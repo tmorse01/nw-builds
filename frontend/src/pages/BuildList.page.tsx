@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Container } from "@mantine/core";
 import { BuildList } from "@/components/BuildList/BuildList";
 import { TagsFilter } from "@/components/Tags/TagsFilter";
 
@@ -20,9 +21,9 @@ export const BuildListPage: React.FC = () => {
   };
 
   return (
-    <>
+    <Container>
       <TagsFilter onFilterChange={handleTagChange} />
       <BuildList tags={tags} />
-    </>
+    </Container>
   );
 };
