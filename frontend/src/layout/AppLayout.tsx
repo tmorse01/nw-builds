@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import { IconExclamationCircle, IconWorldSearch } from "@tabler/icons-react";
+import { IconExclamationCircle } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import {
   Alert,
@@ -7,12 +7,14 @@ import {
   Burger,
   Button,
   Group,
+  Image,
   Modal,
   Text,
   TextInput,
   Title,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import AceFavicon from "@/axefavicon.svg";
 import { ColorSchemeToggle } from "@/components/ColorSchemeToggle/ColorSchemeToggle";
 import { BackToTop } from "@/components/Common/BackToTop";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -47,7 +49,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
         <Group h="100%" px="md" align="center" justify="space-between">
           <Group>
             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-            <IconWorldSearch size={30} /> {/* Replace with suitable logo */}
+            <Image src={AceFavicon} alt="Ace Favicon" w={30} h={30} />
             <Link to="/" style={{ textDecoration: "none" }}>
               <Title>
                 <Text
