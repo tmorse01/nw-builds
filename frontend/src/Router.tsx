@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { PageTitle } from "./components/PageTitle";
 import { AppLayout } from "./layout/AppLayout";
 import AboutPage from "./pages/About.page";
 import AdminProtectedPage from "./pages/AdminProtectedPage";
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <AppLayout>
+        <PageTitle title="Home" />
         <HomePage />
       </AppLayout>
     ),
@@ -22,6 +24,7 @@ const router = createBrowserRouter([
     path: "/builds",
     element: (
       <AppLayout>
+        <PageTitle title="Builds" />
         <BuildListPage />
       </AppLayout>
     ),
@@ -30,6 +33,7 @@ const router = createBrowserRouter([
     path: "/build/:id",
     element: (
       <AppLayout>
+        <PageTitle title="Build Details" />
         <BuildPage />
       </AppLayout>
     ),
@@ -39,6 +43,7 @@ const router = createBrowserRouter([
     element: (
       <AppLayout>
         <AdminProtectedPage>
+          <PageTitle title="Build Manager" />
           <BuildManagerPage />
         </AdminProtectedPage>
       </AppLayout>
@@ -49,6 +54,7 @@ const router = createBrowserRouter([
     element: (
       <AppLayout>
         <AdminProtectedPage>
+          <PageTitle title="Build Editor" />
           <BuildEditorPage />
         </AdminProtectedPage>
       </AppLayout>
@@ -59,6 +65,7 @@ const router = createBrowserRouter([
     element: (
       <AppLayout>
         <AdminProtectedPage>
+          <PageTitle title="Tag Manager" />
           <TagManagerPage />
         </AdminProtectedPage>
       </AppLayout>
@@ -68,6 +75,7 @@ const router = createBrowserRouter([
     path: "/about",
     element: (
       <AppLayout>
+        <PageTitle title="About" />
         <AboutPage />
       </AppLayout>
     ),

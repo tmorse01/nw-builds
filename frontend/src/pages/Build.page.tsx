@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Button, Container, Group, Loader, Text, Title } from "@mantine/core";
 import { BuildOverview } from "@/components/Build/BuildOverview";
 import { BuildSections } from "@/components/Build/BuildSections";
+import { PageTitle } from "@/components/PageTitle";
 import { fetchBuildById } from "@/data/builds";
 import { Build } from "@/data/types";
 
@@ -43,6 +44,12 @@ export const BuildPage: React.FC = () => {
 
   return (
     <Container>
+      {build ? (
+        <PageTitle title={build.name || "Build Details"} />
+      ) : (
+        <PageTitle title="Loading Build..." />
+      )}
+
       <BuildOverview build={build} />
       <BuildSections sections={build.sections} />
     </Container>
