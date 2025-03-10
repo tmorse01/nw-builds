@@ -194,7 +194,14 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
   return (
     <Container>
       {/* Sticky Save Button */}
-      <Box pos="fixed" top={80} right={40} p="md">
+      <Box
+        pos="fixed"
+        top={80}
+        right={40}
+        p="md"
+        bg="dark"
+        style={{ zIndex: 100, borderRadius: 5, opacity: 0.9 }}
+      >
         <Stack gap="xs">
           <Button type="submit" form="buildForm" disabled={autoSaving}>
             {autoSaving ? "Auto-Saving..." : "Save Build"}
