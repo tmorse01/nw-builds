@@ -1,0 +1,17 @@
+export const weapons = [
+  "Great Axe",
+  "Warhammer",
+  "Bow",
+  "Rapier",
+  "Spear",
+  "Sword and Shield",
+  "Hatchet",
+  "Fire Staff",
+  "Life Staff",
+  "Ice Gauntlet",
+  "Void Gauntlet",
+  "Blunderbuss",
+  "Musket",
+  "Greatsword",
+  "Flail",
+];

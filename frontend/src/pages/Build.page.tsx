@@ -26,7 +26,7 @@ export const BuildPage: React.FC = () => {
       </Container>
     );
   }
-  console.log("build page");
+
   if (isError || !build) {
     return (
       <Container>

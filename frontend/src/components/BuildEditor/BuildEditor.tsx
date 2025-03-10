@@ -16,6 +16,7 @@ import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import SectionEditor from "@/components/BuildEditor/SectionEditor";
 import { createBuild, deleteBuild, updateBuild } from "@/data/builds";
+import { weapons } from "@/data/constants";
 import { Build, Section, Tag } from "@/data/types";
 import { DeleteButton } from "../Common/DeleteButton";
 import ThumbnailUpload from "../ImageUpload/ThumbnailUpload";
@@ -41,9 +42,19 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
     setSections(updatedSections);
   };
 
-  const handleAddSection = () => {
+  const handleAddSection = (index?: number) => {
     const newId = new ObjectId().toHexString();
-    setSections([...sections, { _id: newId, title: "", content: undefined } as Section]);
+    const newSection = { _id: newId, title: "", content: undefined } as Section;
+
+    if (index !== undefined) {
+      // Insert after specified index
+      const updatedSections = [...sections];
+      updatedSections.splice(index + 1, 0, newSection);
+      setSections(updatedSections);
+    } else {
+      // Add to the end (original behavior)
+      setSections([...sections, newSection]);
+    }
   };
 
   const handleRemoveSection = (index: number) => {
@@ -134,13 +145,15 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
               label="Season"
               placeholder="Build created for season"
               required
+              w={100}
               {...form.getInputProps("season")}
             />
             <MultiSelect
               label="Weapons"
               required
+              data={weapons}
+              w={260}
               {...form.getInputProps("weapons")}
-              data={["Great Axe", "Warhammer", "Bow", "Rapier", "Spear"]}
             />
           </Group>
           <TagEditor {...form.getInputProps("tags")} />
@@ -166,23 +179,23 @@ const BuildEditor: React.FC<BuildEditorProps> = ({ build, onSave }) => {
 
           <Title order={3}>Sections</Title>
           {sections.map((section, index) => (
-            <SectionEditor
-              key={index}
-              section={section}
-              onChange={(key: string, value: string) => handleSectionChange(index, key, value)}
-              onRemove={() => handleRemoveSection(index)}
-            />
+            <Stack key={index} gap="xs">
+              <SectionEditor
+                section={section}
+                onChange={(key: string, value: string) => handleSectionChange(index, key, value)}
+                onRemove={() => handleRemoveSection(index)}
+              />
+              <Button
+                variant="default"
+                size="xs"
+                fullWidth
+                onClick={() => handleAddSection(index)}
+                style={{ alignSelf: "center", borderStyle: "dashed" }}
+              >
+                Add Section
+              </Button>
+            </Stack>
           ))}
-          <Button
-            fullWidth
-            variant="default"
-            style={{
-              borderStyle: "dashed",
-            }}
-            onClick={handleAddSection}
-          >
-            Add Section
-          </Button>
         </Stack>
       </form>
     </Container>

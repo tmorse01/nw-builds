@@ -38,7 +38,7 @@ const RichTextEditorComponent: React.FC<RichTextEditorComponentProps> = ({
     editable: !readOnly,
   });
 
-  if (!content) return null;
+  if (!content && readOnly) return null;
 
   return (
     <RichTextEditor editor={editor}>

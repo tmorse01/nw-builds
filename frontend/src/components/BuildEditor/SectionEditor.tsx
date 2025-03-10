@@ -24,6 +24,7 @@ const SectionEditor: React.FC<SectionEditorProps> = ({ section, onChange, onRemo
       <Group justify="space-between">
         <TextInput
           label="Section Title"
+          size="lg"
           value={section.title}
           onChange={(e) => onChange("title", e.target.value)}
           required
