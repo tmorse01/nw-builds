@@ -16,6 +16,7 @@ export interface BuildSectionsProps {
 }
 
 function sanitizeMarkdown(content: string): string {
+  if (!content) return "";
   return content
     .replace(/\r\n|\r/g, "\n") // Normalize newlines to "\n"
     .replace(/^\s*(\S.*)?$/gm, (_, line) => (line ? line.trim() : "")) // Trim non-empty lines but preserve blank lines
