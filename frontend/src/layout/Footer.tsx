@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
         <Text size="xs">Built by Grimz</Text>
         <Code fw={700}>
           <Text size="xs" c="dimmed">
-            &copy; {new Date().getFullYear()} NW Builds v0.0.1
+            &copy; {new Date().getFullYear()} NW Builds | v{import.meta.env.PACKAGE_VERSION}
           </Text>
         </Code>
       </Group>
